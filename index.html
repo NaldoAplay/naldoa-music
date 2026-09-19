@@ -63,8 +63,8 @@
 </head>
 <body class="h-screen w-screen flex flex-col items-center justify-center relative bg-slate-950">
 
-    <!-- Header Sólido sem blur para não atrapalhar -->
-    <header class="absolute top-0 inset-x-0 h-[68px] px-4 flex items-center justify-between header-solid max-w-md mx-auto shadow-2xl">
+    <!-- Header Sólido Posicionado em Fluxo (Sem cobrir o conteúdo do topo) -->
+    <header class="w-full h-[64px] px-4 flex items-center justify-between header-solid max-w-md mx-auto shadow-xl flex-shrink-0">
         <div class="flex items-center space-x-3">
             <div class="w-10 h-10 rounded-xl overflow-hidden shadow-md border border-cyan-500/50 flex-shrink-0 bg-slate-900">
                 <img src="icon.png" alt="NaldoA Logo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=200&auto=format&fit=crop'">
@@ -86,7 +86,7 @@
     </header>
 
     <!-- Feed TikTok Style com suporte a Mouse Drag e Touch Swipe -->
-    <main id="feed-root" class="feed-container w-full max-w-md bg-slate-950 relative shadow-2xl overflow-y-scroll pt-[68px]" 
+    <main id="feed-root" class="feed-container w-full max-w-md bg-slate-950 relative shadow-2xl overflow-y-scroll flex-1" 
           onmousedown="startDrag(event)" onmousemove="onDrag(event)" onmouseup="endDrag()" onmouseleave="endDrag()"
           ontouchstart="startTouch(event)" ontouchend="endTouch()">
         <div class="w-full h-full flex flex-col items-center justify-center space-y-4 text-slate-400 p-6 text-center">
@@ -96,7 +96,7 @@
     </main>
 
     <!-- Toast Notification -->
-    <div id="toast-notification" class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900 border border-cyan-500/50 text-white px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 pointer-events-none">
+    <div id="toast-notification" class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900 border border-cyan-500/50 text-white px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 pointer-events-none">
         <i class="fa-solid fa-circle-check text-cyan-400 text-base"></i>
         <span id="toast-message">Link copiado com sucesso!</span>
     </div>
@@ -141,10 +141,10 @@
             <div class="flex flex-col space-y-2">
                 <label class="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold cursor-pointer shadow-lg transition flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-folder-open text-sm"></i>
-                    <span>Selecionar Músicas do Aparelho (Arquivos / iPhone)</span>
+                    <span>Selecionar Músicas (Qualquer Arquivo / iOS Files)</span>
                     <input type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.wma" multiple onchange="handleDeviceAudioUpload(event)" class="hidden">
                 </label>
-                <p class="text-[11px] text-slate-300 text-center">No iPhone/Celular, selecione seus arquivos salvos na pasta Arquivos ou Músicas.</p>
+                <p class="text-[11px] text-slate-300 text-center">No iPhone, selecione seus arquivos salvos em Arquivos / Músicas.</p>
             </div>
 
             <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="local-tracks-list"></div>
@@ -352,20 +352,20 @@
             }
 
             root.innerHTML = tracks.map((track, index) => `
-                <div class="feed-card w-full h-[calc(100vh-68px)] flex flex-col justify-between pt-2 pb-5 px-4 relative overflow-hidden bg-slate-950" id="card-${index}">
+                <div class="feed-card w-full h-[calc(100vh-64px)] flex flex-col justify-between pt-1 pb-4 px-0 relative overflow-hidden bg-slate-950" id="card-${index}">
                     <!-- Immersive Full-Screen Cover Background -->
                     <div class="absolute inset-0 bg-cover bg-center filter blur-3xl opacity-60 scale-125 pointer-events-none" style="background-image: url('${track.cover}')"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-slate-950/50 pointer-events-none"></div>
 
                     <!-- Full Screen Cover Center (Edge-to-Edge sem overlay e sem botão de play visível) -->
-                    <div class="relative z-10 flex-1 flex flex-col items-center justify-center my-auto w-full h-full max-h-[72vh] cursor-pointer" onclick="togglePlayPause()">
-                        <div class="relative w-full h-full flex items-center justify-center overflow-hidden rounded-2xl shadow-2xl bg-black/40">
+                    <div class="relative z-10 flex-1 flex flex-col items-center justify-center my-auto w-full h-full max-h-[74vh] cursor-pointer" onclick="togglePlayPause()">
+                        <div class="relative w-full h-full flex items-center justify-center overflow-hidden bg-black/40">
                             <img src="${track.cover}" alt="${track.title}" class="w-full h-full object-cover" onerror="this.src='icon.png'">
                         </div>
                     </div>
 
-                    <!-- Absolute Floating Social Buttons (TikTok Style on Right - Bem visíveis e com fundo sólido) -->
-                    <div class="absolute right-4 bottom-32 z-30 flex flex-col items-center space-y-4 pointer-events-auto">
+                    <!-- Absolute Floating Social Buttons (TikTok Style on Right) -->
+                    <div class="absolute right-4 bottom-28 z-30 flex flex-col items-center space-y-4 pointer-events-auto">
                         <a href="https://open.spotify.com/intl-pt/artist/05anJA6CE7Afkn0hYyVMRV?si=Zd7SFNN9S9GQWUNWT6pW5g" target="_blank" title="Spotify" class="w-12 h-12 rounded-full bg-emerald-500 border-2 border-emerald-300 text-white flex items-center justify-center text-lg shadow-2xl hover:scale-110 transition">
                             <i class="fa-brands fa-spotify"></i>
                         </a>
@@ -396,20 +396,20 @@
                         </button>
                     </div>
 
-                    <!-- Bottom Info & Edge-to-Edge Progress Bar (Sem margem lateral nas pontas da tela) -->
+                    <!-- Bottom Info & Edge-to-Edge Progress Bar (100% de ponta a ponta sem recortes) -->
                     <div class="relative z-20 flex flex-col space-y-2 pb-1 w-full">
-                        <div class="w-full space-y-1.5 px-0">
+                        <div class="w-full space-y-1.5">
                             <div class="w-full h-2.5 bg-white/20 overflow-hidden cursor-pointer relative" onclick="seekAudio(event, ${index})">
                                 <div id="progress-bar-${index}" class="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 w-0 transition-all duration-100"></div>
                             </div>
-                            <div class="flex justify-between text-xs text-slate-200 font-bold px-1">
+                            <div class="flex justify-between text-xs text-slate-200 font-bold px-3">
                                 <span id="progress-time-${index}">0:00 / 0:00</span>
                                 <span class="text-cyan-300 font-extrabold uppercase tracking-wider">${track.album} ${track.isLocal ? '(Offline)' : ''}</span>
                             </div>
                         </div>
 
-                        <div class="space-y-0.5 px-1 pr-16">
-                            <h2 class="text-lg sm:text-xl font-black text-white leading-tight drop-shadow-lg line-clamp-2">${track.title}</h2>
+                        <div class="space-y-0.5 px-3 pr-16">
+                            <h2 class="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow-lg line-clamp-2">${track.title}</h2>
                         </div>
                     </div>
                 </div>
