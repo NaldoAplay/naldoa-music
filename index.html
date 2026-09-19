@@ -37,24 +37,19 @@
             height: 100svh;
             width: 100vw;
         }
-        .header-solid {
-            background-color: #030305;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            z-index: 50;
-            padding-top: env(safe-area-inset-top);
-            height: calc(64px + env(safe-area-inset-top));
-        }
         .feed-container {
             scroll-snap-type: y mandatory;
             overflow-y: scroll;
-            height: calc(100svh - 64px - env(safe-area-inset-top));
+            height: 100vh;
+            height: 100svh;
             width: 100%;
             scroll-behavior: smooth;
         }
         .feed-card {
             scroll-snap-align: start;
             scroll-snap-stop: always;
-            height: calc(100svh - 64px - env(safe-area-inset-top));
+            height: 100vh;
+            height: 100svh;
             width: 100%;
             position: relative;
             display: flex;
@@ -66,29 +61,27 @@
 </head>
 <body class="h-[100svh] w-screen flex flex-col items-center justify-between relative bg-slate-950 overflow-hidden">
 
-    <!-- Header Sólido com Safe Area para o iPhone (Dynamic Island) -->
-    <header class="w-full px-4 flex items-center justify-between header-solid max-w-md mx-auto shadow-xl flex-shrink-0">
-        <div class="flex items-center space-x-3 pt-[env(safe-area-inset-top)]">
-            <div class="w-10 h-10 rounded-xl overflow-hidden shadow-md border border-cyan-500/50 flex-shrink-0 bg-slate-900">
+    <header class="absolute top-0 left-0 right-0 max-w-md mx-auto px-4 pt-[calc(env(safe-area-inset-top)+12px)] pb-3 flex items-center justify-between z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-auto">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-cyan-500/50 flex-shrink-0 bg-slate-900">
                 <img src="icon.png" alt="NaldoA Logo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=200&auto=format&fit=crop'">
             </div>
             <div class="truncate leading-tight">
-                <h1 class="font-black text-sm tracking-wide text-white truncate block">NaldoA Music</h1>
-                <a href="https://naldoa-dm.web.app" target="_blank" class="text-[10px] text-cyan-300 font-semibold hover:underline block truncate">naldoa-dm.web.app</a>
+                <h1 class="font-black text-sm tracking-wide text-white truncate block drop-shadow-md">NaldoA Music</h1>
+                <a href="https://naldoa-dm.web.app" target="_blank" class="text-[10px] text-cyan-300 font-semibold hover:underline block truncate drop-shadow-md">naldoa-dm.web.app</a>
             </div>
         </div>
-        <div class="flex items-center space-x-2 pt-[env(safe-area-inset-top)]">
-            <button onclick="shuffleTracks()" title="Aleatório" class="w-9 h-9 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/50 flex items-center justify-center transition shadow text-xs">
+        <div class="flex items-center space-x-2">
+            <button onclick="shuffleTracks()" title="Aleatório" class="w-9 h-9 rounded-xl bg-black/40 backdrop-blur-md hover:bg-black/60 text-indigo-300 border border-white/20 flex items-center justify-center transition shadow-lg text-xs">
                 <i class="fa-solid fa-shuffle"></i>
             </button>
-            <button onclick="openLocalManagerModal()" title="Minhas Músicas Offline" class="px-3 h-9 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold shadow transition flex items-center space-x-1.5">
+            <button onclick="openLocalManagerModal()" title="Minhas Músicas Offline" class="px-3 h-9 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold shadow-lg transition flex items-center space-x-1.5">
                 <i class="fa-solid fa-cloud-arrow-down text-xs"></i>
                 <span>Minhas Músicas</span>
             </button>
         </div>
     </header>
 
-    <!-- Feed TikTok Style com suporte a Mouse Drag e Touch Swipe -->
     <main id="feed-root" class="feed-container w-full max-w-md bg-slate-950 relative shadow-2xl overflow-y-scroll flex-1" 
           onmousedown="startDrag(event)" onmousemove="onDrag(event)" onmouseup="endDrag()" onmouseleave="endDrag()"
           ontouchstart="startTouch(event)" ontouchend="endTouch()">
@@ -98,13 +91,11 @@
         </div>
     </main>
 
-    <!-- Toast Notification -->
-    <div id="toast-notification" class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900 border border-cyan-500/50 text-white px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 pointer-events-none">
+    <div id="toast-notification" class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900/90 backdrop-blur-md border border-cyan-500/50 text-white px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 pointer-events-none">
         <i class="fa-solid fa-circle-check text-cyan-400 text-base"></i>
         <span id="toast-message">Link copiado com sucesso!</span>
     </div>
 
-    <!-- Comentários Modal -->
     <div id="comments-modal" class="fixed inset-0 z-50 bg-black/85 hidden items-end sm:items-center justify-center">
         <div class="bg-slate-900 w-full max-w-md sm:max-w-sm max-h-[80vh] rounded-t-3xl sm:rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
             <div class="flex items-center justify-between border-b border-white/15 pb-3">
@@ -126,7 +117,6 @@
         </div>
     </div>
 
-    <!-- Gerenciador Offline / Dispositivo Modal -->
     <div id="local-manager-modal" class="fixed inset-0 z-50 bg-black/85 hidden items-center justify-center p-4">
         <div class="bg-slate-900 w-full max-w-sm max-h-[85vh] rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
             <div class="flex items-center justify-between border-b border-white/15 pb-3">
@@ -147,7 +137,7 @@
                     <span>Selecionar Músicas (Arquivos / iPhone)</span>
                     <input type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.wma" multiple onchange="handleDeviceAudioUpload(event)" class="hidden">
                 </label>
-                <p class="text-[11px] text-slate-300 text-center">No iOS / Android, selecione qualquer arquivo de música salvo no celular.</p>
+                <p class="text-[11px] text-slate-300 text-center">Selecione qualquer arquivo de música salvo no celular ou computador.</p>
             </div>
 
             <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="local-tracks-list"></div>
@@ -187,11 +177,7 @@
         }
 
         function endDrag() { isDragging = false; }
-
-        function startTouch(e) {
-            if (e.touches && e.touches.length > 0) touchStartY = e.touches[0].clientY;
-        }
-
+        function startTouch(e) { if (e.touches && e.touches.length > 0) touchStartY = e.touches[0].clientY; }
         function endTouch() {}
 
         window.onload = async function() {
@@ -230,15 +216,13 @@
 
         function cleanTrackTitleAndAlbum(fileNameBase) {
             let cleanTitle = fileNameBase;
-            let albumName = 'NaldoA Beats';
+            let albumName = 'NaldoA Music';
 
-            // Dicionário de estilos e ritmos para limpeza rigorosa
             const styleRegex = /_?(gospel|reggaeton|edm|progressive_house|progressive|house|love_songs|forr[oó]|sertanejo|funk|trap|pop|rock|flac|wav|mp3|songs)\b/gi;
 
             if (fileNameBase.startsWith('Album_')) {
                 let withoutPrefix = fileNameBase.substring(6);
                 
-                // Tratar "Love Songs" separadamente
                 if (withoutPrefix.toLowerCase().startsWith('love_songs')) {
                     albumName = 'Álbum Love Songs';
                     let remainder = withoutPrefix.substring(10).replace(/^_+/, '');
@@ -365,64 +349,63 @@
             }
 
             root.innerHTML = tracks.map((track, index) => `
-                <div class="feed-card w-full flex flex-col justify-between pt-1 pb-3 px-0 relative overflow-hidden bg-slate-950" id="card-${index}">
-                    <!-- Immersive Full-Screen Cover Background -->
-                    <div class="absolute inset-0 bg-cover bg-center filter blur-3xl opacity-60 scale-125 pointer-events-none" style="background-image: url('${track.cover}')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-slate-950/40 pointer-events-none"></div>
+                <div class="feed-card w-full relative overflow-hidden bg-slate-950 flex flex-col justify-between" id="card-${index}">
+                    <!-- Immersive Edge-to-Edge Background Cover -->
+                    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full" style="background-image: url('${track.cover}')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-black/60 pointer-events-none"></div>
 
-                    <!-- Full Screen Cover Center (Edge-to-Edge puro, sem botões no meio) -->
-                    <div class="relative z-10 flex-1 flex flex-col items-center justify-center my-auto w-full h-full cursor-pointer" onclick="togglePlayPause()">
-                        <div class="relative w-full h-full flex items-center justify-center overflow-hidden bg-black/30">
-                            <img src="${track.cover}" alt="${track.title}" class="w-full h-full object-cover" onerror="this.src='icon.png'">
-                        </div>
-                    </div>
+                    <!-- Invisible Clickable Tap Area for Play/Pause -->
+                    <div class="absolute inset-0 z-10 cursor-pointer" onclick="togglePlayPause()"></div>
 
-                    <!-- Absolute Floating Social Buttons (TikTok Style on Right) -->
-                    <div class="absolute right-4 bottom-32 z-30 flex flex-col items-center space-y-4 pointer-events-auto">
-                        <a href="https://open.spotify.com/intl-pt/artist/05anJA6CE7Afkn0hYyVMRV?si=Zd7SFNN9S9GQWUNWT6pW5g" target="_blank" title="Spotify" class="w-12 h-12 rounded-full bg-emerald-500 border-2 border-emerald-300 text-white flex items-center justify-center text-lg shadow-2xl hover:scale-110 transition">
+                    <!-- Floating TikTok-Style Social Buttons (Right Side) -->
+                    <div class="absolute right-4 bottom-24 z-30 flex flex-col items-center space-y-4 pointer-events-auto">
+                        <a href="https://open.spotify.com/intl-pt/artist/05anJA6CE7Afkn0hYyVMRV?si=Zd7SFNN9S9GQWUNWT6pW5g" target="_blank" title="Spotify" class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center text-lg shadow-2xl hover:scale-110 transition border-2 border-emerald-300">
                             <i class="fa-brands fa-spotify"></i>
                         </a>
 
-                        <a href="https://youtube.com/@naldoamusic?si=QfuYtlOQ1rrIZzKU" target="_blank" title="YouTube" class="w-12 h-12 rounded-full bg-red-600 border-2 border-red-300 text-white flex items-center justify-center text-lg shadow-2xl hover:scale-110 transition">
+                        <a href="https://youtube.com/@naldoamusic?si=QfuYtlOQ1rrIZzKU" target="_blank" title="YouTube" class="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center text-lg shadow-2xl hover:scale-110 transition border-2 border-red-300">
                             <i class="fa-brands fa-youtube"></i>
                         </a>
 
                         <button onclick="toggleLike('${track.id}', ${index})" class="flex flex-col items-center group cursor-pointer">
-                            <div class="w-12 h-12 rounded-full bg-slate-900 border border-white/30 flex items-center justify-center text-base shadow-2xl group-hover:scale-110 transition ${track.liked ? 'text-red-500 bg-red-500/20' : 'text-white'}">
+                            <div class="w-12 h-12 rounded-full bg-slate-900/90 border border-white/30 flex items-center justify-center text-base shadow-2xl group-hover:scale-110 transition ${track.liked ? 'text-red-500 bg-red-500/20' : 'text-white'}">
                                 <i class="fa-${track.liked ? 'solid' : 'regular'} fa-heart"></i>
                             </div>
                             <span class="text-xs font-black mt-1 text-white drop-shadow-md" id="likes-count-${index}">${track.likes}</span>
                         </button>
 
                         <button onclick="openCommentsModal('${track.id}')" class="flex flex-col items-center group cursor-pointer">
-                            <div class="w-12 h-12 rounded-full bg-slate-900 border border-white/30 flex items-center justify-center text-sm shadow-2xl group-hover:scale-110 transition text-white">
+                            <div class="w-12 h-12 rounded-full bg-slate-900/90 border border-white/30 flex items-center justify-center text-sm shadow-2xl group-hover:scale-110 transition text-white">
                                 <i class="fa-solid fa-comment-dots"></i>
                             </div>
                             <span class="text-xs font-black mt-1 text-white drop-shadow-md">${(commentsDb[track.id] || []).length}</span>
                         </button>
 
                         <button onclick="shareApp()" class="flex flex-col items-center group cursor-pointer" title="Compartilhar App">
-                            <div class="w-12 h-12 rounded-full bg-slate-900 border border-white/30 flex items-center justify-center text-sm shadow-2xl group-hover:scale-110 transition text-white">
+                            <div class="w-12 h-12 rounded-full bg-slate-900/90 border border-white/30 flex items-center justify-center text-sm shadow-2xl group-hover:scale-110 transition text-white">
                                 <i class="fa-solid fa-share"></i>
                             </div>
                             <span class="text-xs font-black mt-1 text-white drop-shadow-md">Share</span>
                         </button>
                     </div>
 
-                    <!-- Bottom Info & Progress Bar (100% de ponta a ponta sem recortes) -->
-                    <div class="relative z-20 flex flex-col space-y-1.5 pb-2 w-full bg-slate-950/80 backdrop-blur-md pt-2">
+                    <!-- Spacer Top for Header Clearance -->
+                    <div class="relative z-20 h-20 pointer-events-none"></div>
+
+                    <!-- Floating Bottom Metadata & Edge-to-Edge Progress Bar (Over the Image) -->
+                    <div class="relative z-20 flex flex-col space-y-2 pb-6 pt-10 px-4 w-full bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pointer-events-auto">
                         <div class="w-full space-y-1">
-                            <div class="w-full h-2 bg-white/20 overflow-hidden cursor-pointer relative" onclick="seekAudio(event, ${index})">
+                            <div class="w-full h-2 bg-white/30 overflow-hidden cursor-pointer relative rounded-full" onclick="seekAudio(event, ${index})">
                                 <div id="progress-bar-${index}" class="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 w-0 transition-all duration-100"></div>
                             </div>
-                            <div class="flex justify-between text-[11px] text-slate-300 font-bold px-3">
+                            <div class="flex justify-between text-xs text-slate-200 font-bold">
                                 <span id="progress-time-${index}">0:00 / 0:00</span>
                                 <span class="text-cyan-300 font-extrabold uppercase tracking-wider">${track.album} ${track.isLocal ? '(Offline)' : ''}</span>
                             </div>
                         </div>
 
-                        <div class="space-y-0.5 px-3 pr-16">
-                            <h2 class="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow-lg line-clamp-2">${track.title}</h2>
+                        <div class="space-y-1 pr-16">
+                            <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight drop-shadow-lg line-clamp-2">${track.title}</h2>
                         </div>
                     </div>
                 </div>
@@ -509,7 +492,7 @@
             
             const btn = document.querySelector(`#card-${index} .fa-heart`)?.parentElement;
             const countEl = document.getElementById(`likes-count-${index}`);
-            if (btn) btn.className = `w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-base shadow-2xl transition ${t.liked ? 'text-red-500 bg-red-500/20' : 'text-white bg-slate-900'}`;
+            if (btn) btn.className = `w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-base shadow-2xl transition ${t.liked ? 'text-red-500 bg-red-500/20' : 'text-white bg-slate-900/90'}`;
             if (countEl) countEl.innerText = t.likes;
         }
 
