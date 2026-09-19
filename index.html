@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- jsmediatags for extracting ID3 metadata and embedded album art from local audio files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
     
     <style>
         * { box-sizing: border-box; }
@@ -75,7 +77,10 @@
                 <img src="icon.png" alt="NaldoA Logo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=200&auto=format&fit=crop'">
             </div>
             <div class="truncate leading-tight">
-                <h1 class="font-black text-xs tracking-wide text-white truncate block drop-shadow-md">NaldoA Music</h1>
+                <div class="flex items-center space-x-1.5">
+                    <h1 class="font-black text-xs tracking-wide text-white truncate block drop-shadow-md">NaldoA Music</h1>
+                    <span id="offline-status-badge" class="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-amber-500 text-slate-950 hidden">OFFLINE</span>
+                </div>
                 <a href="https://naldoa-dm.web.app" target="_blank" class="text-[9px] text-cyan-300 font-semibold hover:underline block truncate drop-shadow-md">naldoa-dm.web.app</a>
             </div>
         </div>
@@ -125,41 +130,82 @@
         </div>
     </div>
 
-    <!-- Modal Minhas Músicas com aba/seção atualizada para listar as músicas do Archive (.mp3 únicas) e locais -->
     <div id="local-manager-modal" class="fixed inset-0 z-50 bg-black/85 hidden items-center justify-center p-4">
-        <div class="bg-slate-900 w-full max-w-md max-h-[85vh] rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
+        <div class="bg-slate-900 w-full max-w-md max-h-[88vh] rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
             <div class="flex items-center justify-between border-b border-white/15 pb-3">
                 <div class="flex items-center space-x-2">
                     <div class="w-8 h-8 rounded-lg overflow-hidden border border-cyan-500/50 bg-slate-950">
                         <img src="icon.png" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=100&auto=format&fit=crop'">
                     </div>
-                    <h2 class="text-sm font-bold text-white">Minhas Músicas Offline</h2>
+                    <h2 class="text-sm font-bold text-white">Minhas Músicas & Playlists Offline</h2>
                 </div>
                 <button onclick="closeLocalManagerModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-xs">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <!-- Abas da Biblioteca: NaldoA Music (Archive) vs Minhas Músicas (Local) -->
-            <div class="grid grid-cols-2 gap-2 bg-slate-950 p-1 rounded-xl border border-white/10">
-                <button id="tab-archive" onclick="switchModalTab('archive')" class="py-2 rounded-lg text-xs font-bold transition bg-cyan-600 text-white shadow">
-                    NaldoA Music (<span id="count-archive">0</span>)
+            <!-- Abas do Gerenciador (NaldoA Music / Locais / Playlists / Favoritos) -->
+            <div class="grid grid-cols-4 gap-1 bg-slate-950 p-1 rounded-xl border border-white/10 text-center">
+                <button id="tab-archive" onclick="switchModalTab('archive')" class="py-2 rounded-lg text-[10px] font-bold transition bg-cyan-600 text-white shadow truncate px-0.5">
+                    Acervo (<span id="count-archive">0</span>)
                 </button>
-                <button id="tab-local" onclick="switchModalTab('local')" class="py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">
+                <button id="tab-local" onclick="switchModalTab('local')" class="py-2 rounded-lg text-[10px] font-bold transition text-slate-400 hover:text-white truncate px-0.5">
                     Locais (<span id="count-local">0</span>)
                 </button>
+                <button id="tab-playlists" onclick="switchModalTab('playlists')" class="py-2 rounded-lg text-[10px] font-bold transition text-slate-400 hover:text-white truncate px-0.5">
+                    Playlists
+                </button>
+                <button id="tab-favs" onclick="switchModalTab('favs')" class="py-2 rounded-lg text-[10px] font-bold transition text-slate-400 hover:text-white truncate px-0.5">
+                    Favoritos
+                </button>
             </div>
 
-            <!-- Upload local (visível apenas na aba local) -->
+            <!-- Seção de Ações Locais (Arquivos e Pastas) -->
             <div id="upload-section" class="hidden flex-col space-y-2">
-                <label class="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold cursor-pointer shadow-lg transition flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-folder-open text-sm"></i>
-                    <span>Selecionar Músicas (Celular / PC / iPhone)</span>
-                    <input type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.wma" multiple onchange="handleDeviceAudioUpload(event)" class="hidden">
-                </label>
+                <div class="grid grid-cols-2 gap-2">
+                    <label class="py-2.5 px-3 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-[11px] font-bold cursor-pointer shadow transition flex items-center justify-center space-x-1.5 text-center">
+                        <i class="fa-solid fa-file-audio"></i>
+                        <span>Add Músicas</span>
+                        <input type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.wma" multiple onchange="handleDeviceAudioUpload(event)" class="hidden">
+                    </label>
+                    <label class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-white border border-white/20 rounded-xl text-[11px] font-bold cursor-pointer shadow transition flex items-center justify-center space-x-1.5 text-center">
+                        <i class="fa-solid fa-folder-open text-cyan-400"></i>
+                        <span>Add Pasta</span>
+                        <input type="file" webkitdirectory directory multiple onchange="handleDeviceAudioUpload(event)" class="hidden">
+                    </label>
+                </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto space-y-2 pr-1 max-h-[50vh]" id="modal-tracks-list"></div>
+            <!-- Seção para Criar Playlist -->
+            <div id="playlist-create-section" class="hidden flex-col space-y-2">
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="new-playlist-name" placeholder="Nome da nova playlist..." class="flex-1 bg-white/5 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400">
+                    <button onclick="createNewPlaylist()" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold shadow transition">
+                        Criar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Barra de Busca Rápida na Modal -->
+            <div class="relative">
+                <input type="text" id="modal-search" oninput="filterModalList(this.value)" placeholder="Buscar música..." class="w-full bg-white/5 border border-white/20 rounded-xl px-3 py-2 pl-8 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            </div>
+
+            <div class="flex-1 overflow-y-auto space-y-2 pr-1 max-h-[44vh]" id="modal-tracks-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal para Adicionar Música à Playlist -->
+    <div id="add-to-playlist-modal" class="fixed inset-0 z-50 bg-black/85 hidden items-center justify-center p-4">
+        <div class="bg-slate-900 w-full max-w-sm rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-white/15 pb-3">
+                <h3 class="text-sm font-bold text-white">Adicionar à Playlist</h3>
+                <button onclick="closeAddToPlaylistModal()" class="w-7 h-7 rounded-full bg-white/10 text-white flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="max-h-60 overflow-y-auto space-y-2" id="playlists-select-list"></div>
         </div>
     </div>
 
@@ -169,23 +215,23 @@
         const ARCHIVE_IDENTIFIER = 'naldoa-digital-music-stream';
         let archiveTracks = [];
         let localTracks = JSON.parse(localStorage.getItem('naldoa_local_tracks_offline')) || [];
+        let playlists = JSON.parse(localStorage.getItem('naldoa_playlists_offline')) || {};
+        let favorites = JSON.parse(localStorage.getItem('naldoa_favorites_offline')) || [];
         let tracks = [];
         let commentsDb = JSON.parse(localStorage.getItem('naldoa_archive_comments')) || {};
         let likesDb = JSON.parse(localStorage.getItem('naldoa_archive_likes')) || {};
         let currentPlayingIndex = -1;
         let activeCommentTrackId = null;
         let currentModalTab = 'archive';
+        let currentPlaylistView = null;
+        let trackToAddToPlaylist = null;
         let audioEl = null;
 
         let isDragging = false;
         let startY = 0;
         let touchStartY = 0;
 
-        function startDrag(e) {
-            isDragging = true;
-            startY = e.clientY;
-        }
-
+        function startDrag(e) { isDragging = true; startY = e.clientY; }
         function onDrag(e) {
             if (!isDragging) return;
             const deltaY = e.clientY - startY;
@@ -195,7 +241,6 @@
                 isDragging = false;
             }
         }
-
         function endDrag() { isDragging = false; }
         function startTouch(e) { if (e.touches && e.touches.length > 0) touchStartY = e.touches[0].clientY; }
         function endTouch() {}
@@ -207,7 +252,6 @@
             audioEl.ontimeupdate = () => {
                 if (!audioEl.duration) return;
                 const percent = (audioEl.currentTime / audioEl.duration) * 100;
-                
                 tracks.forEach((_, idx) => {
                     const progressBar = document.getElementById(`progress-bar-${idx}`);
                     const progressTime = document.getElementById(`progress-time-${idx}`);
@@ -218,8 +262,29 @@
                 });
             };
 
-            await fetchArchiveData();
+            window.addEventListener('online', () => updateNetworkStatus(false));
+            window.addEventListener('offline', () => updateNetworkStatus(true));
+            updateNetworkStatus(!navigator.onLine);
+
+            if (navigator.onLine) {
+                await fetchArchiveData();
+            } else {
+                loadOfflineMode();
+            }
         };
+
+        function updateNetworkStatus(offline) {
+            const badge = document.getElementById('offline-status-badge');
+            if (badge) {
+                if (offline) badge.classList.remove('hidden');
+                else badge.classList.add('hidden');
+            }
+        }
+
+        function loadOfflineMode() {
+            mergeAndShuffleTracks(true);
+            showToast('Modo Offline: Músicas locais carregadas.');
+        }
 
         function formatTime(seconds) {
             const m = Math.floor(seconds / 60);
@@ -247,7 +312,6 @@
 
             if (fileNameBase.startsWith('Album_')) {
                 let withoutPrefix = fileNameBase.substring(6);
-                
                 if (withoutPrefix.toLowerCase().startsWith('love_songs')) {
                     albumName = 'Álbum Love Songs';
                     let remainder = withoutPrefix.substring(10).replace(/^_+/, '');
@@ -259,7 +323,6 @@
                         const idx = withoutPrefix.indexOf(trackNumMatch[0]);
                         let albumKeyRaw = withoutPrefix.substring(0, idx);
                         albumName = 'Álbum ' + albumKeyRaw.replace(/_/g, ' ').trim();
-
                         let remainder = withoutPrefix.substring(idx + trackNumMatch[0].length);
                         remainder = remainder.replace(styleRegex, '');
                         remainder = remainder.replace(/_/g, ' ').trim();
@@ -292,12 +355,10 @@
             try {
                 const response = await fetch(`https://archive.org/metadata/${ARCHIVE_IDENTIFIER}`);
                 const data = await response.json();
-                
                 const server = data.server;
                 const dir = data.dir;
                 const files = data.files || [];
 
-                // Filtro estrito para pegar apenas arquivos .mp3 e evitar duplicatas pelo nome exato
                 const seenNames = new Set();
                 const audioFiles = files.filter(f => {
                     if (!f.name || !f.name.toLowerCase().endsWith('.mp3')) return false;
@@ -314,7 +375,6 @@
                     const baseName = fileName.replace(/\.[^/.]+$/, "");
                     const audioUrl = `https://${server}${dir}/${fileName}`;
                     let coverUrl = 'icon.png';
-                    
                     const parsed = cleanTrackTitleAndAlbum(baseName);
 
                     if (baseName.startsWith('Album_')) {
@@ -343,22 +403,19 @@
                     };
                 });
 
-                mergeAndShuffleTracks(false);
+                mergeAndShuffleTracks(true);
             } catch (err) {
-                loadFallbackTracks();
+                loadOfflineMode();
             }
-        }
-
-        function loadFallbackTracks() {
-            archiveTracks = [
-                { id: 'f1', title: 'Sem Você Aqui', album: 'Álbum Falta Você', artist: 'NaldoA', cover: 'icon.png', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', likes: 1850, liked: false, isLocal: false }
-            ];
-            mergeAndShuffleTracks(false);
         }
 
         function mergeAndShuffleTracks(andPlay = true) {
             const formattedLocal = localTracks.map(t => ({ ...t, artist: 'NaldoA', isLocal: true }));
             tracks = [...formattedLocal, ...archiveTracks];
+
+            if (tracks.length === 0) {
+                tracks = [{ id: 'default-1', title: 'Nenhuma Música Encontrada', album: 'Adicione em Minhas Músicas', artist: 'NaldoA', cover: 'icon.png', audio: '', likes: 100, liked: false, isLocal: true }];
+            }
 
             for (let i = tracks.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -367,8 +424,7 @@
             updateModalCounts();
             renderFeed();
             setupIntersectionObserver();
-            if (andPlay && tracks.length > 0) playTrackIndex(0);
-            else if (tracks.length > 0 && currentPlayingIndex === -1) playTrackIndex(0);
+            if (andPlay && tracks.length > 0 && tracks[0].audio) playTrackIndex(0);
         }
 
         function shuffleTracks() { mergeAndShuffleTracks(true); }
@@ -382,27 +438,72 @@
 
         function switchModalTab(tab) {
             currentModalTab = tab;
+            currentPlaylistView = null;
             const btnArch = document.getElementById('tab-archive');
             const btnLoc = document.getElementById('tab-local');
+            const btnPlaylists = document.getElementById('tab-playlists');
+            const btnFavs = document.getElementById('tab-favs');
             const uploadSec = document.getElementById('upload-section');
+            const createPlaylistSec = document.getElementById('playlist-create-section');
+
+            [btnArch, btnLoc, btnPlaylists, btnFavs].forEach(b => b.className = 'py-2 rounded-lg text-[10px] font-bold transition text-slate-400 hover:text-white truncate px-0.5');
+            uploadSec.classList.add('hidden'); uploadSec.classList.remove('flex');
+            createPlaylistSec.classList.add('hidden'); createPlaylistSec.classList.remove('flex');
 
             if (tab === 'archive') {
-                btnArch.className = 'py-2 rounded-lg text-xs font-bold transition bg-cyan-600 text-white shadow';
-                btnLoc.className = 'py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
-                uploadSec.classList.add('hidden');
-                uploadSec.classList.remove('flex');
-            } else {
-                btnLoc.className = 'py-2 rounded-lg text-xs font-bold transition bg-fuchsia-600 text-white shadow';
-                btnArch.className = 'py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
-                uploadSec.classList.remove('hidden');
-                uploadSec.classList.add('flex');
+                btnArch.className = 'py-2 rounded-lg text-[10px] font-bold transition bg-cyan-600 text-white shadow truncate px-0.5';
+            } else if (tab === 'local') {
+                btnLoc.className = 'py-2 rounded-lg text-[10px] font-bold transition bg-fuchsia-600 text-white shadow truncate px-0.5';
+                uploadSec.classList.remove('hidden'); uploadSec.classList.add('flex');
+            } else if (tab === 'playlists') {
+                btnPlaylists.className = 'py-2 rounded-lg text-[10px] font-bold transition bg-indigo-600 text-white shadow truncate px-0.5';
+                createPlaylistSec.classList.remove('hidden'); createPlaylistSec.classList.add('flex');
+            } else if (tab === 'favs') {
+                btnFavs.className = 'py-2 rounded-lg text-[10px] font-bold transition bg-red-600 text-white shadow truncate px-0.5';
             }
             renderModalTracksList();
         }
 
-        function renderModalTracksList() {
+        function filterModalList(query) {
+            renderModalTracksList(query.toLowerCase());
+        }
+
+        function renderModalTracksList(search = '') {
             const container = document.getElementById('modal-tracks-list');
-            const list = currentModalTab === 'archive' ? archiveTracks : localTracks;
+            let list = [];
+
+            if (currentModalTab === 'archive') list = archiveTracks;
+            else if (currentModalTab === 'local') list = localTracks;
+            else if (currentModalTab === 'playlists') {
+                if (!currentPlaylistView) {
+                    const keys = Object.keys(playlists);
+                    if (keys.length === 0) {
+                        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma playlist criada. Crie acima!</p>`;
+                        return;
+                    }
+                    container.innerHTML = keys.map(name => `
+                        <div class="flex items-center justify-between bg-white/5 border border-white/15 p-3 rounded-xl hover:bg-white/10 transition cursor-pointer" onclick="openPlaylistView('${name}')">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-indigo-600/30 border border-indigo-400/40 flex items-center justify-center text-indigo-300 font-bold"><i class="fa-solid fa-list-music"></i></div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-white">${name}</h4>
+                                    <p class="text-[10px] text-slate-400">${playlists[name].length} música(s)</p>
+                                </div>
+                            </div>
+                            <button onclick="event.stopPropagation(); deletePlaylist('${name}')" class="text-slate-400 hover:text-red-400 p-2 text-xs"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    `).join('');
+                    return;
+                } else {
+                    list = playlists[currentPlaylistView] || [];
+                }
+            } else if (currentModalTab === 'favs') {
+                list = tracks.filter(t => favorites.includes(t.id));
+            }
+
+            if (search) {
+                list = list.filter(t => t.title.toLowerCase().includes(search) || t.album.toLowerCase().includes(search));
+            }
 
             if (list.length === 0) {
                 container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma música encontrada.</p>`;
@@ -412,6 +513,7 @@
             container.innerHTML = list.map((t) => {
                 const globalIdx = tracks.findIndex(x => x.id === t.id);
                 const isPlaying = globalIdx === currentPlayingIndex;
+                const isFav = favorites.includes(t.id);
 
                 return `
                     <div class="flex items-center justify-between bg-white/5 border ${isPlaying ? 'border-cyan-400 bg-cyan-950/30' : 'border-white/15'} p-2.5 rounded-xl hover:bg-white/10 transition">
@@ -427,6 +529,12 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-1">
+                            <button onclick="toggleFavorite('${t.id}')" class="p-2 text-xs ${isFav ? 'text-red-500' : 'text-slate-400 hover:text-white'}" title="Favoritar">
+                                <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart"></i>
+                            </button>
+                            <button onclick="openAddToPlaylistModal('${t.id}')" class="p-2 text-slate-400 hover:text-cyan-300 text-xs" title="Adicionar à Playlist">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
                             <button onclick="playTrackFromModal('${t.id}')" class="p-2 text-cyan-400 hover:text-cyan-300 text-xs">
                                 <i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
                             </button>
@@ -447,6 +555,157 @@
                 closeLocalManagerModal();
                 playTrackIndex(index, true);
             }
+        }
+
+        function handleDeviceAudioUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            Array.from(files).forEach((file, idx) => {
+                if (!file.type.startsWith('audio/') && !file.name.match(/\.(mp3|wav|flac|m4a|aac|ogg|wma)$/i)) return;
+
+                const audioUrl = URL.createObjectURL(file);
+                const trackId = 'local-' + Date.now() + '-' + idx;
+                let trackTitle = file.name.replace(/\.[^/.]+$/, "").replace(/_/g, " ");
+                let albumName = 'Minhas Músicas Offline';
+                let coverImage = 'icon.png';
+
+                window.jsmediatags.read(file, {
+                    onSuccess: function(tag) {
+                        const tags = tag.tags;
+                        if (tags.title) trackTitle = tags.title;
+                        if (tags.album) albumName = tags.album;
+                        if (tags.picture) {
+                            const data = tags.picture.data;
+                            const format = tags.picture.format;
+                            let base64String = "";
+                            for (let i = 0; i < data.length; i++) {
+                                base64String += String.fromCharCode(data[i]);
+                            }
+                            coverImage = `data:${format};base64,${window.btoa(base64String)}`;
+                        }
+                        updateLocalMetadata(trackId, trackTitle, albumName, coverImage);
+                    },
+                    onError: function(error) {
+                        console.log("Tag ID3 não encontrada:", error);
+                    }
+                });
+
+                const newTrack = {
+                    id: trackId,
+                    title: trackTitle,
+                    album: albumName,
+                    artist: 'NaldoA',
+                    cover: coverImage,
+                    audio: audioUrl,
+                    likes: 1,
+                    liked: false,
+                    isLocal: true
+                };
+
+                localTracks.push(newTrack);
+            });
+
+            localStorage.setItem('naldoa_local_tracks_offline', JSON.stringify(localTracks));
+            updateModalCounts();
+            renderModalTracksList();
+            mergeAndShuffleTracks(false);
+            showToast(`${files.length} arquivo(s) adicionado(s)!`);
+        }
+
+        function updateLocalMetadata(id, title, album, cover) {
+            const t = localTracks.find(x => x.id === id);
+            if (t) {
+                t.title = title;
+                t.album = album;
+                t.cover = cover;
+                localStorage.setItem('naldoa_local_tracks_offline', JSON.stringify(localTracks));
+                mergeAndShuffleTracks(false);
+            }
+        }
+
+        function removeLocalTrack(trackId) {
+            localTracks = localTracks.filter(t => t.id !== trackId);
+            localStorage.setItem('naldoa_local_tracks_offline', JSON.stringify(localTracks));
+            updateModalCounts();
+            renderModalTracksList();
+            mergeAndShuffleTracks(false);
+            showToast('Música removida.');
+        }
+
+        function createNewPlaylist() {
+            const input = document.getElementById('new-playlist-name');
+            const name = input.value.trim();
+            if (!name) return;
+            if (playlists[name]) { showToast('Playlist já existe!'); return; }
+            playlists[name] = [];
+            localStorage.setItem('naldoa_playlists_offline', JSON.stringify(playlists));
+            input.value = '';
+            renderModalTracksList();
+            showToast(`Playlist "${name}" criada!`);
+        }
+
+        function deletePlaylist(name) {
+            delete playlists[name];
+            localStorage.setItem('naldoa_playlists_offline', JSON.stringify(playlists));
+            renderModalTracksList();
+            showToast('Playlist excluída.');
+        }
+
+        function openPlaylistView(name) {
+            currentPlaylistView = name;
+            renderModalTracksList();
+        }
+
+        function openAddToPlaylistModal(trackId) {
+            trackToAddToPlaylist = trackId;
+            const keys = Object.keys(playlists);
+            const container = document.getElementById('playlists-select-list');
+            if (keys.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Nenhuma playlist criada.</p>`;
+            } else {
+                container.innerHTML = keys.map(name => `
+                    <button onclick="confirmAddToPlaylist('${name}')" class="w-full text-left bg-white/5 hover:bg-white/10 p-2.5 rounded-xl text-xs text-white font-bold transition flex items-center justify-between">
+                        <span>${name}</span>
+                        <i class="fa-solid fa-chevron-right text-cyan-400 text-[10px]"></i>
+                    </button>
+                `).join('');
+            }
+            document.getElementById('add-to-playlist-modal').classList.remove('hidden');
+            document.getElementById('add-to-playlist-modal').classList.add('flex');
+        }
+
+        function closeAddToPlaylistModal() {
+            document.getElementById('add-to-playlist-modal').classList.remove('flex');
+            document.getElementById('add-to-playlist-modal').classList.add('hidden');
+            trackToAddToPlaylist = null;
+        }
+
+        function confirmAddToPlaylist(playlistName) {
+            const track = tracks.find(t => t.id === trackToAddToPlaylist);
+            if (track && playlists[playlistName]) {
+                if (!playlists[playlistName].some(t => t.id === track.id)) {
+                    playlists[playlistName].push(track);
+                    localStorage.setItem('naldoa_playlists_offline', JSON.stringify(playlists));
+                    showToast(`Adicionado à playlist "${playlistName}"!`);
+                } else {
+                    showToast('A música já está nesta playlist.');
+                }
+            }
+            closeAddToPlaylistModal();
+        }
+
+        function toggleFavorite(trackId) {
+            const idx = favorites.indexOf(trackId);
+            if (idx === -1) {
+                favorites.push(trackId);
+                showToast('Adicionado aos favoritos!');
+            } else {
+                favorites.splice(idx, 1);
+                showToast('Removido dos favoritos.');
+            }
+            localStorage.setItem('naldoa_favorites_offline', JSON.stringify(favorites));
+            renderModalTracksList();
         }
 
         function renderFeed() {
@@ -554,6 +813,7 @@
             if (index < 0 || index >= tracks.length) return;
             currentPlayingIndex = index;
             const track = tracks[index];
+            if (!track.audio) return;
 
             if (audioEl.src !== track.audio) {
                 audioEl.src = track.audio;
@@ -609,7 +869,6 @@
             if (!t) return;
             t.liked = !t.liked;
             t.likes += t.liked ? 1 : -1;
-            
             likesDb[trackId] = t.likes;
             likesDb[trackId + '_liked'] = t.liked;
             localStorage.setItem('naldoa_archive_likes', JSON.stringify(likesDb));
@@ -643,21 +902,18 @@
             const input = document.getElementById('comment-input');
             const val = input.value.trim();
             if (!val || !activeCommentTrackId) return;
-
             if (!commentsDb[activeCommentTrackId]) commentsDb[activeCommentTrackId] = [];
             commentsDb[activeCommentTrackId].push(val);
             localStorage.setItem('naldoa_archive_comments', JSON.stringify(commentsDb));
-            
             input.value = '';
             renderCommentsList();
-            renderFeed();
             showToast('Comentário enviado!');
         }
 
         function shareApp() {
             const shareUrl = window.location.href;
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(shareUrl).then(() => showToast('Link do NaldoA Music copiado!')).catch(() => fallbackCopy(shareUrl));
+                navigator.clipboard.writeText(shareUrl).then(() => showToast('Link copiado!')).catch(() => fallbackCopy(shareUrl));
             } else {
                 fallbackCopy(shareUrl);
             }
@@ -668,7 +924,7 @@
             textArea.value = text;
             document.body.appendChild(textArea);
             textArea.select();
-            try { document.execCommand('copy'); showToast('Link copiado!'); } catch (err) { showToast('Erro ao copiar.'); }
+            try { document.execCommand('copy'); showToast('Link copiado!'); } catch (err) {}
             document.body.removeChild(textArea);
         }
 
@@ -682,47 +938,6 @@
         function closeLocalManagerModal() {
             document.getElementById('local-manager-modal').classList.remove('flex');
             document.getElementById('local-manager-modal').classList.add('hidden');
-        }
-
-        function handleDeviceAudioUpload(event) {
-            const files = event.target.files;
-            if (!files || files.length === 0) return;
-
-            Array.from(files).forEach((file, idx) => {
-                const audioUrl = URL.createObjectURL(file);
-                const baseName = file.name.replace(/\.[^/.]+$/, "");
-                const parsed = cleanTrackTitleAndAlbum(baseName);
-                const trackId = 'local-' + Date.now() + '-' + idx;
-
-                const newTrack = {
-                    id: trackId,
-                    title: parsed.title,
-                    album: 'Minhas Músicas Offline',
-                    artist: 'NaldoA',
-                    cover: 'icon.png',
-                    audio: audioUrl,
-                    likes: 1,
-                    liked: false,
-                    isLocal: true
-                };
-
-                localTracks.push(newTrack);
-            });
-
-            localStorage.setItem('naldoa_local_tracks_offline', JSON.stringify(localTracks));
-            updateModalCounts();
-            renderModalTracksList();
-            mergeAndShuffleTracks(false);
-            showToast(`${files.length} música(s) adicionada(s) com sucesso!`);
-        }
-
-        function removeLocalTrack(trackId) {
-            localTracks = localTracks.filter(t => t.id !== trackId);
-            localStorage.setItem('naldoa_local_tracks_offline', JSON.stringify(localTracks));
-            updateModalCounts();
-            renderModalTracksList();
-            mergeAndShuffleTracks(false);
-            showToast('Música removida.');
         }
     </script>
 </body>
