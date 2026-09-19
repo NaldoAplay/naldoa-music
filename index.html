@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>NaldoA Music</title>
     
-    <!-- PWA Manifest & Icons -->
+    <!-- PWA Manifest & Icons referencing local icon.png -->
     <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22NaldoA%20Music%22%2C%22short_name%22%3A%22NaldoA%20Music%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23030305%22%2C%22theme_color%22%3A%22%23030305%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22icon.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any maskable%22%7D%2C%7B%22src%22%3A%22icon.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any maskable%22%7D%5D%7D">
     <meta name="theme-color" content="#030305">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -60,7 +60,7 @@
 
         @keyframes bounce-up {
             0%, 100% { transform: translateY(0); opacity: 0.6; }
-            50% { transform: translateY(-6px); opacity: 1; }
+            50% { transform: translateY(-8px); opacity: 1; }
         }
         .animate-bounce-up {
             animation: bounce-up 1.8s infinite ease-in-out;
@@ -69,10 +69,9 @@
 </head>
 <body class="h-[100svh] w-screen flex flex-col items-center justify-between relative bg-slate-950 overflow-hidden">
 
-    <!-- Header Floating Clean Above Cover -->
-    <header class="absolute top-0 left-0 right-0 max-w-md mx-auto px-4 pt-[calc(env(safe-area-inset-top)+12px)] pb-3 flex items-center justify-between z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-auto">
+    <header class="absolute top-0 left-0 right-0 w-full px-4 pt-[calc(env(safe-area-inset-top)+12px)] pb-3 flex items-center justify-between z-40 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-auto">
         <div class="flex items-center space-x-2.5">
-            <div class="w-9 h-9 rounded-xl overflow-hidden shadow-lg border border-cyan-500/50 flex-shrink-0 bg-slate-900">
+            <div class="w-9 h-9 rounded-xl overflow-hidden shadow-xl border border-cyan-400/40 flex-shrink-0 bg-slate-900">
                 <img src="icon.png" alt="NaldoA Logo" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=200&auto=format&fit=crop'">
             </div>
             <div class="truncate leading-tight">
@@ -81,18 +80,17 @@
             </div>
         </div>
         <div class="flex items-center space-x-2">
-            <button onclick="shuffleTracks()" title="Aleatório" class="w-8 h-8 rounded-xl bg-black/60 backdrop-blur-md hover:bg-black/80 text-indigo-300 border border-white/20 flex items-center justify-center transition shadow-lg text-xs">
+            <button onclick="shuffleTracks()" title="Aleatório" class="w-8 h-8 rounded-xl bg-black/50 backdrop-blur-md hover:bg-black/80 text-indigo-200 border border-white/20 flex items-center justify-center transition shadow-lg text-xs">
                 <i class="fa-solid fa-shuffle"></i>
             </button>
-            <button onclick="openLocalManagerModal()" title="Minhas Músicas Offline" class="px-2.5 h-8 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-[11px] font-bold shadow-lg transition flex items-center space-x-1.5">
+            <button onclick="openLocalManagerModal()" title="Minhas Músicas Offline" class="px-3 h-8 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-[11px] font-bold shadow-lg transition flex items-center space-x-1.5">
                 <i class="fa-solid fa-cloud-arrow-down text-[10px]"></i>
                 <span>Minhas Músicas</span>
             </button>
         </div>
     </header>
 
-    <!-- Feed Container with Touch Swipe & Laptop Mouse Drag -->
-    <main id="feed-root" class="feed-container w-full max-w-md bg-slate-950 relative shadow-2xl overflow-y-scroll flex-1" 
+    <main id="feed-root" class="feed-container w-full bg-slate-950 relative shadow-2xl overflow-y-scroll flex-1" 
           onmousedown="startDrag(event)" onmousemove="onDrag(event)" onmouseup="endDrag()" onmouseleave="endDrag()"
           ontouchstart="startTouch(event)" ontouchend="endTouch()">
         <div class="w-full h-full flex flex-col items-center justify-center space-y-4 text-slate-400 p-6 text-center">
@@ -101,13 +99,11 @@
         </div>
     </main>
 
-    <!-- Toast Notification System -->
     <div id="toast-notification" class="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 bg-slate-900/95 backdrop-blur-md border border-cyan-500/50 text-white px-4 py-2.5 rounded-2xl shadow-2xl text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 pointer-events-none">
         <i class="fa-solid fa-circle-check text-cyan-400 text-base"></i>
         <span id="toast-message">Link copiado com sucesso!</span>
     </div>
 
-    <!-- Comments Modal -->
     <div id="comments-modal" class="fixed inset-0 z-50 bg-black/85 hidden items-end sm:items-center justify-center">
         <div class="bg-slate-900 w-full max-w-md sm:max-w-sm max-h-[80vh] rounded-t-3xl sm:rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
             <div class="flex items-center justify-between border-b border-white/15 pb-3">
@@ -129,7 +125,6 @@
         </div>
     </div>
 
-    <!-- Local Offline Music Manager Modal -->
     <div id="local-manager-modal" class="fixed inset-0 z-50 bg-black/85 hidden items-center justify-center p-4">
         <div class="bg-slate-900 w-full max-w-sm max-h-[85vh] rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
             <div class="flex items-center justify-between border-b border-white/15 pb-3">
@@ -147,10 +142,10 @@
             <div class="flex flex-col space-y-2">
                 <label class="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold cursor-pointer shadow-lg transition flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-folder-open text-sm"></i>
-                    <span>Selecionar Músicas (Arquivos / iPhone / PC)</span>
+                    <span>Selecionar Músicas (Celular / PC / iPhone)</span>
                     <input type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.wma" multiple onchange="handleDeviceAudioUpload(event)" class="hidden">
                 </label>
-                <p class="text-[11px] text-slate-300 text-center">Selecione qualquer arquivo de música salvo no celular ou computador.</p>
+                <p class="text-[11px] text-slate-300 text-center">Adicione qualquer arquivo de música do seu dispositivo ou pasta de arquivos.</p>
             </div>
 
             <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="local-tracks-list"></div>
@@ -370,13 +365,13 @@
                 <div class="feed-card w-full relative overflow-hidden bg-slate-950 flex flex-col justify-between" id="card-${index}">
                     <!-- Edge-to-Edge Immersive Background Cover -->
                     <div class="absolute inset-0 bg-cover bg-center bg-no-repeat w-full h-full" style="background-image: url('${track.cover}')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/40 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-black/30 pointer-events-none"></div>
 
                     <!-- Invisible Clickable Tap Area for Play/Pause -->
                     <div class="absolute inset-0 z-10 cursor-pointer" onclick="togglePlayPause()"></div>
 
                     <!-- Floating TikTok-Style Social Buttons (Right Side) -->
-                    <div class="absolute right-4 bottom-24 z-30 flex flex-col items-center space-y-4 pointer-events-auto">
+                    <div class="absolute right-4 bottom-28 z-30 flex flex-col items-center space-y-4 pointer-events-auto">
                         <a href="https://open.spotify.com/intl-pt/artist/05anJA6CE7Afkn0hYyVMRV?si=Zd7SFNN9S9GQWUNWT6pW5g" target="_blank" title="Spotify" class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center text-lg shadow-2xl hover:scale-110 transition border-2 border-emerald-300">
                             <i class="fa-brands fa-spotify"></i>
                         </a>
@@ -410,25 +405,30 @@
                     <!-- Spacer Top for Header Clearance -->
                     <div class="relative z-20 h-20 pointer-events-none"></div>
 
-                    <!-- Metadata & 100% Edge-to-Edge Progress Bar Overlaid on Bottom of Cover -->
-                    <div class="relative z-20 flex flex-col space-y-1.5 pb-5 px-0 w-full bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pointer-events-auto">
-                        <div class="w-full space-y-1">
-                            <div class="w-full h-1.5 bg-white/30 overflow-hidden cursor-pointer relative" onclick="seekAudio(event, ${index})">
-                                <div id="progress-bar-${index}" class="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 w-0 transition-all duration-100"></div>
-                            </div>
-                            <div class="flex justify-between text-xs text-slate-200 font-bold px-4">
-                                <span id="progress-time-${index}">0:00 / 0:00</span>
-                                <span class="text-cyan-300 font-extrabold uppercase tracking-wider">${track.album} ${track.isLocal ? '(Offline)' : ''}</span>
+                    <!-- Overlaid Bottom Content (TikTok Style - Edge to Edge) -->
+                    <div class="relative z-20 flex flex-col space-y-2 pb-5 px-4 w-full pointer-events-auto bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent pt-8">
+                        <!-- Full-Width Edge-to-Edge Progress Bar -->
+                        <div class="w-full">
+                            <div class="w-full h-1 bg-white/30 overflow-hidden cursor-pointer relative rounded-full" onclick="seekAudio(event, ${index})">
+                                <div id="progress-bar-${index}" class="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 w-0 transition-all duration-100 rounded-full"></div>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between px-4 pr-16">
-                            <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight drop-shadow-lg line-clamp-2">${track.title}</h2>
-                            <!-- Animated Up Arrow Indicator -->
-                            <div class="flex flex-col items-center text-cyan-400 animate-bounce-up flex-shrink-0 ml-2" title="Deslize para cima">
-                                <i class="fa-solid fa-chevron-up text-base drop-shadow-md"></i>
-                            </div>
+                        <!-- Time and Album Tag -->
+                        <div class="flex justify-between text-xs text-slate-300 font-bold">
+                            <span id="progress-time-${index}">0:00 / 0:00</span>
+                            <span class="text-cyan-300 font-extrabold uppercase tracking-wider">${track.album} ${track.isLocal ? '(Offline)' : ''}</span>
                         </div>
+
+                        <!-- Track Title -->
+                        <div class="flex items-end justify-between pr-14">
+                            <h2 class="text-2xl sm:text-3xl font-black text-white leading-tight drop-shadow-lg line-clamp-2">${track.title}</h2>
+                        </div>
+                    </div>
+
+                    <!-- Animated Up Arrow Indicator at Bottom Center -->
+                    <div class="absolute bottom-1 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center text-cyan-400 animate-bounce-up pointer-events-none" title="Deslize para cima">
+                        <i class="fa-solid fa-chevron-up text-xs drop-shadow-md"></i>
                     </div>
                 </div>
             `).join('');
