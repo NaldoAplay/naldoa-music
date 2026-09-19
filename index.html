@@ -125,8 +125,9 @@
         </div>
     </div>
 
+    <!-- Modal Minhas Músicas com aba/seção atualizada para listar as músicas do Archive (.mp3 únicas) e locais -->
     <div id="local-manager-modal" class="fixed inset-0 z-50 bg-black/85 hidden items-center justify-center p-4">
-        <div class="bg-slate-900 w-full max-w-sm max-h-[85vh] rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
+        <div class="bg-slate-900 w-full max-w-md max-h-[85vh] rounded-2xl p-5 flex flex-col space-y-4 border border-white/20 shadow-2xl overflow-hidden">
             <div class="flex items-center justify-between border-b border-white/15 pb-3">
                 <div class="flex items-center space-x-2">
                     <div class="w-8 h-8 rounded-lg overflow-hidden border border-cyan-500/50 bg-slate-950">
@@ -139,16 +140,26 @@
                 </button>
             </div>
 
-            <div class="flex flex-col space-y-2">
-                <label class="w-full py-3.5 px-4 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold cursor-pointer shadow-lg transition flex items-center justify-center space-x-2">
+            <!-- Abas da Biblioteca: NaldoA Music (Archive) vs Minhas Músicas (Local) -->
+            <div class="grid grid-cols-2 gap-2 bg-slate-950 p-1 rounded-xl border border-white/10">
+                <button id="tab-archive" onclick="switchModalTab('archive')" class="py-2 rounded-lg text-xs font-bold transition bg-cyan-600 text-white shadow">
+                    NaldoA Music (<span id="count-archive">0</span>)
+                </button>
+                <button id="tab-local" onclick="switchModalTab('local')" class="py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">
+                    Locais (<span id="count-local">0</span>)
+                </button>
+            </div>
+
+            <!-- Upload local (visível apenas na aba local) -->
+            <div id="upload-section" class="hidden flex-col space-y-2">
+                <label class="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 to-fuchsia-600 hover:opacity-90 text-white rounded-xl text-xs font-bold cursor-pointer shadow-lg transition flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-folder-open text-sm"></i>
                     <span>Selecionar Músicas (Celular / PC / iPhone)</span>
                     <input type="file" accept="audio/*,.mp3,.wav,.flac,.m4a,.aac,.ogg,.wma" multiple onchange="handleDeviceAudioUpload(event)" class="hidden">
                 </label>
-                <p class="text-[11px] text-slate-300 text-center">Adicione qualquer arquivo de música do seu dispositivo ou pasta de arquivos.</p>
             </div>
 
-            <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="local-tracks-list"></div>
+            <div class="flex-1 overflow-y-auto space-y-2 pr-1 max-h-[50vh]" id="modal-tracks-list"></div>
         </div>
     </div>
 
@@ -163,6 +174,7 @@
         let likesDb = JSON.parse(localStorage.getItem('naldoa_archive_likes')) || {};
         let currentPlayingIndex = -1;
         let activeCommentTrackId = null;
+        let currentModalTab = 'archive';
         let audioEl = null;
 
         let isDragging = false;
@@ -285,7 +297,16 @@
                 const dir = data.dir;
                 const files = data.files || [];
 
-                const audioFiles = files.filter(f => f.name && (f.name.endsWith('.mp3') || f.name.endsWith('.wav') || f.name.endsWith('.flac')));
+                // Filtro estrito para pegar apenas arquivos .mp3 e evitar duplicatas pelo nome exato
+                const seenNames = new Set();
+                const audioFiles = files.filter(f => {
+                    if (!f.name || !f.name.toLowerCase().endsWith('.mp3')) return false;
+                    const base = f.name.toLowerCase();
+                    if (seenNames.has(base)) return false;
+                    seenNames.add(base);
+                    return true;
+                });
+
                 const imageFiles = files.filter(f => f.name && (f.name.endsWith('.jpg') || f.name.endsWith('.png') || f.name.endsWith('.jpeg')));
 
                 archiveTracks = audioFiles.map((file, idx) => {
@@ -343,6 +364,7 @@
                 const j = Math.floor(Math.random() * (i + 1));
                 [tracks[i], tracks[j]] = [tracks[j], tracks[i]];
             }
+            updateModalCounts();
             renderFeed();
             setupIntersectionObserver();
             if (andPlay && tracks.length > 0) playTrackIndex(0);
@@ -350,6 +372,82 @@
         }
 
         function shuffleTracks() { mergeAndShuffleTracks(true); }
+
+        function updateModalCounts() {
+            const cArch = document.getElementById('count-archive');
+            const cLoc = document.getElementById('count-local');
+            if (cArch) cArch.innerText = archiveTracks.length;
+            if (cLoc) cLoc.innerText = localTracks.length;
+        }
+
+        function switchModalTab(tab) {
+            currentModalTab = tab;
+            const btnArch = document.getElementById('tab-archive');
+            const btnLoc = document.getElementById('tab-local');
+            const uploadSec = document.getElementById('upload-section');
+
+            if (tab === 'archive') {
+                btnArch.className = 'py-2 rounded-lg text-xs font-bold transition bg-cyan-600 text-white shadow';
+                btnLoc.className = 'py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
+                uploadSec.classList.add('hidden');
+                uploadSec.classList.remove('flex');
+            } else {
+                btnLoc.className = 'py-2 rounded-lg text-xs font-bold transition bg-fuchsia-600 text-white shadow';
+                btnArch.className = 'py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
+                uploadSec.classList.remove('hidden');
+                uploadSec.classList.add('flex');
+            }
+            renderModalTracksList();
+        }
+
+        function renderModalTracksList() {
+            const container = document.getElementById('modal-tracks-list');
+            const list = currentModalTab === 'archive' ? archiveTracks : localTracks;
+
+            if (list.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma música encontrada.</p>`;
+                return;
+            }
+
+            container.innerHTML = list.map((t) => {
+                const globalIdx = tracks.findIndex(x => x.id === t.id);
+                const isPlaying = globalIdx === currentPlayingIndex;
+
+                return `
+                    <div class="flex items-center justify-between bg-white/5 border ${isPlaying ? 'border-cyan-400 bg-cyan-950/30' : 'border-white/15'} p-2.5 rounded-xl hover:bg-white/10 transition">
+                        <div class="flex items-center space-x-3 truncate cursor-pointer flex-1" onclick="playTrackFromModal('${t.id}')">
+                            <img src="${t.cover}" alt="Capa" class="w-10 h-10 rounded-lg object-cover bg-slate-950 flex-shrink-0" onerror="this.src='icon.png'">
+                            <div class="truncate">
+                                <h4 class="text-xs font-bold ${isPlaying ? 'text-cyan-300' : 'text-white'} truncate">${t.title}</h4>
+                                <div class="flex items-center space-x-1.5 mt-0.5">
+                                    <span class="text-[9px] font-black px-1.5 py-0.5 rounded ${t.isLocal ? 'bg-fuchsia-950 text-fuchsia-300' : 'bg-cyan-950 text-cyan-300'}">
+                                        ${t.isLocal ? 'LOCAL' : 'NALDOA MUSIC'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <button onclick="playTrackFromModal('${t.id}')" class="p-2 text-cyan-400 hover:text-cyan-300 text-xs">
+                                <i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
+                            </button>
+                            ${t.isLocal ? `
+                                <button onclick="removeLocalTrack('${t.id}')" class="p-2 text-slate-400 hover:text-red-400 text-xs">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function playTrackFromModal(trackId) {
+            const index = tracks.findIndex(t => t.id === trackId);
+            if (index !== -1) {
+                closeLocalManagerModal();
+                playTrackIndex(index, true);
+            }
+        }
 
         function renderFeed() {
             const root = document.getElementById('feed-root');
@@ -575,7 +673,8 @@
         }
 
         function openLocalManagerModal() {
-            renderLocalTracksList();
+            updateModalCounts();
+            switchModalTab('archive');
             document.getElementById('local-manager-modal').classList.remove('hidden');
             document.getElementById('local-manager-modal').classList.add('flex');
         }
@@ -583,29 +682,6 @@
         function closeLocalManagerModal() {
             document.getElementById('local-manager-modal').classList.remove('flex');
             document.getElementById('local-manager-modal').classList.add('hidden');
-        }
-
-        function renderLocalTracksList() {
-            const container = document.getElementById('local-tracks-list');
-            if (localTracks.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma música offline adicionada ainda.</p>`;
-                return;
-            }
-
-            container.innerHTML = localTracks.map((t) => `
-                <div class="flex items-center justify-between bg-white/5 border border-white/15 p-3 rounded-xl hover:bg-white/10 transition">
-                    <div class="flex items-center space-x-3 truncate cursor-pointer flex-1" onclick="playLocalTrackItem('${t.id}')">
-                        <img src="${t.cover}" alt="Capa" class="w-10 h-10 rounded-lg object-cover bg-slate-950" onerror="this.src='icon.png'">
-                        <div class="truncate">
-                            <h4 class="text-xs font-bold text-white truncate">${t.title}</h4>
-                            <p class="text-[10px] text-cyan-400">${t.album}</p>
-                        </div>
-                    </div>
-                    <button onclick="removeLocalTrack('${t.id}')" class="text-slate-400 hover:text-red-400 p-2 text-xs">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
-            `).join('');
         }
 
         function handleDeviceAudioUpload(event) {
@@ -634,25 +710,19 @@
             });
 
             localStorage.setItem('naldoa_local_tracks_offline', JSON.stringify(localTracks));
-            renderLocalTracksList();
-            mergeAndShuffleTracks(true);
+            updateModalCounts();
+            renderModalTracksList();
+            mergeAndShuffleTracks(false);
             showToast(`${files.length} música(s) adicionada(s) com sucesso!`);
         }
 
         function removeLocalTrack(trackId) {
             localTracks = localTracks.filter(t => t.id !== trackId);
             localStorage.setItem('naldoa_local_tracks_offline', JSON.stringify(localTracks));
-            renderLocalTracksList();
+            updateModalCounts();
+            renderModalTracksList();
             mergeAndShuffleTracks(false);
             showToast('Música removida.');
-        }
-
-        function playLocalTrackItem(trackId) {
-            const index = tracks.findIndex(t => t.id === trackId);
-            if (index !== -1) {
-                closeLocalManagerModal();
-                playTrackIndex(index, true);
-            }
         }
     </script>
 </body>
