@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#090a0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="EXNA Music">
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="manifest" href="manifest.json">
@@ -19,66 +20,61 @@
   --glass-2:rgba(255,255,255,0.08);
   --glass-3:rgba(255,255,255,0.14);
   --border:rgba(255,255,255,0.1);
-  --border-2:rgba(255,255,255,0.18);
   --accent:linear-gradient(135deg,#9333ea 0%,#ec4899 100%);
   --accent-solid:#ec4899;
   --text:#fff;
   --text-2:rgba(255,255,255,0.55);
   --blur:blur(40px) saturate(180%);
-  --shadow:0 10px 30px rgba(0,0,0,0.4);
   color-scheme:dark;
 }
-[data-theme="light-pearl"]{--bg:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#cbd5e1 100%);--theme-base:#e2e8f0;--glass:rgba(255,255,255,0.7);--glass-2:rgba(255,255,255,0.85);--glass-3:rgba(255,255,255,0.95);--border:rgba(255,255,255,0.9);--accent:linear-gradient(135deg,#6366f1 0%,#a855f7 100%);--accent-solid:#6366f1;--text:#0f172a;--text-2:rgba(15,23,42,0.6);--shadow:0 10px 25px rgba(0,0,0,0.08);color-scheme:light}
-[data-theme="light-sunset"]{--bg:linear-gradient(135deg,#fff1eb 0%,#fbcfe8 50%,#bae6fd 100%);--theme-base:#fbcfe8;--glass:rgba(255,255,255,0.65);--glass-2:rgba(255,255,255,0.8);--glass-3:rgba(255,255,255,0.9);--border:rgba(255,255,255,0.85);--accent:linear-gradient(135deg,#f43f5e 0%,#fb7185 100%);--accent-solid:#f43f5e;--text:#271025;--text-2:rgba(39,16,37,0.65);--shadow:0 10px 25px rgba(244,63,94,0.1);color-scheme:light}
+[data-theme="light-pearl"]{--bg:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 50%,#cbd5e1 100%);--theme-base:#e2e8f0;--glass:rgba(255,255,255,0.7);--glass-2:rgba(255,255,255,0.85);--glass-3:rgba(255,255,255,0.95);--border:rgba(255,255,255,0.9);--accent:linear-gradient(135deg,#6366f1 0%,#a855f7 100%);--accent-solid:#6366f1;--text:#0f172a;--text-2:rgba(15,23,42,0.6);color-scheme:light}
+[data-theme="light-sunset"]{--bg:linear-gradient(135deg,#fff1eb 0%,#fbcfe8 50%,#bae6fd 100%);--theme-base:#fbcfe8;--glass:rgba(255,255,255,0.65);--glass-2:rgba(255,255,255,0.8);--glass-3:rgba(255,255,255,0.9);--border:rgba(255,255,255,0.85);--accent:linear-gradient(135deg,#f43f5e 0%,#fb7185 100%);--accent-solid:#f43f5e;--text:#271025;--text-2:rgba(39,16,37,0.65);color-scheme:light}
 [data-theme="aurora"]{--bg:linear-gradient(135deg,#020617 0%,#0369a1 50%,#0f766e 100%);--theme-base:#0369a1;--accent:linear-gradient(135deg,#22d3ee 0%,#38bdf8 100%);--accent-solid:#22d3ee;--text:#f8fafc;--text-2:rgba(248,250,252,0.65)}
-[data-theme="album"]{--bg:linear-gradient(135deg,var(--al1,#090a0f) 0%,var(--al2,#3a1f5c) 45%,var(--al3,#6b3050) 75%,var(--al1,#090a0f) 100%);--theme-base:var(--alb,#090a0f);--glass:rgba(255,255,255,0.07);--glass-2:rgba(255,255,255,0.12);--glass-3:rgba(255,255,255,0.18);--border:rgba(255,255,255,0.15);--accent:linear-gradient(135deg,var(--al3,#6b3050) 0%,var(--al2,#3a1f5c) 100%);--accent-solid:var(--al3,#6b3050);--shadow:0 10px 30px rgba(0,0,0,0.5)}
+[data-theme="album"]{--bg:linear-gradient(135deg,var(--al1,#090a0f) 0%,var(--al2,#3a1f5c) 45%,var(--al3,#6b3050) 75%,var(--al1,#090a0f) 100%);--theme-base:var(--alb,#090a0f);--glass:rgba(255,255,255,0.07);--glass-2:rgba(255,255,255,0.12);--glass-3:rgba(255,255,255,0.18);--border:rgba(255,255,255,0.15);--accent:linear-gradient(135deg,var(--al3,#6b3050) 0%,var(--al2,#3a1f5c) 100%);--accent-solid:var(--al3,#6b3050)}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 @keyframes gradientFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-html{width:100%;min-height:100lvh;background-color:var(--theme-base);background-image:var(--bg);background-size:220% 220%;background-position:0% 50%;overscroll-behavior:none;transition:background-color .6s;animation:gradientFlow 40s ease-in-out infinite;will-change:background-position}
+@keyframes eqBar{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+html{width:100%;min-height:100lvh;background-color:var(--theme-base);background-image:var(--bg);background-size:220% 220%;background-position:0% 50%;overscroll-behavior:none;transition:background-color .6s;animation:gradientFlow 40s ease-in-out infinite}
 html.playing{background-size:400% 400%;animation-duration:8s}
 html[data-theme="album"]{background-size:320% 320%;animation-duration:18s}
-body{position:fixed;inset:0;width:100%;height:100dvh;display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;color:var(--text);background:transparent;transition:color .4s}
+body{position:fixed;inset:0;width:100%;height:100dvh;display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;color:var(--text);background:transparent}
 .ico{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.ico-fill{width:20px;height:20px;fill:currentColor;flex-shrink:0}
 
-/* HEADER */
 header{width:100%;display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top,25px) + 8px) 18px 12px 18px;z-index:20;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-bottom:1px solid var(--border);flex-shrink:0;gap:10px}
 .header-left{display:flex;align-items:center;gap:12px}
 .icon-btn{background:none;border:none;color:var(--text);cursor:pointer;padding:8px;border-radius:12px;transition:.2s;display:flex;align-items:center;justify-content:center}
-.icon-btn:hover{background:var(--glass-2);transform:scale(1.05)}
+.icon-btn:hover{background:var(--glass-2)}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:36px;height:36px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.2);overflow:hidden}
+.logo-icon{width:36px;height:36px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;overflow:hidden}
 .logo-icon img{width:100%;height:100%;object-fit:cover}
 .logo h1{font-size:15px;font-weight:800;letter-spacing:-.3px;background:var(--accent);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 
-/* MODE TABS */
-.mode-tabs{display:flex;gap:6px;padding:10px 18px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-bottom:1px solid var(--border);z-index:19;flex-shrink:0}
+.mode-tabs{display:flex;gap:6px;padding:10px 18px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-bottom:1px solid var(--border);flex-shrink:0}
 .mode-tab{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:14px;background:transparent;border:1px solid transparent;color:var(--text-2);font-size:12px;font-weight:800;letter-spacing:.4px;cursor:pointer;transition:.25s;text-transform:uppercase}
 .mode-tab:hover{background:var(--glass);color:var(--text)}
 .mode-tab.active{background:var(--accent);color:#fff;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 .mode-tab .ico{width:16px;height:16px}
 
-/* SIDEBAR */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:90;opacity:0;visibility:hidden;transition:.3s}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);z-index:90;opacity:0;visibility:hidden;transition:.3s}
 .overlay.open{opacity:1;visibility:visible}
 .sidebar{position:fixed;top:0;left:-320px;width:280px;height:100dvh;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-right:1px solid var(--border);z-index:100;transition:left .35s cubic-bezier(.1,.9,.2,1);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,30px) + 14px) 16px calc(env(safe-area-inset-bottom,20px) + 16px);gap:6px;overflow-y:auto}
 .sidebar.open{left:0}
 .drawer-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-shrink:0}
 .drawer-head h3{font-size:16px;font-weight:800}
-.sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-2);margin-top:14px;margin-bottom:4px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center}
-.nav-item{padding:11px 14px;border-radius:14px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text);transition:.2s;display:flex;align-items:center;gap:12px;background:var(--glass);border:1px solid var(--border);text-decoration:none;flex-shrink:0}
+.sec-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-2);margin-top:14px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.nav-item{padding:11px 14px;border-radius:14px;cursor:pointer;font-size:14px;font-weight:600;color:var(--text);transition:.2s;display:flex;align-items:center;gap:12px;background:var(--glass);border:1px solid var(--border);text-decoration:none}
 .nav-item:hover,.nav-item.active{background:var(--glass-3);border-color:var(--accent-solid)}
-.nav-item.active .ico{color:var(--accent-solid)}
-.bio{background:var(--glass);border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:12px;line-height:1.5;color:var(--text-2);flex-shrink:0}
+.bio{background:var(--glass);border:1px solid var(--border);border-radius:14px;padding:12px 14px;font-size:12px;line-height:1.5;color:var(--text-2)}
 .bio strong{background:var(--accent);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:13px}
 .bio .role{display:block;margin-top:4px;font-size:11px}
-.pl-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:14px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);transition:.2s;background:var(--glass);border:1px solid var(--border);gap:8px;flex-shrink:0}
+.pl-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:14px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);transition:.2s;background:var(--glass);border:1px solid var(--border);gap:8px}
 .pl-item:hover,.pl-item.active{background:var(--glass-3);border-color:var(--accent-solid)}
 .pl-item .pl-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pl-item .pl-count{font-size:11px;color:var(--text-2)}
 .pl-del{background:none;border:none;color:var(--text-2);cursor:pointer;padding:4px;border-radius:6px;display:flex;align-items:center;justify-content:center}
 .pl-del:hover{color:#f43f5e}
-.socials{display:flex;gap:8px;justify-content:center;padding:6px 0;flex-shrink:0}
+.socials{display:flex;gap:8px;justify-content:center;padding:6px 0}
 .social{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--glass);border:1px solid var(--border);color:var(--text);transition:.25s;text-decoration:none}
 .social:hover{transform:translateY(-2px) scale(1.06);background:var(--glass-3)}
 .social.yt:hover{color:#ff0033;border-color:#ff0033}
@@ -88,12 +84,26 @@ header{width:100%;display:flex;justify-content:space-between;align-items:center;
 .drawer-foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--border);text-align:center;font-size:10px;font-weight:700;color:var(--text-2);letter-spacing:1.2px;text-transform:uppercase}
 .drawer-foot strong{background:var(--accent);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
 
-/* CONTENT */
-.content{flex:1;width:100%;padding:18px 18px 180px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch}
+.content{flex:1;width:100%;padding:18px 18px 180px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch}
 .content-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .content-head h2{font-size:22px;font-weight:800;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .counter{color:var(--text-2);font-size:12px;font-weight:600;flex-shrink:0}
 .song-grid{display:flex;flex-direction:column;gap:8px}
+
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:var(--glass);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:100px;font-size:12px;font-weight:700;cursor:pointer;width:fit-content;transition:.2s}
+.back-btn:hover{background:var(--glass-2);transform:translateX(-2px)}
+
+/* ALBUM CARD */
+.album-card{display:flex;align-items:center;gap:14px;padding:10px;border-radius:18px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--border);cursor:pointer;transition:.25s}
+.album-card:hover{background:var(--glass-2);transform:translateY(-2px);border-color:var(--accent-solid)}
+.album-card:active{transform:scale(.985)}
+.album-cover{width:70px;height:70px;border-radius:14px;overflow:hidden;flex-shrink:0;background:var(--glass-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-2)}
+.album-cover img{width:100%;height:100%;object-fit:cover}
+.album-cover .ico{width:26px;height:26px}
+.album-info{flex:1;min-width:0}
+.album-info h4{font-size:14px;font-weight:800;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.album-info p{font-size:12px;color:var(--text-2)}
+
 .song-card{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--border);cursor:pointer;transition:.2s}
 .song-card:hover{background:var(--glass-2)}
 .song-card:active{transform:scale(.985)}
@@ -107,18 +117,15 @@ header{width:100%;display:flex;justify-content:space-between;align-items:center;
 .song-actions{display:flex;align-items:center;gap:0;flex-shrink:0}
 .s-btn{background:none;border:none;cursor:pointer;padding:7px;border-radius:9px;color:var(--text-2);transition:.2s;display:flex;align-items:center;justify-content:center;min-width:32px;min-height:32px}
 .s-btn:hover{background:var(--glass-3);color:var(--text)}
-.s-btn:active{transform:scale(.9)}
 .s-btn.fav{color:var(--accent-solid)}
 .s-btn.fav svg{fill:currentColor;stroke:currentColor}
 .s-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 
-/* EQUALIZER */
 .eq{display:inline-flex;align-items:flex-end;gap:2px;width:12px;height:12px;flex-shrink:0}
 .eq span{display:block;width:2.5px;background:var(--accent-solid);border-radius:2px;transform-origin:bottom;animation:eqBar .9s ease-in-out infinite}
 .eq span:nth-child(1){animation-delay:-.4s;height:40%}
 .eq span:nth-child(2){animation-delay:-.2s;height:100%}
 .eq span:nth-child(3){animation-delay:0s;height:60%}
-@keyframes eqBar{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
 .song-card:not(.active) .eq{display:none}
 .song-card.paused .eq span{animation-play-state:paused;opacity:.5}
 
@@ -128,9 +135,7 @@ header{width:100%;display:flex;justify-content:space-between;align-items:center;
 .empty-state p{font-size:12px;line-height:1.5}
 .loading{text-align:center;padding:40px 20px;color:var(--text-2)}
 .spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent-solid);animation:spin 1s linear infinite;margin:0 auto 12px}
-@keyframes spin{to{transform:rotate(360deg)}}
 
-/* FOOTER PLAYER */
 footer{position:fixed;bottom:0;left:0;width:100%;padding:8px 16px calc(env(safe-area-inset-bottom,12px) + 6px) 16px;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--border);background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);z-index:30;box-shadow:0 -10px 30px rgba(0,0,0,.2)}
 .player-row{display:flex;align-items:center;justify-content:space-between;cursor:pointer;gap:8px}
 .player-left{display:flex;align-items:center;gap:12px;overflow:hidden;flex:1;min-width:0}
@@ -150,23 +155,25 @@ footer{position:fixed;bottom:0;left:0;width:100%;padding:8px 16px calc(env(safe-
 .play-main:hover{transform:scale(1.05)}
 .progress-row{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text-2)}
 input[type=range]{flex:1;-webkit-appearance:none;background:var(--glass-3);height:5px;border-radius:3px;outline:none;cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--text);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--text);cursor:pointer}
 input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--text);border:none;cursor:pointer}
 
 /* EXPANDED */
-.expanded{position:fixed;inset:0;background-color:var(--theme-base);background-image:var(--bg);background-size:220% 220%;backdrop-filter:blur(60px);-webkit-backdrop-filter:blur(60px);z-index:100;transition:top .4s cubic-bezier(.1,.9,.2,1);display:flex;flex-direction:column;gap:8px;padding:calc(env(safe-area-inset-top,30px) + 10px) 20px calc(env(safe-area-inset-bottom,16px) + 16px) 20px;overflow-y:hidden;top:100%;animation:gradientFlow 40s ease-in-out infinite}
+.expanded{position:fixed;inset:0;background-color:var(--theme-base);background-image:var(--bg);background-size:220% 220%;backdrop-filter:blur(60px);-webkit-backdrop-filter:blur(60px);z-index:100;transition:top .4s cubic-bezier(.1,.9,.2,1);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,30px) + 10px) 20px calc(env(safe-area-inset-bottom,16px) + 16px) 20px;overflow:hidden;top:100%;animation:gradientFlow 40s ease-in-out infinite}
 .expanded.open{top:0}
 .exp-head{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:400px;margin:0 auto;flex-shrink:0}
-.exp-btn{background:var(--glass);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(20px)}
+.exp-btn{background:var(--glass);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
 .exp-btn:hover{background:var(--glass-3);transform:scale(1.05)}
 .exp-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .exp-btn.fav{color:var(--accent-solid)}
 .exp-btn.fav svg{fill:var(--accent-solid);stroke:var(--accent-solid)}
-.exp-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;width:100%;max-width:400px;margin:0 auto;min-height:0}
-.exp-art{width:100%;max-width:260px;aspect-ratio:1;border-radius:24px;background:var(--glass);border:1px solid var(--border);box-shadow:0 20px 45px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.exp-art img{width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.exp-main{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;max-width:400px;margin:0 auto;transition:.35s}
+.expanded:not(.queue-hidden) .exp-main{gap:10px}
+.expanded:not(.queue-hidden) .exp-art{max-width:160px}
+.exp-art{width:100%;max-width:260px;aspect-ratio:1;border-radius:24px;background:var(--glass);border:1px solid var(--border);box-shadow:0 20px 45px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;transition:max-width .35s}
+.exp-art img{width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none}
 .exp-info{text-align:center;flex-shrink:0;width:100%;padding:0 10px}
-.exp-info h2{font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exp-info h2{font-size:20px;font-weight:800;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exp-info p{font-size:13px;color:var(--text-2)}
 .exp-progress{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text-2);width:100%}
 .exp-controls{display:grid;grid-template-columns:repeat(5,1fr);align-items:center;justify-items:center;width:100%}
@@ -179,14 +186,30 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
 .big-play svg{width:24px;height:24px;fill:#fff}
 .big-play:hover{transform:scale(1.06)}
 
-/* MODAL */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.exp-queue{flex:0 0 auto;width:100%;max-width:400px;margin:6px auto 0;display:flex;flex-direction:column;gap:6px;min-height:0;transition:.35s}
+.queue-head{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-2);padding:4px;flex-shrink:0}
+.queue-toggle{display:flex;align-items:center;gap:4px;background:var(--glass);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:100px;font-size:10px;font-weight:800;cursor:pointer;text-transform:uppercase}
+.queue-toggle svg{width:10px;height:10px;fill:currentColor;transition:transform .3s}
+.queue-toggle:hover{background:var(--glass-2)}
+.queue-list{flex:1 1 auto;overflow-y:auto;display:flex;flex-direction:column;gap:6px;max-height:32vh;min-height:0;scrollbar-width:none;transition:max-height .35s,opacity .25s;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 8px)}
+.queue-list::-webkit-scrollbar{display:none}
+.expanded.queue-hidden .queue-list{max-height:0;opacity:0;overflow:hidden;padding:0;gap:0;pointer-events:none}
+.expanded.queue-hidden .queue-toggle svg{transform:rotate(180deg)}
+.queue-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:var(--glass);border:1px solid var(--border);cursor:pointer;transition:.2s}
+.queue-item:hover{background:var(--glass-2)}
+.queue-item.current{border-color:var(--accent-solid);background:var(--glass-3);box-shadow:0 0 0 1px var(--accent-solid) inset}
+.queue-thumb{width:36px;height:36px;border-radius:10px;background:var(--glass-2);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--text-2);border:1px solid var(--border)}
+.queue-thumb img{width:100%;height:100%;object-fit:cover}
+.queue-info{flex:1;min-width:0}
+.queue-info .qt{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.queue-info .qs{font-size:10px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(14px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.open{display:flex}
 .modal-card{background:var(--glass);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid var(--border);border-radius:22px;padding:20px;width:100%;max-width:380px;max-height:80vh;display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .modal-head{display:flex;justify-content:space-between;align-items:center}
 .modal-head h3{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.modal-close{background:var(--glass-2);border:none;cursor:pointer;color:var(--text);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.modal-close:hover{background:var(--glass-3)}
+.modal-close{background:var(--glass-2);border:none;cursor:pointer;color:var(--text);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .modal-body{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;min-height:50px}
 .pl-choice{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:var(--glass);border:1px solid var(--border);cursor:pointer;transition:.2s;font-size:13px;font-weight:600}
 .pl-choice:hover{background:var(--glass-2)}
@@ -201,13 +224,10 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
 .input{width:100%;padding:12px 14px;border-radius:14px;background:var(--glass);border:1px solid var(--border);color:var(--text);font-size:13px;outline:none}
 .input:focus{border-color:var(--accent-solid)}
 .modal-empty{text-align:center;padding:20px;color:var(--text-2);font-size:12px}
-
-@media (prefers-reduced-motion:reduce){html,footer,.expanded,.eq span{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<!-- SVG SPRITE -->
 <svg width="0" height="0" style="position:absolute">
 <defs>
 <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></symbol>
@@ -226,8 +246,9 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
 <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
 <symbol id="i-trash" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
 <symbol id="i-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+<symbol id="i-up" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></symbol>
 <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></symbol>
-<symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/></symbol>
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/></symbol>
 <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
 <symbol id="i-sunset" viewBox="0 0 24 24"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/><line x1="23" y1="22" x2="1" y2="22"/><polyline points="16 5 12 9 8 5"/></symbol>
@@ -236,58 +257,46 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
 </defs>
 </svg>
 
-<!-- HEADER -->
 <header>
   <div class="header-left">
-    <button class="icon-btn" onclick="toggleSidebar()" aria-label="Menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+    <button class="icon-btn" onclick="toggleSidebar()"><svg class="ico"><use href="#i-menu"/></svg></button>
     <div class="logo">
       <div class="logo-icon" id="logo-icon">EX</div>
       <h1>EXNA MUSIC</h1>
     </div>
   </div>
-  <button class="icon-btn" id="theme-btn" onclick="cycleTheme()" aria-label="Tema"></button>
+  <button class="icon-btn" id="theme-btn" onclick="cycleTheme()"></button>
 </header>
 
-<!-- MODE TABS -->
 <div class="mode-tabs">
   <button class="mode-tab active" data-mode="local" onclick="setMode('local')">
-    <svg class="ico"><use href="#i-phone"/></svg>
-    <span>Local</span>
+    <svg class="ico"><use href="#i-phone"/></svg><span>Local</span>
   </button>
   <button class="mode-tab" data-mode="online" onclick="setMode('online')">
-    <svg class="ico"><use href="#i-globe"/></svg>
-    <span>Online</span>
+    <svg class="ico"><use href="#i-globe"/></svg><span>Online</span>
   </button>
 </div>
 
-<!-- SIDEBAR -->
 <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 <aside class="sidebar" id="sidebar">
   <div class="drawer-head">
     <h3>Menu EXNA</h3>
     <button class="icon-btn" onclick="toggleSidebar()"><svg class="ico"><use href="#i-x"/></svg></button>
   </div>
-
   <div class="sec-title">Ações</div>
   <div class="nav-item" onclick="document.getElementById('file-input').click();toggleSidebar()">
-    <svg class="ico"><use href="#i-plus"/></svg>
-    <span>Adicionar Músicas</span>
+    <svg class="ico"><use href="#i-plus"/></svg><span>Adicionar Músicas</span>
   </div>
   <div class="nav-item" onclick="reloadArchive();toggleSidebar()">
-    <svg class="ico"><use href="#i-globe"/></svg>
-    <span>Recarregar Acervo</span>
+    <svg class="ico"><use href="#i-globe"/></svg><span>Recarregar Acervo</span>
   </div>
-
   <div class="sec-title">Biblioteca</div>
   <div class="nav-item active" id="tab-all" onclick="selectView('all');toggleSidebar()">
-    <svg class="ico"><use href="#i-music"/></svg>
-    <span>Todas as Músicas</span>
+    <svg class="ico"><use href="#i-music"/></svg><span>Todas as Músicas</span>
   </div>
   <div class="nav-item" id="tab-fav" onclick="selectView('favorites');toggleSidebar()">
-    <svg class="ico"><use href="#i-heart"/></svg>
-    <span>Favoritos</span>
+    <svg class="ico"><use href="#i-heart"/></svg><span>Favoritos</span>
   </div>
-
   <div class="sec-title">
     <span>Playlists</span>
     <button onclick="createPlaylistPrompt()" style="background:none;border:none;color:var(--accent-solid);cursor:pointer;padding:0 4px;display:flex;align-items:center">
@@ -295,25 +304,21 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
     </button>
   </div>
   <div id="playlists-list"></div>
-
   <div class="sec-title">NaldoA</div>
   <div class="bio">
     <strong>NaldoA</strong>
     <span class="role">Fundador do EXNA MUSIC</span>
     <p style="margin-top:8px">Artista e criador do projeto <b>NaldoA Music</b>. Músico apaixonado por transformar sons em experiências únicas.</p>
   </div>
-
   <div class="sec-title">Links</div>
   <div class="socials">
-    <a class="social yt" href="https://youtube.com/@naldoamusic?si=yVA87cRhrK-rtfcL" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-    <a class="social tt" href="https://www.tiktok.com/@naldoamusic" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
-    <a class="social ig" href="https://www.instagram.com/naldoamusic" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+    <a class="social yt" href="https://youtube.com/@naldoamusic?si=yVA87cRhrK-rtfcL" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+    <a class="social tt" href="https://www.tiktok.com/@naldoamusic" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+    <a class="social ig" href="https://www.instagram.com/naldoamusic" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
   </div>
-
   <div class="drawer-foot"><strong>EXNA MUSIC</strong> by NaldoA</div>
 </aside>
 
-<!-- CONTENT -->
 <main class="content" id="content">
   <div class="content-head">
     <h2 id="section-title">Todas as Músicas</h2>
@@ -322,7 +327,6 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
   <div class="song-grid" id="song-list"></div>
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="player-row" onclick="openExpanded()">
     <div class="player-left">
@@ -346,8 +350,7 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
   </div>
 </footer>
 
-<!-- EXPANDED -->
-<div class="expanded" id="expanded">
+<div class="expanded queue-hidden" id="expanded">
   <div class="exp-head">
     <button class="exp-btn" onclick="closeExpanded()"><svg><use href="#i-down"/></svg></button>
     <h3 style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-2)">Tocando agora</h3>
@@ -372,9 +375,18 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
       <button class="big-btn" id="repeat-exp" onclick="toggleRepeat()"><svg><use href="#i-repeat"/></svg></button>
     </div>
   </div>
+  <div class="exp-queue">
+    <div class="queue-head">
+      <span>Fila de reprodução</span>
+      <button class="queue-toggle" onclick="toggleQueue()">
+        <span id="queue-label">Mostrar</span>
+        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+    </div>
+    <div class="queue-list" id="queue-list"></div>
+  </div>
 </div>
 
-<!-- MODAL PLAYLIST -->
 <div class="modal" id="pl-modal" onclick="if(event.target===this)closePlaylistModal()">
   <div class="modal-card">
     <div class="modal-head">
@@ -386,7 +398,6 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
   </div>
 </div>
 
-<!-- MODAL NOVA PLAYLIST -->
 <div class="modal" id="new-pl-modal">
   <div class="modal-card">
     <div class="modal-head">
@@ -404,27 +415,27 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
 <script>
 'use strict';
 
-/* ============== CONFIG ============== */
 const ARCHIVE_ID = 'naldoa-digital-music-stream';
 const DB_NAME = 'ExnaMusicDB';
-
-/* ============== HELPERS ============== */
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = s => {
   if (!isFinite(s) || s < 0) return '0:00';
   const m = Math.floor(s / 60), sec = Math.floor(s % 60);
-  return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
 };
-const svgIcon = (name, style='') => `<svg class="ico" style="${style}"><use href="#${name}"/></svg>`;
+const svgIcon = (n, st) => `<svg class="ico" style="${st||''}"><use href="#${n}"/></svg>`;
 
-/* ============== STATE ============== */
-let localLibrary = [];      // músicas locais
-let onlineLibrary = [];     // músicas do archive
+/* STATE */
+let localLibrary = [];
+let onlineLibrary = [];
+let onlineAlbums = [];
+let onlineView = 'albums'; // 'albums' | 'album'
+let onlineAlbumName = null;
 let currentMode = 'local';
-let currentView = 'all';    // all | favorites | playlist
+let currentView = 'all';
 let currentPlaylistId = null;
-let currentTrack = null;    // referência à música atual
+let currentTrack = null;
 let currentTrackSource = 'local';
 let isShuffle = false;
 let isRepeat = false;
@@ -434,8 +445,9 @@ let pendingSongForPlaylist = null;
 let db = null;
 let archiveLoading = false;
 let archiveLoaded = false;
+let queueHidden = localStorage.getItem('exna_queue_hidden') !== 'false';
 
-/* ============== THEMES ============== */
+/* THEMES */
 const THEMES = [
   { id: 'default', icon: 'i-moon', color: '#090a0f' },
   { id: 'light-pearl', icon: 'i-sun', color: '#e2e8f0' },
@@ -444,7 +456,6 @@ const THEMES = [
   { id: 'album', icon: 'i-palette', color: '#3a1f5c' }
 ];
 let themeIdx = 0;
-
 function applyTheme(id) {
   document.documentElement.setAttribute('data-theme', id);
   document.body.setAttribute('data-theme', id);
@@ -456,79 +467,88 @@ function applyTheme(id) {
   }
   localStorage.setItem('exna_theme', id);
 }
-
 function cycleTheme() {
   themeIdx = (themeIdx + 1) % THEMES.length;
   applyTheme(THEMES[themeIdx].id);
-  // update album colors if active
   if (THEMES[themeIdx].id === 'album' && currentTrack) updateAlbumColors(currentTrack);
 }
 
-/* ============== INDEXEDDB ============== */
+/* INDEXEDDB v2 (UID estável) */
 function initDB() {
   return new Promise(resolve => {
-    const req = indexedDB.open(DB_NAME, 1);
+    const req = indexedDB.open(DB_NAME, 2);
     req.onupgradeneeded = e => {
       const d = e.target.result;
-      if (!d.objectStoreNames.contains('songs')) d.createObjectStore('songs', { keyPath: 'id', autoIncrement: true });
+      if (d.objectStoreNames.contains('songs')) d.deleteObjectStore('songs');
+      d.createObjectStore('songs', { keyPath: 'uid' });
     };
     req.onsuccess = e => { db = e.target.result; resolve(); };
     req.onerror = () => resolve();
   });
 }
-function dbAdd(data, cb) {
-  if (!db) return cb(null);
-  const tx = db.transaction(['songs'], 'readwrite');
-  const req = tx.objectStore('songs').add(data);
-  req.onsuccess = e => cb(e.target.result);
-  req.onerror = () => cb(null);
+function dbPut(data) {
+  return new Promise(resolve => {
+    if (!db) return resolve(false);
+    try {
+      const tx = db.transaction(['songs'], 'readwrite');
+      tx.objectStore('songs').put(data);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    } catch(e) { resolve(false); }
+  });
 }
-function dbDelete(id) {
-  if (!db || !id) return;
-  db.transaction(['songs'], 'readwrite').objectStore('songs').delete(id);
+function dbDelete(uid) {
+  if (!db || !uid) return;
+  try { db.transaction(['songs'], 'readwrite').objectStore('songs').delete(uid); } catch(e) {}
 }
-function dbUpdateFav(id, fav) {
-  if (!db || !id) return;
-  const tx = db.transaction(['songs'], 'readwrite');
-  const st = tx.objectStore('songs');
-  const r = st.get(id);
-  r.onsuccess = () => { const d = r.result; if (d) { d.favorite = fav; st.put(d); } };
+function dbUpdateFav(uid, fav) {
+  if (!db || !uid) return;
+  try {
+    const tx = db.transaction(['songs'], 'readwrite');
+    const st = tx.objectStore('songs');
+    const r = st.get(uid);
+    r.onsuccess = () => { const d = r.result; if (d) { d.favorite = fav; st.put(d); } };
+  } catch(e) {}
 }
 function loadLocalLibrary() {
   return new Promise(resolve => {
     if (!db) return resolve();
-    const req = db.transaction(['songs'], 'readonly').objectStore('songs').getAll();
-    req.onsuccess = () => {
-      (req.result || []).forEach(item => {
-        try {
-          if (!item.file) return;
-          localLibrary.push({
-            id: 'local-' + item.id,
-            dbId: item.id,
-            name: item.name || 'Sem nome',
-            artist: item.artist || 'EXNA MUSIC',
-            file: item.file,
-            url: URL.createObjectURL(item.file),
-            thumbUrl: item.thumbUrl || null,
-            source: 'local'
-          });
-        } catch(e) {}
-      });
-      resolve();
-    };
-    req.onerror = () => resolve();
+    try {
+      const req = db.transaction(['songs'], 'readonly').objectStore('songs').getAll();
+      req.onsuccess = () => {
+        (req.result || []).forEach(item => {
+          try {
+            if (!item.file) return;
+            localLibrary.push({
+              id: item.uid,
+              dbId: item.uid,
+              name: item.name || 'Sem nome',
+              artist: item.artist || 'EXNA MUSIC',
+              file: item.file,
+              url: URL.createObjectURL(item.file),
+              thumbUrl: item.thumbUrl || null,
+              source: 'local'
+            });
+          } catch(e) {}
+        });
+        console.log('[EXNA] ' + localLibrary.length + ' música(s) local(is) carregada(s)');
+        resolve();
+      };
+      req.onerror = () => resolve();
+    } catch(e) { resolve(); }
   });
 }
 
-/* ============== FAVORITES ============== */
-function isFav(t) { return favorites.has(t.id); }
+/* FAVORITES */
+function isFav(t) { return t && favorites.has(t.id); }
 function toggleFav(t) {
   if (!t) return;
-  if (favorites.has(t.id)) favorites.delete(t.id);
-  else favorites.add(t.id);
+  const on = !favorites.has(t.id);
+  if (on) favorites.add(t.id); else favorites.delete(t.id);
   localStorage.setItem('exna_favorites', JSON.stringify([...favorites]));
-  if (t.source === 'local' && t.dbId) dbUpdateFav(t.dbId, favorites.has(t.id));
+  if (t.source === 'local' && t.dbId) dbUpdateFav(t.dbId, on);
   renderLibrary();
+  renderQueue();
   updateExpandedFav();
 }
 function toggleFavoriteCurrent() { if (currentTrack) toggleFav(currentTrack); }
@@ -536,7 +556,7 @@ function updateExpandedFav() {
   $('exp-fav').classList.toggle('fav', currentTrack ? isFav(currentTrack) : false);
 }
 
-/* ============== PLAYLISTS ============== */
+/* PLAYLISTS */
 function loadPlaylists() {
   try {
     const raw = JSON.parse(localStorage.getItem('exna_playlists') || '[]');
@@ -549,7 +569,7 @@ function renderPlaylists() {
   const el = $('playlists-list');
   if (!el) return;
   if (playlists.length === 0) {
-    el.innerHTML = `<div style="font-size:11px;color:var(--text-2);padding:8px 4px">Nenhuma playlist ainda.</div>`;
+    el.innerHTML = '<div style="font-size:11px;color:var(--text-2);padding:8px 4px">Nenhuma playlist ainda.</div>';
     return;
   }
   el.innerHTML = playlists.map(pl => `
@@ -585,11 +605,12 @@ function confirmNewPlaylist() {
 function deletePlaylist(id) {
   const pl = playlists.find(p => p.id === id);
   if (!pl) return;
-  if (!confirm(`Excluir a playlist "${pl.name}"?`)) return;
+  if (!confirm('Excluir a playlist "' + pl.name + '"?')) return;
   playlists = playlists.filter(p => p.id !== id);
   savePlaylists();
   if (currentPlaylistId === id) selectView('all');
   renderPlaylists();
+  renderLibrary();
 }
 function toggleSongInPlaylist(playlistId) {
   if (!currentModalSong) return;
@@ -603,23 +624,20 @@ function toggleSongInPlaylist(playlistId) {
   openPlaylistModal(currentModalSong);
 }
 
-/* ============== MODAL PLAYLIST ============== */
 let currentModalSong = null;
 function openPlaylistModal(song) {
+  if (!song) return;
   currentModalSong = song;
   $('pl-modal-title').textContent = song.name;
   const body = $('pl-modal-body');
   if (playlists.length === 0) {
-    body.innerHTML = `<div class="modal-empty">Nenhuma playlist ainda.<br>Crie uma abaixo.</div>`;
+    body.innerHTML = '<div class="modal-empty">Nenhuma playlist ainda.<br>Crie uma abaixo.</div>';
   } else {
     body.innerHTML = playlists.map(pl => {
       const on = pl.songIds.includes(song.id);
-      return `
-        <div class="pl-choice ${on ? 'on' : ''}" onclick="toggleSongInPlaylist('${pl.id}')">
-          <span class="check"><svg><use href="#${on ? 'i-check' : 'i-circle'}"/></svg></span>
-          <span class="lbl">${esc(pl.name)}</span>
-        </div>
-      `;
+      return '<div class="pl-choice ' + (on ? 'on' : '') + '" onclick="toggleSongInPlaylist(\'' + pl.id + '\')">' +
+        '<span class="check"><svg><use href="#' + (on ? 'i-check' : 'i-circle') + '"/></svg></span>' +
+        '<span class="lbl">' + esc(pl.name) + '</span></div>';
     }).join('');
   }
   $('pl-modal').classList.add('open');
@@ -629,7 +647,7 @@ function closePlaylistModal() {
   currentModalSong = null;
 }
 
-/* ============== ALBUM COLORS ============== */
+/* ALBUM COLORS */
 function extractColors(url) {
   return new Promise(res => {
     const img = new Image();
@@ -652,13 +670,11 @@ function extractColors(url) {
         if (!vib.length) return res(null);
         vib.sort((a,b) => b.s - a.s);
         const picked = [vib[0]];
-        for (const c of vib.slice(1)) {
+        for (const cc of vib.slice(1)) {
           if (picked.length >= 3) break;
           let close = false;
-          for (const p of picked) {
-            if (Math.abs(c.r-p.r)+Math.abs(c.g-p.g)+Math.abs(c.b-p.b) < 90) { close = true; break; }
-          }
-          if (!close) picked.push(c);
+          for (const p of picked) if (Math.abs(cc.r-p.r)+Math.abs(cc.g-p.g)+Math.abs(cc.b-p.b) < 90) { close = true; break; }
+          if (!close) picked.push(cc);
         }
         while (picked.length < 3) picked.push(picked[0]);
         res(picked);
@@ -680,7 +696,7 @@ async function updateAlbumColors(song) {
       b: Math.max(0, Math.min(255, Math.round((a + (c.b-a)*sf) * br)))
     };
   };
-  const rgb = c => `rgb(${c.r},${c.g},${c.b})`;
+  const rgb = c => 'rgb(' + c.r + ',' + c.g + ',' + c.b + ')';
   const r = document.documentElement;
   r.style.setProperty('--al1', rgb(soft(cols[0], .45, .22)));
   r.style.setProperty('--al2', rgb(soft(cols[0], .5, .45)));
@@ -688,9 +704,12 @@ async function updateAlbumColors(song) {
   r.style.setProperty('--alb', rgb(soft(cols[0], .45, .22)));
 }
 
-/* ============== LIBRARY / VIEW ============== */
+/* VIEWS */
 function getActiveList() {
-  if (currentMode === 'online') return onlineLibrary;
+  if (currentMode === 'online') {
+    if (onlineView === 'album' && onlineAlbumName) return onlineLibrary.filter(t => t.album === onlineAlbumName);
+    return onlineLibrary;
+  }
   if (currentView === 'favorites') return localLibrary.filter(isFav);
   if (currentView === 'playlist' && currentPlaylistId) {
     const pl = playlists.find(p => p.id === currentPlaylistId);
@@ -699,35 +718,27 @@ function getActiveList() {
   }
   return localLibrary;
 }
-
 function selectView(view, playlistId) {
   currentView = view;
   currentPlaylistId = view === 'playlist' ? playlistId : null;
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.pl-item').forEach(el => el.classList.remove('active'));
   const title = $('section-title');
-  if (currentMode === 'online') {
-    title.textContent = 'Acervo Online';
-  } else if (view === 'all') {
-    $('tab-all').classList.add('active');
-    title.textContent = 'Todas as Músicas';
-  } else if (view === 'favorites') {
-    $('tab-fav').classList.add('active');
-    title.textContent = 'Favoritos';
-  } else if (view === 'playlist') {
-    const pl = playlists.find(p => p.id === playlistId);
-    title.textContent = pl ? pl.name : 'Playlist';
-  }
+  if (currentMode === 'online') title.textContent = 'Acervo Online';
+  else if (view === 'all') { $('tab-all').classList.add('active'); title.textContent = 'Todas as Músicas'; }
+  else if (view === 'favorites') { $('tab-fav').classList.add('active'); title.textContent = 'Favoritos'; }
+  else if (view === 'playlist') { const pl = playlists.find(p => p.id === playlistId); title.textContent = pl ? pl.name : 'Playlist'; }
   renderPlaylists();
   renderLibrary();
 }
-
 function setMode(mode) {
   if (mode === currentMode && mode !== 'online') return;
   currentMode = mode;
   document.querySelectorAll('.mode-tab').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
   if (mode === 'online') {
+    onlineView = 'albums';
+    onlineAlbumName = null;
     $('section-title').textContent = 'Acervo Online';
     if (!archiveLoaded && !archiveLoading) fetchArchive();
   } else {
@@ -738,37 +749,74 @@ function setMode(mode) {
   renderLibrary();
 }
 
-/* ============== RENDER ============== */
+/* ONLINE ALBUM NAVIGATION */
+function openAlbumByIndex(i) {
+  const alb = onlineAlbums[i];
+  if (!alb) return;
+  onlineView = 'album';
+  onlineAlbumName = alb.name;
+  $('section-title').textContent = alb.name;
+  renderLibrary();
+  $('content').scrollTop = 0;
+}
+function backToAlbums() {
+  onlineView = 'albums';
+  onlineAlbumName = null;
+  $('section-title').textContent = 'Acervo Online';
+  renderLibrary();
+  $('content').scrollTop = 0;
+}
+
+/* RENDER */
 function renderLibrary() {
   const list = $('song-list');
   const title = $('section-title');
   const counter = $('counter');
 
   if (currentMode === 'online') {
-    title.textContent = 'Acervo Online';
     if (archiveLoading) {
-      list.innerHTML = `<div class="loading"><div class="spinner"></div><p style="font-size:12px">Carregando acervo...</p></div>`;
+      title.textContent = 'Acervo Online';
       counter.textContent = '...';
+      list.innerHTML = '<div class="loading"><div class="spinner"></div><p style="font-size:12px">Carregando acervo...</p></div>';
       return;
     }
     if (onlineLibrary.length === 0) {
-      list.innerHTML = `<div class="empty-state">${svgIcon('i-globe','width:48px;height:48px')}<h3>Acervo indisponível</h3><p>Sem conexão ou acervo vazio.<br>Toque em "Recarregar Acervo" no menu.</p></div>`;
+      title.textContent = 'Acervo Online';
       counter.textContent = '0 faixas';
+      list.innerHTML = '<div class="empty-state">' + svgIcon('i-globe','width:48px;height:48px') + '<h3>Acervo indisponível</h3><p>Sem conexão ou acervo vazio.<br>Toque em "Recarregar Acervo" no menu.</p></div>';
       return;
     }
-    counter.textContent = `${onlineLibrary.length} faixas`;
-    list.innerHTML = onlineLibrary.map(t => buildCard(t)).join('');
+    // Sub-view de álbum
+    if (onlineView === 'album' && onlineAlbumName) {
+      const tracks = onlineLibrary.filter(t => t.album === onlineAlbumName);
+      title.textContent = onlineAlbumName;
+      counter.textContent = tracks.length + ' faixa' + (tracks.length === 1 ? '' : 's');
+      list.innerHTML = '<button class="back-btn" onclick="backToAlbums()">' + svgIcon('i-up','width:14px;height:14px') + 'Voltar aos álbuns</button>' + tracks.map(t => buildCard(t)).join('');
+      return;
+    }
+    // View de álbuns
+    title.textContent = 'Acervo Online';
+    counter.textContent = onlineAlbums.length + ' álbuns';
+    list.innerHTML = onlineAlbums.map((alb, i) => {
+      const cover = alb.tracks[0] && alb.tracks[0].thumbUrl ? alb.tracks[0].thumbUrl : 'icon.png';
+      return '<div class="album-card" onclick="openAlbumByIndex(' + i + ')">' +
+        '<div class="album-cover"><img src="' + cover + '" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<svg class=&quot;ico&quot;><use href=&quot;#i-music&quot;/></svg>\'"></div>' +
+        '<div class="album-info"><h4>' + esc(alb.name) + '</h4><p>' + alb.tracks.length + ' faixa' + (alb.tracks.length === 1 ? '' : 's') + '</p></div>' +
+        svgIcon('i-next','width:18px;height:18px;color:var(--text-2)') +
+        '</div>';
+    }).join('');
     return;
   }
 
+  // Local
   const activeList = getActiveList();
-  counter.textContent = `${activeList.length} faixas`;
+  counter.textContent = activeList.length + ' faixas';
   if (activeList.length === 0) {
     let h = 'Biblioteca vazia';
     let p = 'Toque em "Adicionar Músicas" no menu para importar arquivos.';
     if (currentView === 'favorites') { h = 'Sem favoritos'; p = 'Marque músicas com ❤ para vê-las aqui.'; }
     if (currentView === 'playlist') { h = 'Playlist vazia'; p = 'Adicione músicas pela biblioteca.'; }
-    list.innerHTML = `<div class="empty-state">${svgIcon('i-music','width:48px;height:48px')}<h3>${h}</h3><p>${p}</p></div>`;
+    list.innerHTML = '<div class="empty-state">' + svgIcon('i-music','width:48px;height:48px') + '<h3>' + h + '</h3><p>' + p + '</p></div>';
     return;
   }
   list.innerHTML = activeList.map(t => buildCard(t)).join('');
@@ -778,80 +826,109 @@ function buildCard(song) {
   const isCurrent = currentTrack && currentTrack.id === song.id && currentTrackSource === song.source;
   const isPaused = isCurrent && audio.paused;
   const thumb = song.thumbUrl
-    ? `<img src="${song.thumbUrl}" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<svg class=&quot;ico&quot;><use href=&quot;#i-music&quot;/></svg>'">`
+    ? '<img src="' + song.thumbUrl + '" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<svg class=&quot;ico&quot;><use href=&quot;#i-music&quot;/></svg>\'">'
     : svgIcon('i-music');
   const fav = isFav(song);
-  return `
-    <div class="song-card ${isCurrent ? 'active' : ''} ${isPaused ? 'paused' : ''}" onclick="onCardClick(event, '${song.id}')">
-      <div class="song-thumb">${thumb}</div>
-      <div class="song-meta">
-        <h4><span class="eq"><span></span><span></span><span></span></span><span class="txt">${esc(song.name)}</span></h4>
-        <div class="sub">${esc(song.artist)}${song.source === 'online' ? ' · Online' : ''}</div>
-      </div>
-      <div class="song-actions">
-        <button class="s-btn" onclick="event.stopPropagation();openPlaylistModal(findTrack('${song.id}'))" title="Playlist">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <button class="s-btn ${fav ? 'fav' : ''}" onclick="event.stopPropagation();toggleFav(findTrack('${song.id}'))" title="Favoritar">
-          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
-        ${song.source === 'local' ? `
-        <button class="s-btn" onclick="event.stopPropagation();removeLocalSong('${song.id}')" title="Remover">
-          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        </button>` : ''}
-      </div>
-    </div>
-  `;
+  return '<div class="song-card ' + (isCurrent ? 'active' : '') + ' ' + (isPaused ? 'paused' : '') + '" onclick="onCardClick(event, \'' + song.id + '\')">' +
+    '<div class="song-thumb">' + thumb + '</div>' +
+    '<div class="song-meta">' +
+      '<h4><span class="eq"><span></span><span></span><span></span></span><span class="txt">' + esc(song.name) + '</span></h4>' +
+      '<div class="sub">' + esc(song.artist) + (song.source === 'online' ? ' · Online' : '') + '</div>' +
+    '</div>' +
+    '<div class="song-actions">' +
+      '<button class="s-btn" onclick="event.stopPropagation();openPlaylistModal(findTrack(\'' + song.id + '\'))" title="Playlist"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>' +
+      '<button class="s-btn ' + (fav ? 'fav' : '') + '" onclick="event.stopPropagation();toggleFav(findTrack(\'' + song.id + '\'))" title="Favoritar"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>' +
+      (song.source === 'local' ? '<button class="s-btn" onclick="event.stopPropagation();removeLocalSong(\'' + song.id + '\')" title="Remover"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>' : '') +
+    '</div>' +
+  '</div>';
 }
-
 function findTrack(id) {
   return localLibrary.find(t => t.id === id) || onlineLibrary.find(t => t.id === id) || null;
 }
-
 function onCardClick(e, id) {
   if (e.target.closest('.s-btn')) return;
   const track = findTrack(id);
-  if (!track) return;
-  playTrack(track);
+  if (track) playTrack(track);
 }
 
-/* ============== PLAYBACK ============== */
-const audio = $('audio');
+/* QUEUE */
+function toggleQueue() {
+  queueHidden = !queueHidden;
+  applyQueueState();
+  localStorage.setItem('exna_queue_hidden', queueHidden ? 'true' : 'false');
+}
+function applyQueueState() {
+  const exp = $('expanded');
+  const lbl = $('queue-label');
+  if (!exp) return;
+  exp.classList.toggle('queue-hidden', queueHidden);
+  if (lbl) lbl.textContent = queueHidden ? 'Mostrar' : 'Ocultar';
+  if (!queueHidden) renderQueue();
+}
+function renderQueue() {
+  const list = $('queue-list');
+  if (!list) return;
+  if (!currentTrack) {
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-2);font-size:12px">Nenhuma música tocando</div>';
+    return;
+  }
+  let tracks;
+  if (currentTrackSource === 'online' && currentTrack.album) {
+    tracks = onlineLibrary.filter(t => t.album === currentTrack.album);
+  } else if (currentTrackSource === 'online') {
+    tracks = onlineLibrary;
+  } else {
+    tracks = getActiveList();
+  }
+  if (tracks.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-2);font-size:12px">Fila vazia</div>';
+    return;
+  }
+  list.innerHTML = tracks.map(t => {
+    const isCur = currentTrack && currentTrack.id === t.id;
+    return '<div class="queue-item ' + (isCur ? 'current' : '') + '" onclick="playTrack(findTrack(\'' + t.id + '\'))">' +
+      '<div class="queue-thumb">' + (t.thumbUrl ? '<img src="' + t.thumbUrl + '" onerror="this.style.display=\'none\'">' : svgIcon('i-music')) + '</div>' +
+      '<div class="queue-info"><div class="qt">' + esc(t.name) + '</div><div class="qs">' + esc(t.artist) + '</div></div>' +
+      (isCur ? '<div class="eq"><span></span><span></span><span></span></div>' : '') +
+    '</div>';
+  }).join('');
+  setTimeout(() => {
+    const cur = list.querySelector('.queue-item.current');
+    if (cur) cur.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }, 50);
+}
 
+/* PLAYBACK */
+const audio = $('audio');
 function playTrack(track) {
   if (!track || !track.url) return;
   currentTrack = track;
   currentTrackSource = track.source;
 
-  // SEMPRE seta src (corrige o bug de continuar tocando outra)
   audio.src = track.url;
   audio.play().catch(err => console.log('play blocked:', err));
 
-  // UI
   $('mini-title').textContent = track.name;
   $('mini-artist').textContent = track.artist + (track.source === 'online' ? ' · Online' : '');
   $('mini-thumb').innerHTML = track.thumbUrl
-    ? `<img src="${track.thumbUrl}" alt="" onerror="this.parentElement.innerHTML='<img src=icon.png>'">`
-    : `<img src="icon.png" alt="">`;
+    ? '<img src="' + track.thumbUrl + '" alt="" onerror="this.parentElement.innerHTML=\'<img src=icon.png>\'">'
+    : '<img src="icon.png" alt="">';
 
   $('exp-title').textContent = track.name;
   $('exp-artist').textContent = track.artist;
   $('exp-art').innerHTML = track.thumbUrl
-    ? `<img src="${track.thumbUrl}" alt="">`
-    : `<img src="icon.png" alt="">`;
+    ? '<img src="' + track.thumbUrl + '" alt="">'
+    : '<img src="icon.png" alt="">';
 
   updateExpandedFav();
-
-  // Album theme
   if (document.documentElement.getAttribute('data-theme') === 'album') updateAlbumColors(track);
 
-  // Media session
   if ('mediaSession' in navigator) {
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: track.name,
         artist: track.artist,
-        album: 'EXNA MUSIC',
+        album: track.album || 'EXNA MUSIC',
         artwork: [{ src: track.thumbUrl || 'icon.png', sizes: '512x512', type: 'image/png' }]
       });
       navigator.mediaSession.setActionHandler('play', () => audio.play());
@@ -861,16 +938,14 @@ function playTrack(track) {
     } catch(e) {}
   }
 
-  // Re-render para mostrar o card ativo
-  setTimeout(() => renderLibrary(), 30);
+  renderLibrary();
+  renderQueue();
 
-  // Persistir
   if (track.source === 'local') {
     const idx = localLibrary.indexOf(track);
     if (idx >= 0) localStorage.setItem('exna_last_index', idx);
   }
 }
-
 function togglePlay() {
   if (!currentTrack || !audio.src) {
     const list = getActiveList();
@@ -880,32 +955,22 @@ function togglePlay() {
   if (audio.paused) audio.play();
   else audio.pause();
 }
-
 function nextSong() {
   if (!currentTrack) { togglePlay(); return; }
-  const list = currentTrackSource === 'online' ? onlineLibrary : localLibrary;
+  const list = currentTrackSource === 'online' ? onlineLibrary : getActiveList();
   if (list.length === 0) return;
-  if (isShuffle) {
-    const pick = list[Math.floor(Math.random() * list.length)];
-    playTrack(pick);
-    return;
-  }
+  if (isShuffle) { playTrack(list[Math.floor(Math.random() * list.length)]); return; }
   const idx = list.indexOf(currentTrack);
   playTrack(list[(idx + 1) % list.length]);
 }
 function prevSong() {
   if (!currentTrack) { togglePlay(); return; }
-  const list = currentTrackSource === 'online' ? onlineLibrary : localLibrary;
+  const list = currentTrackSource === 'online' ? onlineLibrary : getActiveList();
   if (list.length === 0) return;
-  if (isShuffle) {
-    const pick = list[Math.floor(Math.random() * list.length)];
-    playTrack(pick);
-    return;
-  }
+  if (isShuffle) { playTrack(list[Math.floor(Math.random() * list.length)]); return; }
   const idx = list.indexOf(currentTrack);
   playTrack(list[(idx - 1 + list.length) % list.length]);
 }
-
 function toggleShuffle() {
   isShuffle = !isShuffle;
   $('shuffle-mini').classList.toggle('active', isShuffle);
@@ -915,7 +980,6 @@ function toggleRepeat() {
   isRepeat = !isRepeat;
   $('repeat-exp').classList.toggle('active', isRepeat);
 }
-
 audio.addEventListener('ended', () => {
   if (isRepeat) { audio.currentTime = 0; audio.play(); }
   else nextSong();
@@ -924,6 +988,7 @@ audio.addEventListener('play', () => {
   document.documentElement.classList.add('playing');
   updatePlayIcons(true);
   renderLibrary();
+  renderQueue();
 });
 audio.addEventListener('pause', () => {
   document.documentElement.classList.remove('playing');
@@ -939,10 +1004,6 @@ audio.addEventListener('timeupdate', () => {
   $('duration').textContent = fmt(audio.duration);
   $('exp-time').textContent = fmt(audio.currentTime);
   $('exp-duration').textContent = fmt(audio.duration);
-  if (currentTrack?.source === 'local') {
-    const idx = localLibrary.indexOf(currentTrack);
-    if (idx >= 0) localStorage.setItem('exna_last_time_' + idx, audio.currentTime);
-  }
 });
 function updatePlayIcons(playing) {
   const html = svgIcon(playing ? 'i-pause' : 'i-play');
@@ -953,17 +1014,19 @@ function seekAudio(v) {
   if (audio.duration) audio.currentTime = (v / 100) * audio.duration;
 }
 
-/* ============== EXPANDED PLAYER ============== */
-function openExpanded() { $('expanded').classList.add('open'); }
+/* EXPANDED */
+function openExpanded() {
+  $('expanded').classList.add('open');
+  if (!queueHidden) renderQueue();
+}
 function closeExpanded() { $('expanded').classList.remove('open'); }
 
-/* ============== SIDEBAR ============== */
 function toggleSidebar() {
   $('sidebar').classList.toggle('open');
   $('overlay').classList.toggle('open');
 }
 
-/* ============== FILE UPLOAD ============== */
+/* FILE UPLOAD */
 const fileInput = $('file-input');
 fileInput.addEventListener('change', e => {
   const files = e.target.files;
@@ -971,79 +1034,88 @@ fileInput.addEventListener('change', e => {
   handleFiles(Array.from(files));
   fileInput.value = '';
 });
-
-function handleFiles(files) {
-  let count = 0;
-  files.forEach(file => {
-    if (!file.type.startsWith('audio/') && !/\.(mp3|wav|flac|m4a|aac|ogg|wma|opus)$/i.test(file.name)) return;
-    count++;
+async function handleFiles(files) {
+  const audioFiles = files.filter(f => f.type.startsWith('audio/') || /\.(mp3|wav|flac|m4a|aac|ogg|wma|opus)$/i.test(f.name));
+  if (!audioFiles.length) return;
+  let added = 0;
+  for (const file of audioFiles) {
+    const uid = 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
     const song = {
-      id: 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+      id: uid,
+      dbId: uid,
       name: file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' '),
       artist: 'EXNA MUSIC',
-      file,
+      file: file,
       url: URL.createObjectURL(file),
       thumbUrl: null,
-      source: 'local',
-      dbId: null
+      source: 'local'
     };
     localLibrary.push(song);
-
-    // ID3
-    if (window.jsmediatags) {
+    added++;
+    renderLibrary();
+    try { await readID3(file, song); } catch(e) {}
+    const ok = await dbPut({
+      uid: uid,
+      name: song.name,
+      artist: song.artist,
+      album: song.album || null,
+      file: song.file,
+      thumbUrl: song.thumbUrl || null,
+      favorite: favorites.has(song.id)
+    });
+    console.log('[EXNA] ' + (ok ? '✅' : '❌') + ' salvo: ' + song.name);
+  }
+  renderLibrary();
+  if (added > 0) {
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:999;background:var(--glass);backdrop-filter:blur(30px);border:1px solid var(--border);color:#fff;padding:10px 18px;border-radius:100px;font-size:12px;font-weight:700';
+    t.textContent = '✅ ' + added + ' música' + (added === 1 ? '' : 's') + ' adicionada' + (added === 1 ? '' : 's');
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2200);
+  }
+}
+function readID3(file, song) {
+  return new Promise(resolve => {
+    if (!window.jsmediatags) return resolve();
+    const done = () => resolve();
+    const timeout = setTimeout(done, 3000);
+    try {
       window.jsmediatags.read(file, {
         onSuccess: tag => {
+          clearTimeout(timeout);
           const t = tag.tags || {};
           if (t.title) song.name = t.title;
           if (t.artist && !isUnknownArtist(t.artist)) song.artist = t.artist;
+          if (t.album) song.album = t.album;
           if (t.picture) {
             try {
               const d = t.picture.data;
               let s = '';
               for (let i = 0; i < d.length; i++) s += String.fromCharCode(d[i]);
-              song.thumbUrl = `data:${t.picture.format};base64,${btoa(s)}`;
+              song.thumbUrl = 'data:' + t.picture.format + ';base64,' + btoa(s);
             } catch(e) {}
           }
-          renderLibrary();
-          if (currentTrack?.id === song.id) {
-            $('mini-thumb').innerHTML = `<img src="${song.thumbUrl || 'icon.png'}">`;
-            $('exp-art').innerHTML = `<img src="${song.thumbUrl || 'icon.png'}">`;
-          }
+          resolve();
         },
-        onError: () => {}
+        onError: () => { clearTimeout(timeout); resolve(); }
       });
-    }
-
-    // DB
-    dbAdd({
-      name: song.name,
-      artist: song.artist,
-      file: song.file,
-      thumbUrl: null,
-      favorite: false
-    }, newId => { if (newId) { song.dbId = newId; song.id = 'local-' + newId; } });
+    } catch(e) { clearTimeout(timeout); resolve(); }
   });
-
-  if (currentMode !== 'local') setMode('local');
-  renderLibrary();
-  if (count > 0) console.log(`[EXNA] ${count} arquivo(s) adicionado(s)`);
 }
-
 function isUnknownArtist(a) {
   const l = ['unknown','unknown artist','artista desconhecido','desconhecido','desconhecida','various artists','vários artistas','varios artistas','va','n/a','na','none','null','undefined','-','?','sem artista','no artist','nao informado','não informado'];
   return l.includes(String(a).trim().toLowerCase());
 }
-
 function removeLocalSong(id) {
   const song = localLibrary.find(t => t.id === id);
   if (!song) return;
-  if (!confirm(`Remover "${song.name}"?`)) return;
-  if (song.dbId) dbDelete(song.dbId);
+  if (!confirm('Remover "' + song.name + '"?')) return;
+  dbDelete(song.dbId);
   playlists.forEach(pl => { pl.songIds = pl.songIds.filter(x => x !== id); });
   savePlaylists();
-  const wasCurrent = currentTrack?.id === id;
+  const wasCur = currentTrack && currentTrack.id === id;
   localLibrary = localLibrary.filter(t => t.id !== id);
-  if (wasCurrent) {
+  if (wasCur) {
     audio.pause();
     audio.src = '';
     currentTrack = null;
@@ -1053,12 +1125,13 @@ function removeLocalSong(id) {
     $('exp-title').textContent = 'Nenhuma música';
     $('exp-artist').textContent = 'EXNA MUSIC';
     $('exp-art').innerHTML = '<img src="icon.png">';
+    renderQueue();
   }
   renderLibrary();
   renderPlaylists();
 }
 
-/* ============== ARCHIVE (ONLINE) ============== */
+/* ARCHIVE */
 function cleanTitle(name) {
   let t = name;
   let album = 'NaldoA Music';
@@ -1091,13 +1164,12 @@ function cleanTitle(name) {
   if (!t || t.length < 2) t = name.replace(/_/g, ' ');
   return { title: t, album };
 }
-
 async function fetchArchive() {
   if (archiveLoading) return;
   archiveLoading = true;
   renderLibrary();
   try {
-    const res = await fetch(`https://archive.org/metadata/${ARCHIVE_ID}`);
+    const res = await fetch('https://archive.org/metadata/' + ARCHIVE_ID);
     const data = await res.json();
     const server = data.server, dir = data.dir;
     const files = data.files || [];
@@ -1110,99 +1182,95 @@ async function fetchArchive() {
       return true;
     });
     const imgFiles = files.filter(f => f.name && /\.(jpg|jpeg|png)$/i.test(f.name));
-
     onlineLibrary = audioFiles.map((file, idx) => {
       const fname = file.name;
       const base = fname.replace(/\.[^/.]+$/, '');
-      const url = `https://${server}${dir}/${encodeURIComponent(fname).replace(/%2F/g, '/')}`;
+      const url = 'https://' + server + dir + '/' + encodeURIComponent(fname).replace(/%2F/g, '/');
       let cover = 'icon.png';
       const parsed = cleanTitle(base);
       if (base.startsWith('Album_')) {
         const p = base.split('_');
         if (p.length >= 2) {
           const key = p[1];
-          const m = imgFiles.find(i => i.name.toLowerCase().includes(`album_${key.toLowerCase()}`));
-          if (m) cover = `https://${server}${dir}/${encodeURIComponent(m.name).replace(/%2F/g, '/')}`;
+          const m = imgFiles.find(i => i.name.toLowerCase().includes('album_' + key.toLowerCase()));
+          if (m) cover = 'https://' + server + dir + '/' + encodeURIComponent(m.name).replace(/%2F/g, '/');
         }
       } else {
         const m = imgFiles.find(i => i.name.replace(/\.[^/.]+$/, '').toLowerCase() === base.toLowerCase());
-        if (m) cover = `https://${server}${dir}/${encodeURIComponent(m.name).replace(/%2F/g, '/')}`;
+        if (m) cover = 'https://' + server + dir + '/' + encodeURIComponent(m.name).replace(/%2F/g, '/');
       }
       return {
         id: 'arc-' + idx,
         name: parsed.title,
         artist: 'NaldoA',
+        album: parsed.album,
         thumbUrl: cover,
-        url,
+        url: url,
         source: 'online'
       };
     });
+    // Agrupar por álbum
+    const groups = {};
+    onlineLibrary.forEach(t => {
+      const al = t.album || 'Outros';
+      if (!groups[al]) groups[al] = [];
+      groups[al].push(t);
+    });
+    onlineAlbums = Object.keys(groups).sort().map(name => ({ name, tracks: groups[name] }));
 
     archiveLoaded = true;
     archiveLoading = false;
     renderLibrary();
-    console.log(`[EXNA] ${onlineLibrary.length} faixas online carregadas`);
+    console.log('[EXNA] ' + onlineLibrary.length + ' faixas / ' + onlineAlbums.length + ' álbuns');
   } catch(e) {
     archiveLoading = false;
     archiveLoaded = false;
     renderLibrary();
-    console.error('[EXNA] Falha no archive:', e);
+    console.error('[EXNA] Falha archive:', e);
   }
 }
-
 function reloadArchive() {
   archiveLoaded = false;
   onlineLibrary = [];
+  onlineAlbums = [];
   setMode('online');
   fetchArchive();
 }
 
-/* ============== INIT ============== */
+/* INIT */
 (async function init() {
-  // Logo
   const logoIcon = $('logo-icon');
   const testImg = new Image();
   testImg.onload = () => { logoIcon.innerHTML = '<img src="icon.png" alt="">'; };
   testImg.onerror = () => { logoIcon.textContent = 'EX'; };
   testImg.src = 'icon.png';
 
-  // Theme
-  const savedTheme = localStorage.getItem('exna_theme') || 'default';
-  applyTheme(savedTheme);
-
-  // Playlists
+  applyTheme(localStorage.getItem('exna_theme') || 'default');
   loadPlaylists();
   renderPlaylists();
+  applyQueueState();
 
-  // DB + local
   await initDB();
   await loadLocalLibrary();
 
-  // Persist last local playback
   const lastIdx = parseInt(localStorage.getItem('exna_last_index'));
   if (!isNaN(lastIdx) && localLibrary[lastIdx]) {
-    // Apenas atualiza UI, não toca automaticamente
     const t = localLibrary[lastIdx];
     $('mini-title').textContent = t.name;
     $('mini-artist').textContent = t.artist;
-    if (t.thumbUrl) $('mini-thumb').innerHTML = `<img src="${t.thumbUrl}">`;
+    if (t.thumbUrl) $('mini-thumb').innerHTML = '<img src="' + t.thumbUrl + '">';
   }
 
-  // Initial render
   renderLibrary();
+  renderQueue();
 
-  // Preload archive in background for faster switching
-  if (navigator.onLine) {
-    setTimeout(fetchArchive, 500);
-  }
+  if (navigator.onLine) setTimeout(fetchArchive, 400);
 
-  // Gestures
   setupGestures();
-
-  console.log('[EXNA] App inicializado');
+  console.log('[EXNA] App inicializado. Locais:', localLibrary.length);
 })();
 
-/* ============== GESTURES ============== */
+/* GESTURES */
 function setupGestures() {
   let tx = 0, ty = 0;
   document.addEventListener('touchstart', e => {
@@ -1213,16 +1281,13 @@ function setupGestures() {
     const t = e.changedTouches[0];
     const dx = t.clientX - tx;
     const dy = t.clientY - ty;
-    // Edge swipe right → open sidebar
     if (tx < 30 && dx > 60 && Math.abs(dy) < 60 && !$('sidebar').classList.contains('open')) toggleSidebar();
-    // Swipe left → close sidebar
     if ($('sidebar').classList.contains('open') && dx < -60 && Math.abs(dy) < 60) toggleSidebar();
-    // Swipe down on expanded → close
     if ($('expanded').classList.contains('open') && dy > 80 && Math.abs(dx) < 60) closeExpanded();
   }, { passive: true });
 }
 
-/* ============== KEYBOARD ============== */
+/* KEYBOARD */
 document.addEventListener('keydown', e => {
   if (e.target.matches('input,textarea')) return;
   if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
@@ -1231,25 +1296,17 @@ document.addEventListener('keydown', e => {
   if (e.code === 'Escape') { closeExpanded(); if ($('sidebar').classList.contains('open')) toggleSidebar(); }
 });
 
-/* ============== SW REGISTRATION (PWA / OFFLINE) ============== */
+/* SW */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js', { scope: './' })
-      .then((reg) => {
-        console.log('[EXNA] SW registrado. Escopo:', reg.scope);
-      })
-      .catch((err) => console.warn('[EXNA] SW falhou:', err));
+      .then(reg => console.log('[EXNA] SW OK:', reg.scope))
+      .catch(err => console.warn('[EXNA] SW falhou:', err));
   });
 }
-
 if (navigator.storage && navigator.storage.persist) {
-  navigator.storage.persist().then((granted) => {
-    console.log('[EXNA] Armazenamento persistente:', granted ? 'OK' : 'negado');
-  }).catch(() => {});
+  navigator.storage.persist().then(g => console.log('[EXNA] Persistente:', g ? 'OK' : 'negado'));
 }
-
-window.addEventListener('online', () => console.log('[EXNA] Online'));
-window.addEventListener('offline', () => console.log('[EXNA] Offline — modo local disponível'));
 </script>
 </body>
 </html>
