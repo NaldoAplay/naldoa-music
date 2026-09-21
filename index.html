@@ -576,6 +576,10 @@ const ARCHIVE_IDS = [
   { id: 'naldoa-digital-music-stream', parser: 'filename' },
   { id: 'exna-fm', parser: 'id3' }
 ];
+const DRIVE_API_KEY = 'AIzaSyBVpSXuoQT0jjh6nqzKo5U1IYlaP_qolSs';
+const DRIVE_FOLDERS = [
+  { id: '1vcukZmaqRgdkg6hEe-zgMjY7H9VwwY9J', name: 'HITS EXTRA', category: 'HITS EXTRA', blockSize: 20 }
+];
 const DB_NAME = 'ExnaMusicDB';
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -590,8 +594,10 @@ const svgIcon = (n, st) => `<svg class="ico" style="${st||''}"><use href="#${n}"
 let localLibrary = [];
 let onlineLibrary = [];
 let onlineAlbums = [];
-let onlineView = 'albums'; // 'albums' | 'album'
+let onlineView = 'root';
+let onlineCategoryName = null;
 let onlineAlbumName = null;
+let onlineCategories = [];
 let currentMode = 'local';
 let currentView = 'all';
 let currentPlaylistId = null;
@@ -896,8 +902,9 @@ function setMode(mode) {
   currentMode = mode;
   document.querySelectorAll('.mode-tab').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  if (mode === 'online') {
-    onlineView = 'albums';
+    if (mode === 'online') {
+    onlineView = 'root';
+    onlineCategoryName = null;
     onlineAlbumName = null;
     $('section-title').textContent = 'Acervo Online';
     if (!archiveLoaded && !archiveLoading) fetchArchive();
@@ -910,19 +917,42 @@ function setMode(mode) {
 }
 
 /* ONLINE ALBUM NAVIGATION */
-function openAlbumByIndex(i) {
-  const alb = onlineAlbums[i];
-  if (!alb) return;
-  onlineView = 'album';
-  onlineAlbumName = alb.name;
-  $('section-title').textContent = alb.name;
+function openCategoryByName(name) {
+  onlineView = 'category';
+  onlineCategoryName = name;
+  onlineAlbumName = null;
+  $('section-title').textContent = name;
   renderLibrary();
   $('content').scrollTop = 0;
 }
-function backToAlbums() {
-  onlineView = 'albums';
+function openAlbumInCategory(catName, albumName) {
+  onlineView = 'album';
+  onlineCategoryName = catName;
+  onlineAlbumName = albumName;
+  $('section-title').textContent = albumName;
+  renderLibrary();
+  $('content').scrollTop = 0;
+}
+function openSoloAlbum(name) {
+  onlineView = 'album';
+  onlineCategoryName = null;
+  onlineAlbumName = name;
+  $('section-title').textContent = name;
+  renderLibrary();
+  $('content').scrollTop = 0;
+}
+function backToRoot() {
+  onlineView = 'root';
+  onlineCategoryName = null;
   onlineAlbumName = null;
   $('section-title').textContent = 'Acervo Online';
+  renderLibrary();
+  $('content').scrollTop = 0;
+}
+function backToCategory() {
+  onlineView = 'category';
+  onlineAlbumName = null;
+  $('section-title').textContent = onlineCategoryName || 'Acervo Online';
   renderLibrary();
   $('content').scrollTop = 0;
 }
@@ -946,25 +976,62 @@ function renderLibrary() {
       list.innerHTML = '<div class="empty-state">' + svgIcon('i-globe','width:48px;height:48px') + '<h3>Acervo indisponível</h3><p>Sem conexão ou acervo vazio.<br>Toque em "Recarregar Acervo" no menu.</p></div>';
       return;
     }
-    // Sub-view de álbum
+        // ───── ÁLBUM (faixas) ─────
     if (onlineView === 'album' && onlineAlbumName) {
       const tracks = onlineLibrary.filter(t => t.album === onlineAlbumName);
       title.textContent = onlineAlbumName;
       counter.textContent = tracks.length + ' faixa' + (tracks.length === 1 ? '' : 's');
-      list.innerHTML = '<button class="back-btn" onclick="backToAlbums()">' + svgIcon('i-up','width:14px;height:14px') + 'Voltar aos álbuns</button>' + tracks.map(t => buildCard(t)).join('');
+      const backFn = onlineCategoryName ? 'backToCategory()' : 'backToRoot()';
+      list.innerHTML = '<button class="back-btn" onclick="' + backFn + '">' +
+        svgIcon('i-up','width:14px;height:14px') + 'Voltar' +
+        '</button>' + tracks.map(t => buildCard(t)).join('');
       return;
     }
-    // View de álbuns
+
+    // ───── CATEGORIA (sub-álbuns do Drive) ─────
+    if (onlineView === 'category' && onlineCategoryName) {
+      const cat = onlineCategories.find(c => c.name === onlineCategoryName);
+      if (!cat) { backToRoot(); return; }
+      title.textContent = cat.name;
+      counter.textContent = cat.albums.length + ' volume' + (cat.albums.length === 1 ? '' : 's');
+      list.innerHTML = '<button class="back-btn" onclick="backToRoot()">' +
+        svgIcon('i-up','width:14px;height:14px') + 'Voltar' +
+        '</button>' +
+        cat.albums.map(alb => {
+          const cover = alb.tracks[0] && alb.tracks[0].thumbUrl ? alb.tracks[0].thumbUrl : 'icon.png';
+          return '<div class="album-card" onclick="openAlbumInCategory(\'' + esc(cat.name).replace(/'/g,"\\'") + '\', \'' + esc(alb.name).replace(/'/g,"\\'") + '\')">' +
+            '<div class="album-cover"><img src="' + cover + '" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<svg class=&quot;ico&quot;><use href=&quot;#i-music&quot;/></svg>\'"></div>' +
+            '<div class="album-info"><h4>' + esc(alb.name) + '</h4><p>' + alb.tracks.length + ' faixa' + (alb.tracks.length === 1 ? '' : 's') + '</p></div>' +
+            svgIcon('i-next','width:18px;height:18px;color:var(--text-2)') +
+          '</div>';
+        }).join('');
+      return;
+    }
+
+    // ───── ROOT (álbuns do archive + HITS EXTRA no FINAL) ─────
     title.textContent = 'Acervo Online';
-    counter.textContent = onlineAlbums.length + ' álbuns';
-    list.innerHTML = onlineAlbums.map((alb, i) => {
+    counter.textContent = (onlineAlbums.length + onlineCategories.length) + ' pastas';
+
+    let rootHtml = onlineAlbums.map(alb => {
       const cover = alb.tracks[0] && alb.tracks[0].thumbUrl ? alb.tracks[0].thumbUrl : 'icon.png';
-      return '<div class="album-card" onclick="openAlbumByIndex(' + i + ')">' +
+      return '<div class="album-card" onclick="openSoloAlbum(\'' + esc(alb.name).replace(/'/g,"\\'") + '\')">' +
         '<div class="album-cover"><img src="' + cover + '" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<svg class=&quot;ico&quot;><use href=&quot;#i-music&quot;/></svg>\'"></div>' +
         '<div class="album-info"><h4>' + esc(alb.name) + '</h4><p>' + alb.tracks.length + ' faixa' + (alb.tracks.length === 1 ? '' : 's') + '</p></div>' +
         svgIcon('i-next','width:18px;height:18px;color:var(--text-2)') +
-        '</div>';
+      '</div>';
     }).join('');
+
+    rootHtml += onlineCategories.map(cat => {
+      const firstTrack = cat.albums[0] && cat.albums[0].tracks[0];
+      const cover = firstTrack && firstTrack.thumbUrl ? firstTrack.thumbUrl : 'icon.png';
+      return '<div class="album-card" onclick="openCategoryByName(\'' + esc(cat.name).replace(/'/g,"\\'") + '\')" style="border-color:var(--accent-solid)">' +
+        '<div class="album-cover"><img src="' + cover + '" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<svg class=&quot;ico&quot;><use href=&quot;#i-music&quot;/></svg>\'"></div>' +
+        '<div class="album-info"><h4>' + esc(cat.name) + '</h4><p>' + cat.albums.length + ' volume' + (cat.albums.length === 1 ? '' : 's') + ' · ' + cat.total + ' faixas</p></div>' +
+        svgIcon('i-next','width:18px;height:18px;color:var(--accent-solid)') +
+      '</div>';
+    }).join('');
+
+    list.innerHTML = rootHtml;
     return;
   }
 
@@ -1324,12 +1391,75 @@ function cleanTitle(name) {
   if (!t || t.length < 2) t = name.replace(/_/g, ' ');
   return { title: t, album };
 }
+async function fetchDriveTracks() {
+  const allDrive = [];
+  for (const folder of DRIVE_FOLDERS) {
+    try {
+      const url = 'https://www.googleapis.com/drive/v3/files?q=\'' + folder.id +
+        '\'+in+parents+and+(mimeType+contains+\'audio\')&key=' + DRIVE_API_KEY +
+        '&fields=files(id,name,mimeType,size)&pageSize=1000';
+      const res = await fetch(url);
+      const data = await res.json();
+      if (!data.files || !data.files.length) {
+        console.warn('[EXNA] Drive vazio:', folder.id);
+        continue;
+      }
+
+      // Filtra vinhetas
+      const tracks = data.files.filter(f => {
+        const n = (f.name || '').toLowerCase();
+        return !n.includes('vinheta');
+      });
+
+      // Ordena naturalmente (01, 02, 10 em vez de 01, 10, 02)
+      tracks.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+      // Divide em blocos de 20
+      const blockSize = folder.blockSize || 20;
+      const totalBlocks = Math.ceil(tracks.length / blockSize);
+
+      for (let i = 0; i < tracks.length; i += blockSize) {
+        const block = tracks.slice(i, i + blockSize);
+        const volNum = Math.floor(i / blockSize) + 1;
+        const albumName = totalBlocks > 1
+          ? folder.name + ' • Vol. ' + volNum
+          : folder.name;
+
+        block.forEach((file, idx) => {
+          const cleanName = file.name
+            .replace(/\.[^/.]+$/, '')
+            .replace(/^\d+\s*[-._)]\s*/, '')
+            .replace(/[-_]/g, ' ')
+            .trim();
+
+                    allDrive.push({
+            id: 'drive-' + file.id,
+            name: cleanName || file.name,
+            artist: 'NaldoA',
+            album: albumName,
+            category: folder.category,
+            thumbUrl: 'icon.png',
+            url: 'https://www.googleapis.com/drive/v3/files/' + file.id + '?alt=media&key=' + DRIVE_API_KEY,
+            source: 'online'
+          });
+        });
+      }
+      console.log('[EXNA] Drive ' + folder.name + ': ' + tracks.length + ' faixas em ' + totalBlocks + ' volume(s)');
+    } catch (e) {
+      console.warn('[EXNA] Falha Drive ' + folder.id, e);
+    }
+  }
+  return allDrive;
+}
+
 async function fetchArchive() {
   if (archiveLoading) return;
   archiveLoading = true;
   renderLibrary();
 
   try {
+        // ⚡ Busca os DOIS em paralelo: archive.org + Google Drive
+    const drivePromise = fetchDriveTracks();
     const results = await Promise.all(
       ARCHIVE_IDS.map(async (cfg) => {
         try {
@@ -1431,18 +1561,38 @@ async function fetchArchive() {
       });
     }
 
-    onlineLibrary = allTracks;
+        // Junta os tracks do archive + os do Drive
+    const driveTracks = await drivePromise;
+    onlineLibrary = allTracks.concat(driveTracks);
 
-    // Agrupar por álbum
-    const groups = {};
+        // Separa por categoria e por álbum simples
+    const groupByCat = {};
+    const soloGroups = {};
     onlineLibrary.forEach(t => {
       const al = t.album || 'Outros';
-      if (!groups[al]) groups[al] = [];
-      groups[al].push(t);
+      if (t.category) {
+        if (!groupByCat[t.category]) groupByCat[t.category] = {};
+        if (!groupByCat[t.category][al]) groupByCat[t.category][al] = [];
+        groupByCat[t.category][al].push(t);
+      } else {
+        if (!soloGroups[al]) soloGroups[al] = [];
+        soloGroups[al].push(t);
+      }
     });
-    onlineAlbums = Object.keys(groups).sort().map(name => ({
+
+    onlineCategories = Object.keys(groupByCat).map(catName => {
+      const albunsDoCat = groupByCat[catName];
+      const albums = Object.keys(albunsDoCat).sort().map(alName => ({
+        name: alName,
+        tracks: albunsDoCat[alName]
+      }));
+      const total = albums.reduce((s, a) => s + a.tracks.length, 0);
+      return { name: catName, albums: albums, total: total };
+    });
+
+    onlineAlbums = Object.keys(soloGroups).sort().map(name => ({
       name,
-      tracks: groups[name]
+      tracks: soloGroups[name]
     }));
 
     archiveLoaded = true;
@@ -1546,8 +1696,9 @@ function updateThumbInDom(trackId, coverUrl) {
 }
 function reloadArchive() {
   archiveLoaded = false;
-  onlineLibrary = [];
+    onlineLibrary = [];
   onlineAlbums = [];
+  onlineCategories = [];
   setMode('online');
   fetchArchive();
 }
