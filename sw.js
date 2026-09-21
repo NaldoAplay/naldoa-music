@@ -5,7 +5,7 @@
    - Fallback offline: serve index.html do cache
    ============================================================ */
 
-const CACHE_NAME = 'exna-music-v4';
+const CACHE_NAME = 'exna-music-v5';
 
 const CORE_ASSETS = [
   './',
