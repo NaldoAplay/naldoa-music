@@ -572,7 +572,10 @@ input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;bac
 <script>
 'use strict';
 
-const ARCHIVE_ID = 'naldoa-digital-music-stream';
+const ARCHIVE_IDS = [
+  { id: 'naldoa-digital-music-stream', parser: 'filename' },
+  { id: 'exna-fm', parser: 'id3' }
+];
 const DB_NAME = 'ExnaMusicDB';
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -986,7 +989,7 @@ function buildCard(song) {
     ? '<img src="' + song.thumbUrl + '" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<svg class=&quot;ico&quot;><use href=&quot;#i-music&quot;/></svg>\'">'
     : svgIcon('i-music');
   const fav = isFav(song);
-  return '<div class="song-card ' + (isCurrent ? 'active' : '') + ' ' + (isPaused ? 'paused' : '') + '" onclick="onCardClick(event, \'' + song.id + '\')">' +
+  return '<div class="song-card ' + (isCurrent ? 'active' : '') + ' ' + (isPaused ? 'paused' : '') + '" data-track-id="' + song.id + '" onclick="onCardClick(event, \'' + song.id + '\')">' +
     '<div class="song-thumb">' + thumb + '</div>' +
     '<div class="song-meta">' +
       '<h4><span class="eq"><span></span><span></span><span></span></span><span class="txt">' + esc(song.name) + '</span></h4>' +
@@ -1325,47 +1328,111 @@ async function fetchArchive() {
   if (archiveLoading) return;
   archiveLoading = true;
   renderLibrary();
+
   try {
-    const res = await fetch('https://archive.org/metadata/' + ARCHIVE_ID);
-    const data = await res.json();
-    const server = data.server, dir = data.dir;
-    const files = data.files || [];
-    const seen = new Set();
-    const audioFiles = files.filter(f => {
-      if (!f.name || !f.name.toLowerCase().endsWith('.mp3')) return false;
-      const b = f.name.toLowerCase();
-      if (seen.has(b)) return false;
-      seen.add(b);
-      return true;
-    });
-    const imgFiles = files.filter(f => f.name && /\.(jpg|jpeg|png)$/i.test(f.name));
-    onlineLibrary = audioFiles.map((file, idx) => {
-      const fname = file.name;
-      const base = fname.replace(/\.[^/.]+$/, '');
-      const url = 'https://' + server + dir + '/' + encodeURIComponent(fname).replace(/%2F/g, '/');
-      let cover = 'icon.png';
-      const parsed = cleanTitle(base);
-      if (base.startsWith('Album_')) {
-        const p = base.split('_');
-        if (p.length >= 2) {
-          const key = p[1];
-          const m = imgFiles.find(i => i.name.toLowerCase().includes('album_' + key.toLowerCase()));
-          if (m) cover = 'https://' + server + dir + '/' + encodeURIComponent(m.name).replace(/%2F/g, '/');
+    const results = await Promise.all(
+      ARCHIVE_IDS.map(async (cfg) => {
+        try {
+          const res = await fetch('https://archive.org/metadata/' + cfg.id);
+          const data = await res.json();
+          return { cfg, data };
+        } catch (e) {
+          console.warn('[EXNA] Falha no archive ' + cfg.id, e);
+          return { cfg, data: null };
         }
-      } else {
-        const m = imgFiles.find(i => i.name.replace(/\.[^/.]+$/, '').toLowerCase() === base.toLowerCase());
-        if (m) cover = 'https://' + server + dir + '/' + encodeURIComponent(m.name).replace(/%2F/g, '/');
-      }
-      return {
-        id: 'arc-' + idx,
-        name: parsed.title,
-        artist: 'NaldoA',
-        album: parsed.album,
-        thumbUrl: cover,
-        url: url,
-        source: 'online'
-      };
-    });
+      })
+    );
+
+    const allTracks = [];
+
+    for (const { cfg, data } of results) {
+      if (!data || !data.files) continue;
+      const server = data.server;
+      const dir = data.dir;
+      const files = data.files;
+
+            const seen = new Set();
+      const audioFiles = files.filter(f => {
+        if (!f.name || !f.name.toLowerCase().endsWith('.mp3')) return false;
+        // Não filtra por source: aceita original E derivado (evita cortar músicas)
+        const b = f.name.toLowerCase();
+        if (seen.has(b)) return false;
+        seen.add(b);
+        return true;
+      });
+
+      const imgFiles = files.filter(f =>
+        f.name && /\.(jpg|jpeg|png)$/i.test(f.name)
+      );
+
+      audioFiles.forEach((file, idx) => {
+        const fname = file.name;
+        const base = fname.replace(/\.[^/.]+$/, '');
+        const url = 'https://' + server + dir + '/' + encodeURIComponent(fname).replace(/%2F/g, '/');
+
+        let title, artist, album, cover;
+
+        if (cfg.parser === 'filename') {
+          const parsed = cleanTitle(base);
+          title = parsed.title;
+          artist = 'NaldoA';
+          album = parsed.album;
+          cover = 'icon.png';
+
+          if (base.startsWith('Album_')) {
+            const p = base.split('_');
+            if (p.length >= 2) {
+              const key = p[1];
+              const m = imgFiles.find(i => i.name.toLowerCase().includes('album_' + key.toLowerCase()));
+              if (m) cover = 'https://' + server + dir + '/' + encodeURIComponent(m.name).replace(/%2F/g, '/');
+            }
+          } else {
+            const m = imgFiles.find(i => i.name.replace(/\.[^/.]+$/, '').toLowerCase() === base.toLowerCase());
+            if (m) cover = 'https://' + server + dir + '/' + encodeURIComponent(m.name).replace(/%2F/g, '/');
+          }
+
+          allTracks.push({
+            id: cfg.id + '-' + idx,
+            name: title,
+            artist: artist,
+            album: album,
+            thumbUrl: cover,
+            url: url,
+            source: 'online'
+          });
+          return;
+        }
+
+                // Parser ID3 (EXNA FM) — sempre usa icon.png (o archive só tem waveform genérico)
+        title = file.title || base;
+        artist = file.artist || file.creator || 'NaldoA';
+        album = 'EXNA FM';
+        cover = 'icon.png';
+        // ❌ Não busca imagem no archive (é só waveform)
+
+                const trackObj = {
+          id: cfg.id + '-' + idx,
+          name: title,
+          artist: artist,
+          album: album,
+          thumbUrl: cover,
+          url: url,
+          source: 'online',
+          _fname: fname
+        };
+
+        // ⚠️ Filtro SÓ roda no archive do EXNA FM (cfg.parser === 'id3')
+        if (cfg.parser === 'id3' && isJunkTrack(trackObj)) {
+          console.log('[EXNA] Ignorado:', title);
+          return;
+        }
+
+        allTracks.push(trackObj);
+      });
+    }
+
+    onlineLibrary = allTracks;
+
     // Agrupar por álbum
     const groups = {};
     onlineLibrary.forEach(t => {
@@ -1373,18 +1440,109 @@ async function fetchArchive() {
       if (!groups[al]) groups[al] = [];
       groups[al].push(t);
     });
-    onlineAlbums = Object.keys(groups).sort().map(name => ({ name, tracks: groups[name] }));
+    onlineAlbums = Object.keys(groups).sort().map(name => ({
+      name,
+      tracks: groups[name]
+    }));
 
     archiveLoaded = true;
     archiveLoading = false;
     renderLibrary();
     console.log('[EXNA] ' + onlineLibrary.length + ' faixas / ' + onlineAlbums.length + ' álbuns');
-  } catch(e) {
+
+    // ⚠️ iTunes DESLIGADO por enquanto (era o que bagunçava as capas)
+    // setTimeout(() => enrichCoversWithItunes(), 1500);
+
+  } catch (e) {
     archiveLoading = false;
     archiveLoaded = false;
     renderLibrary();
     console.error('[EXNA] Falha archive:', e);
   }
+}
+function isJunkTrack(t) {
+  const name = (t.name || '').trim().toLowerCase();
+  const fname = (t._fname || '').trim().toLowerCase();
+
+  // 1. Começa com www. ou http
+  if (/^www\./i.test(fname) || /^www\./i.test(name)) return true;
+  if (/^https?:\/\//i.test(fname) || /^https?:\/\//i.test(name)) return true;
+
+  // 2. Número na frente (ex: "01 - Musica", "1. Musica", "07 Musica")
+  if (/^\d+\s*[-._)]\s*/i.test(name)) return true;
+  if (/^\d{1,3}\s+[a-z]/i.test(name)) return true;
+
+  // 3. Palavras que indicam vinheta/jingle
+  const junkWords = [
+    'vinheta', 'jingle', 'spot', 'comercial', 'abertura', 'encerramento',
+    'instrumental', 'bgm', 'estudio', 'estúdio', 'vinhet', 'promo'
+  ];
+  for (const w of junkWords) {
+    if (name.includes(w) || fname.includes(w)) return true;
+  }
+
+  return false;
+}
+/* Cache de capas em memória (não refaz toda hora) */
+const coverCache = JSON.parse(localStorage.getItem('exna_covers') || '{}');
+function saveCoverCache() {
+  try { localStorage.setItem('exna_covers', JSON.stringify(coverCache)); } catch(e) {}
+}
+
+async function fetchItunesCover(artist, title) {
+  const key = (artist + '|' + title).toLowerCase();
+  if (coverCache[key]) return coverCache[key];
+
+  try {
+    const q = encodeURIComponent(artist + ' ' + title);
+    const res = await fetch('https://itunes.apple.com/search?term=' + q + '&entity=song&limit=1');
+    const data = await res.json();
+    if (data.results && data.results[0] && data.results[0].artworkUrl100) {
+      // Sobe a resolução pra 600x600
+      const cover = data.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
+      coverCache[key] = cover;
+      saveCoverCache();
+      return cover;
+    }
+  } catch(e) { /* silencioso */ }
+
+  coverCache[key] = null;
+  return null;
+}
+
+/* Busca capas em background, uma por vez, com pausa pra não sobrecarregar */
+async function enrichCoversWithItunes() {
+  const needs = onlineLibrary.filter(t =>
+    (!t.thumbUrl || t.thumbUrl === 'icon.png') && t.source === 'online' && !t._coverTried
+  );
+  if (!needs.length) return;
+
+  console.log('[EXNA] Buscando capas pra ' + needs.length + ' faixas...');
+
+  for (const t of needs) {
+    t._coverTried = true;
+    const cover = await fetchItunesCover(t.artist, t.name);
+    if (cover) {
+      t.thumbUrl = cover;
+      // Atualiza só o card que está na tela (sem re-renderizar tudo)
+      updateThumbInDom(t.id, cover);
+    }
+    // Pausa de 250ms pra não tomar rate limit do iTunes
+    await new Promise(r => setTimeout(r, 250));
+  }
+  console.log('[EXNA] Capas concluídas.');
+}
+
+/* Atualiza o <img> da capa no DOM sem re-renderizar a lista toda */
+function updateThumbInDom(trackId, coverUrl) {
+  // Procura por elementos com data-track-id (vou fazer o buildCard adicionar)
+  const cards = document.querySelectorAll('[data-track-id="' + trackId + '"]');
+  cards.forEach(card => {
+    const thumb = card.querySelector('.song-thumb, .album-cover, .queue-thumb');
+    if (thumb && !thumb.querySelector('img[src="' + coverUrl + '"]')) {
+      thumb.innerHTML = '<img src="' + coverUrl + '" alt="">';
+    }
+  });
 }
 function reloadArchive() {
   archiveLoaded = false;
@@ -1420,7 +1578,8 @@ function reloadArchive() {
 
   renderLibrary();
   renderQueue();
-
+    // Busca capas em background
+    
   if (navigator.onLine) setTimeout(fetchArchive, 400);
 
   setupGestures();
