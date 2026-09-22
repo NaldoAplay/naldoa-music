@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>NaldoA — Release</title>
+<meta name="description" content="Listen to the latest release by NaldoA on all platforms." />
+<meta property="og:type" content="music.song" />
+<meta property="og:title" content="NaldoA — Release" />
+<meta property="og:image" content="NaldoA.jpg" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23000'/><text x='50' y='50' text-anchor='middle' dy='.36em' font-size='58' font-family='-apple-system,sans-serif' font-weight='700' fill='white'>N</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #04040a;
+  --text: #f5f5f7;
+  --muted: #8b8b94;
+  --soft: #b8b8c2;
+  --glass: rgba(255, 255, 255, 0.055);
+  --glass-hover: rgba(255, 255, 255, 0.10);
+  --border: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.20);
+  --accent-1: #6366f1;
+  --accent-2: #8b5cf6;
+  --accent-3: #06b6d4;
+  --radius-lg: 32px;
+  --max: 1240px;
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --shadow-glass: 0 1px 0 0 rgba(255,255,255,0.08) inset, 0 1px 3px 0 rgba(0,0,0,0.4), 0 30px 70px -20px rgba(0,0,0,0.8);
+  --shadow-photo: 0 1px 0 0 rgba(255,255,255,0.10) inset, 0 50px 100px -20px rgba(0,0,0,0.9);
+}
+[data-theme="light"] {
+  --bg: #f5f5fb; --text: #0a0a12; --muted: #6e6e78; --soft: #4a4a55;
+  --glass: rgba(255, 255, 255, 0.55); --glass-hover: rgba(255, 255, 255, 0.78);
+  --border: rgba(0, 0, 0, 0.08); --border-strong: rgba(0, 0, 0, 0.16);
+  --shadow-glass: 0 1px 0 0 rgba(255,255,255,1) inset, 0 1px 3px 0 rgba(0,0,0,0.05), 0 30px 70px -20px rgba(60,40,120,0.20);
+  --shadow-photo: 0 1px 0 0 rgba(255,255,255,1) inset, 0 50px 100px -20px rgba(60,40,120,0.28);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg); color: var(--text);
+  line-height: 1.5; letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; min-height: 100vh;
+  transition: background .6s ease, color .6s ease;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; }
+
+/* FUNDO COM A CAPA */
+.bg-cover {
+  position: fixed; inset: 0; z-index: -5;
+  background-size: cover; background-position: center center;
+  filter: blur(40px) brightness(0.85) saturate(1.5);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  transform: scale(1.15);
+  will-change: opacity;
+}
+.bg-cover.active { opacity: 1; }
+[data-theme="light"] .bg-cover { filter: blur(45px) brightness(1.05) saturate(1.1); }
+
+.bg-cover-overlay {
+  position: fixed; inset: 0; z-index: -4; pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(4,4,10,0.35) 0%,
+    rgba(4,4,10,0.55) 45%,
+    rgba(4,4,10,0.85) 100%);
+  transition: background .6s ease;
+}
+[data-theme="light"] .bg-cover-overlay {
+  background: linear-gradient(180deg,
+    rgba(245,245,251,0.30) 0%,
+    rgba(245,245,251,0.50) 45%,
+    rgba(245,245,251,0.85) 100%);
+}
+
+.bg-blobs { position: fixed; inset: 0; z-index: -3; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(120px); }
+.blob-1 { width: 50vw; height: 50vw; top: -15vw; left: -15vw; background: radial-gradient(circle, var(--accent-1) 0%, transparent 65%); opacity: 0.22; animation: drift1 24s ease-in-out infinite; }
+.blob-2 { width: 45vw; height: 45vw; bottom: -15vw; right: -15vw; background: radial-gradient(circle, var(--accent-2) 0%, transparent 65%); opacity: 0.20; animation: drift2 30s ease-in-out infinite; }
+[data-theme="light"] .blob { opacity: 0.10 !important; }
+@keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(8vw,6vw) scale(1.15); } }
+@keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-10vw,8vw) scale(1.1); } }
+
+.bg-noise {
+  position: fixed; inset: 0; z-index: 9997; pointer-events: none;
+  opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+}
+[data-theme="light"] .bg-noise { opacity: 0.06; mix-blend-mode: multiply; }
+
+.container { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+
+/* HEADER */
+header {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 40px); max-width: var(--max); z-index: 100;
+  padding: 12px 12px 12px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-radius: 999px;
+  background: rgba(12, 12, 18, 0.6);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-glass);
+}
+[data-theme="light"] header { background: rgba(255, 255, 255, 0.7); }
+.logo { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.025em; }
+.header-actions { display: flex; align-items: center; gap: 4px; }
+.icon-btn { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: transparent; border: 1px solid transparent; transition: background .25s ease; }
+.icon-btn:hover { background: var(--glass-hover); }
+.icon-btn svg { width: 17px; height: 17px; color: var(--soft); stroke-width: 1.6; }
+.icon-btn:hover svg { color: var(--text); }
+.icon-btn .icon-sun { display: none; }
+[data-theme="light"] .icon-btn .icon-sun { display: block; }
+[data-theme="light"] .icon-btn .icon-moon { display: none; }
+.lang-wrap { position: relative; }
+.lang-btn { width: auto; padding: 0 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-size: 0.76rem; font-weight: 500; color: var(--soft); }
+.lang-btn:hover { color: var(--text); }
+.lang-menu { position: absolute; top: 52px; right: 0; min-width: 160px; padding: 6px; border-radius: 16px; display: none; flex-direction: column; background: rgba(12, 12, 18, 0.9); backdrop-filter: blur(30px); border: 1px solid var(--border); box-shadow: var(--shadow-glass); z-index: 10; }
+[data-theme="light"] .lang-menu { background: rgba(255, 255, 255, 0.92); }
+.lang-menu.open { display: flex; }
+.lang-menu button { text-align: left; padding: 9px 12px; border-radius: 10px; font-size: 0.83rem; color: var(--soft); transition: background .2s, color .2s; }
+.lang-menu button:hover, .lang-menu button.active { background: var(--glass-hover); color: var(--text); }
+
+main { padding: 130px 0 80px; }
+.back-link { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 40px; padding: 8px 16px 8px 12px; border-radius: 999px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); font-size: 0.82rem; color: var(--soft); transition: all .25s ease; }
+.back-link:hover { background: var(--glass-hover); border-color: var(--border-strong); color: var(--text); }
+.back-link svg { width: 14px; height: 14px; }
+
+/* LAYOUT */
+.release-hero { display: grid; grid-template-columns: 1fr 1.15fr; gap: 64px; align-items: center; margin-bottom: 64px; }
+.cover-wrap { position: relative; aspect-ratio: 1 / 1; border-radius: 28px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-photo); background: linear-gradient(135deg, #1a1a2e, #0f0f1a); }
+.cover-wrap::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 1px 0 rgba(255,255,255,0.14); }
+.cover-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 18px; }
+.eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--border-strong); }
+.info h1 { font-size: clamp(2.4rem, 5.5vw, 4.5rem); margin-bottom: 22px; letter-spacing: -0.045em; line-height: 0.95; background: linear-gradient(180deg, var(--text) 0%, var(--soft) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.info .desc { color: var(--soft); font-size: 1rem; line-height: 1.6; max-width: 500px; margin-bottom: 36px; }
+
+/* PLATAFORMAS */
+.platforms-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; font-weight: 500; }
+.platforms { display: flex; flex-wrap: wrap; gap: 8px; }
+.platform {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 999px;
+  background: var(--glass); backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  font-size: 0.82rem; font-weight: 500; color: var(--soft);
+  transition: all .25s ease;
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.06) inset;
+  cursor: pointer;
+}
+.platform:hover { transform: translateY(-2px); background: var(--glass-hover); color: var(--text); }
+.platform svg { width: 15px; height: 15px; flex-shrink: 0; transition: transform .25s ease; }
+.platform:hover svg { transform: scale(1.15); }
+.platform.spotify svg    { color: #1DB954; }
+.platform.apple svg      { color: #FA243C; }
+.platform.youtube svg    { color: #FF0000; }
+.platform.deezer svg     { color: #A238FF; }
+.platform.amazon svg     { color: #00A8E1; }
+.platform.soundcloud svg { color: #FF5500; }
+.platform.spotify:hover    { border-color: rgba(29, 185, 84, 0.6);  box-shadow: 0 6px 20px -6px rgba(29, 185, 84, 0.5); }
+.platform.apple:hover      { border-color: rgba(250, 36, 60, 0.6);  box-shadow: 0 6px 20px -6px rgba(250, 36, 60, 0.5); }
+.platform.youtube:hover    { border-color: rgba(255, 0, 0, 0.6);    box-shadow: 0 6px 20px -6px rgba(255, 0, 0, 0.5); }
+.platform.deezer:hover     { border-color: rgba(162, 56, 255, 0.6); box-shadow: 0 6px 20px -6px rgba(162, 56, 255, 0.5); }
+.platform.amazon:hover     { border-color: rgba(0, 168, 225, 0.6);  box-shadow: 0 6px 20px -6px rgba(0, 168, 225, 0.5); }
+.platform.soundcloud:hover { border-color: rgba(255, 85, 0, 0.6);   box-shadow: 0 6px 20px -6px rgba(255, 85, 0, 0.5); }
+
+/* SHARE */
+.share-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+.share-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; font-weight: 500; }
+.share-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.share-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); font-size: 0.8rem; font-weight: 450; color: var(--soft); transition: all .25s ease; }
+.share-btn:hover { transform: translateY(-2px); background: var(--glass-hover); border-color: var(--border-strong); color: var(--text); }
+.share-btn svg { width: 14px; height: 14px; }
+.share-btn.copied { border-color: rgba(48, 209, 88, 0.5); color: #30d158; }
+
+/* MORE */
+.more-section { margin-top: 80px; }
+.more-title { font-size: clamp(1.25rem, 2.5vw, 1.75rem); margin-bottom: 24px; }
+.more-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.more-card { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--glass); backdrop-filter: blur(20px); transition: all .35s var(--ease); display: block; }
+.more-card:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: 0 16px 40px -16px rgba(0,0,0,0.6); }
+.more-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; transition: transform .8s var(--ease); background: linear-gradient(135deg, #1a1a2e, #0f0f1a); }
+.more-card:hover img { transform: scale(1.05); }
+.more-info { padding: 10px 12px 12px; }
+.more-title-card { font-family: var(--font-display); font-weight: 600; font-size: 0.82rem; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.more-meta { font-size: 0.68rem; color: var(--muted); }
+
+footer { padding: 50px 0 30px; border-top: 1px solid var(--border); margin-top: 60px; }
+.footer-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.footer-logo { font-family: var(--font-display); font-weight: 600; font-size: 1rem; }
+.copyright { color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+.socials { display: flex; gap: 6px; }
+.socials a { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--glass); border: 1px solid var(--border); transition: all .25s ease; }
+.socials a:hover { background: var(--glass-hover); border-color: var(--border-strong); transform: translateY(-2px); }
+.socials svg { width: 15px; height: 15px; color: var(--soft); stroke-width: 1.6; }
+
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+[data-reveal].in-view { opacity: 1; transform: translateY(0); }
+
+.toast { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(100px); padding: 11px 20px; border-radius: 999px; background: rgba(12, 12, 18, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--border); color: #fff; font-size: 0.82rem; font-weight: 500; z-index: 9999; opacity: 0; transition: all .4s var(--ease); box-shadow: var(--shadow-glass); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 900px) {
+  .container { padding: 0 22px; }
+  main { padding: 110px 0 60px; }
+  .release-hero { grid-template-columns: 1fr; gap: 32px; margin-bottom: 48px; }
+  .cover-wrap { max-width: 380px; margin: 0 auto; width: 100%; border-radius: 22px; }
+  .info h1 { font-size: clamp(2rem, 9vw, 3rem); }
+  .more-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+}
+@media (max-width: 560px) {
+  .container { padding: 0 16px; }
+  main { padding: 96px 0 50px; }
+  header { width: calc(100% - 20px); padding: 6px 6px 6px 14px; top: 10px; }
+  .logo { font-size: 0.9rem; }
+  .icon-btn { width: 34px; height: 34px; }
+  .back-link { font-size: 0.74rem; padding: 6px 12px 6px 10px; margin-bottom: 24px; }
+  .info h1 { font-size: clamp(1.9rem, 10vw, 2.6rem); margin-bottom: 16px; }
+  .info .desc { font-size: 0.88rem; margin-bottom: 26px; }
+  .eyebrow { font-size: 0.6rem; margin-bottom: 12px; }
+  .platforms-label { font-size: 0.6rem; margin-bottom: 10px; }
+  .platform { padding: 8px 13px; font-size: 0.74rem; gap: 6px; }
+  .platform svg { width: 13px; height: 13px; }
+  .share-section { margin-top: 40px; padding-top: 32px; }
+  .more-section { margin-top: 56px; }
+  .more-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  footer { padding: 36px 0 26px; margin-top: 50px; }
+  .footer-grid { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-cover" id="bgCover"></div>
+<div class="bg-cover-overlay"></div>
+
+<div class="bg-blobs" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+</div>
+<div class="bg-noise" aria-hidden="true"></div>
+
+<header>
+  <a href="index.html" class="logo">NaldoA</a>
+  <div class="header-actions">
+    <div class="lang-wrap">
+      <button class="icon-btn lang-btn" id="langBtn" aria-label="Language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 3.5 9 14 14 0 0 1-3.5 9 14 14 0 0 1-3.5-9A14 14 0 0 1 12 3z"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <div class="lang-menu" id="langMenu">
+        <button data-lang="pt">Português</button>
+        <button data-lang="en">English</button>
+        <button data-lang="es">Español</button>
+      </div>
+    </div>
+    <button class="icon-btn" id="themeToggle" aria-label="Theme">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <a href="index.html#catalog" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span data-i18n="back">All releases</span>
+    </a>
+
+    <div class="release-hero">
+      <div class="cover-wrap" data-reveal>
+        <img id="coverImg" src="" alt="" />
+      </div>
+      <div class="info" data-reveal>
+        <div class="eyebrow">
+          <span id="typeLabel"></span>
+          <span>·</span>
+          <span id="yearLabel"></span>
+        </div>
+        <h1 id="titleLabel">Loading...</h1>
+        <p class="desc" id="descLabel"></p>
+        <div class="platforms-label" data-i18n="listenOn">Listen on</div>
+        <div class="platforms" id="platformsWrap"></div>
+      </div>
+    </div>
+
+    <div class="share-section" data-reveal>
+      <div class="share-label" data-i18n="shareTitle">Share this release</div>
+      <div class="share-buttons">
+        <button class="share-btn" id="copyBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span data-i18n="copyLink">Copy link</span>
+        </button>
+        <a class="share-btn" id="xBtn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.96 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.02 4.13H5.06l12.02 15.64Z"/></svg>
+          X
+        </a>
+        <a class="share-btn" id="fbBtn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+      </div>
+    </div>
+
+    <div class="more-section" data-reveal>
+      <h2 class="more-title" data-i18n="moreTitle">More from NaldoA</h2>
+      <div class="more-grid" id="moreGrid"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-logo">NaldoA</div>
+      <div class="copyright">© <span id="year"></span> NaldoA. <span data-i18n="footer.rights">All rights reserved.</span></div>
+    </div>
+    <div class="socials">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+      <a href="#" aria-label="Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10a4 4 0 1 1-4-4"/><path d="M14 4c.5 2 2 3.5 4 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   🎵 CADASTRE SUAS MÚSICAS AQUI
+   ═══════════════════════════════════════════════════════════════════ */
+const RELEASES = {
+  "album-frost": { title: "Album Frost", type: "Album", year: 2026, cover: "capas/Album Frost",
+    descPT: "Álbum com atmosfera glacial e produção cinematográfica.", descEN: "Album with a glacial atmosphere and cinematic production.", descES: "Álbum con atmósfera glacial y producción cinematográfica.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "album-frozen": { title: "Album Frozen", type: "Album", year: 2026, cover: "capas/Album Frozen",
+    descPT: "Uma jornada gelada por sintetizadores cristalinos.", descEN: "A frozen journey through crystalline synths.", descES: "Un viaje helado por sintetizadores cristalinos.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "album-sinal": { title: "Album Sinal", type: "Album", year: 2026, cover: "capas/Album Sinal",
+    descPT: "Álbum que explora sinais, texturas e emoções eletrônicas.", descEN: "Album exploring signals, textures and electronic emotions.", descES: "Álbum que explora señales, texturas y emociones electrónicas.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "album-another-night": { title: "Album Another Night", type: "Album", year: 2026, cover: "capas/Album Another Night",
+    descPT: "Coletânea noturna com batidas profundas.", descEN: "Night compilation with deep beats.", descES: "Recopilación nocturna con ritmos profundos.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "another-night": { title: "Another Night", type: "Single", year: 2026, cover: "capas/Another Night",
+    descPT: "Energia noturna e groove contagiante.", descEN: "Night energy and a contagious groove.", descES: "Energía nocturna y un groove contagioso.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "blackout": { title: "Blackout", type: "Single", year: 2026, cover: "capas/Blackout",
+    descPT: "EDM sombrio com batidas hipnóticas.", descEN: "Dark EDM with hypnotic grooves.", descES: "EDM oscuro con ritmos hipnóticos.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "carry-me-home": { title: "Carry Me Home", type: "Single", year: 2026, cover: "capas/Carry Me Home",
+    descPT: "Melodia emocional com sintetizadores brilhantes.", descEN: "Emotional melody with bright synths.", descES: "Melodía emocional con sintetizadores brillantes.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "dark-room": { title: "Dark Room", type: "Single", year: 2026, cover: "capas/Dark Room",
+    descPT: "Club techno com graves profundos.", descEN: "Club techno with deep bass.", descES: "Techno de club con bajos profundos.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "deadlock": { title: "Deadlock", type: "Single", year: 2026, cover: "capas/Deadlock",
+    descPT: "Tensão crescente com drop pesado.", descEN: "Building tension with a heavy drop.", descES: "Tensión creciente con un drop pesado.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "ember": { title: "Ember", type: "Single", year: 2026, cover: "capas/EMBER",
+    descPT: "Brasa acesa — faixa quente e pulsante.", descEN: "A burning ember — warm and pulsing.", descES: "Una brasa encendida — cálida y pulsante.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "fading-signals": { title: "Fading Signals", type: "Single", year: 2026, cover: "capas/Fading Signals",
+    descPT: "Texturas eletrônicas com vocais etéreos.", descEN: "Electronic textures with ethereal vocals.", descES: "Texturas electrónicas con voces etéreas.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "fading-signals-mix": { title: "Fading Signals (Mix)", type: "Remix", year: 2026, cover: "capas/Fading Signals Mix",
+    descPT: "Versão mix estendida com progressão mais profunda.", descEN: "Extended mix with deeper progression.", descES: "Versión mix extendida con progresión más profunda.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "feeling": { title: "Feeling", type: "Single", year: 2026, cover: "capas/Feeling",
+    descPT: "Faixa melódica com groove profundo.", descEN: "Melodic track with deep groove.", descES: "Pista melódica con groove profundo.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "glacial-heart": { title: "Glacial Heart", type: "Single", year: 2026, cover: "capas/Glacial Heart",
+    descPT: "Contraste entre melodia fria e batida quente.", descEN: "Contrast between cold melody and hot beat.", descES: "Contraste entre melodía fría y ritmo caliente.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "hollow-core": { title: "Hollow Core", type: "Single", year: 2026, cover: "capas/Hollow Core",
+    descPT: "Produção crua com foco na batida e no baixo.", descEN: "Raw production focused on beat and bass.", descES: "Producción cruda enfocada en el ritmo y el bajo.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "hollow-core-progressive-house": { title: "Hollow Core (Progressive House)", type: "Single", year: 2026, cover: "capas/Hollow Core Core",
+    descPT: "Versão progressive house com progressão longa.", descEN: "Progressive house version with a long progression.", descES: "Versión progressive house con progresión larga.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "iron-currents": { title: "Iron Currents", type: "Single", year: 2026, cover: "capas/Iron Currents",
+    descPT: "Faixa industrial com graves densos.", descEN: "Industrial track with dense bass.", descES: "Pista industrial con bajos densos.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "null-state": { title: "Null State", type: "Single", year: 2026, cover: "capas/Null State",
+    descPT: "Faixa minimalista e hipnótica.", descEN: "Minimalist and hypnotic track.", descES: "Pista minimalista e hipnótica.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "overlap": { title: "Overlap", type: "Single", year: 2026, cover: "capas/Overlap",
+    descPT: "Sobreposição de camadas sonoras.", descEN: "Overlapping sonic layers.", descES: "Superposición de capas sonoras.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "proxy": { title: "Proxy", type: "Single", year: 2026, cover: "capas/Proxy",
+    descPT: "Textura futurista e groove hipnótico.", descEN: "Futuristic texture and hypnotic groove.", descES: "Textura futurista y groove hipnótico.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "shortwave": { title: "Shortwave", type: "Single", year: 2026, cover: "capas/Shortwave",
+    descPT: "Som retrô-futurista com batida pulsante.", descEN: "Retro-futuristic sound with pulsing beat.", descES: "Sonido retro-futurista con ritmo pulsante.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "the-last-goodbye": { title: "The Last Goodbye", type: "Single", year: 2026, cover: "capas/The Last Goodbye",
+    descPT: "Faixa emotiva com melodia marcante.", descEN: "Emotional track with memorable melody.", descES: "Pista emotiva con melodía memorable.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "tiempo-loco": { title: "Tiempo Loco", type: "Single", year: 2026, cover: "capas/Tiempo Loco",
+    descPT: "Batida latina vibrante com produção eletrônica.", descEN: "Vibrant Latin beat with electronic production.", descES: "Ritmo latino vibrante con producción electrónica.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "too-late": { title: "Too Late", type: "Single", year: 2026, cover: "capas/TOO LATE",
+    descPT: "Urgência e energia crua.", descEN: "Urgency and raw energy.", descES: "Urgencia y energía cruda.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "tum-ta-tum": { title: "Tum Tá Tum", type: "Single", year: 2026, cover: "capas/Tum Tá Tum",
+    descPT: "Batida latina com influência de reggaeton.", descEN: "Latin beat with reggaeton influence.", descES: "Ritmo latino con influencia de reggaeton.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "unbroken": { title: "Unbroken", type: "Single", year: 2026, cover: "capas/Unbroken",
+    descPT: "Força e resiliência no som.", descEN: "Strength and resilience in the sound.", descES: "Fuerza y resiliencia en el sonido.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "velvet-smoke": { title: "Velvet Smoke", type: "Single", year: 2026, cover: "capas/Velvet Smoke",
+    descPT: "Faixa sensual com atmosfera noturna.", descEN: "Sensual track with nocturnal atmosphere.", descES: "Pista sensual con atmósfera nocturna.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "while-there-is-still-time": { title: "While There Is Still Time", type: "Single", year: 2026, cover: "capas/While There Is Still Time",
+    descPT: "Faixa introspectiva e emotiva.", descEN: "Introspective and emotional track.", descES: "Pista introspectiva y emotiva.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "white-noise": { title: "White Noise", type: "Single", year: 2026, cover: "capas/White Noise",
+    descPT: "Textura sonora com energia hipnótica.", descEN: "Sonic texture with hypnotic energy.", descES: "Textura sonora con energía hipnótica.",
+    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+};
+/* ═══════════════════════════════════════════════════════════════════
+   RESOLVE AUTOMÁTICO DE EXTENSÃO (.jpg / .jpeg / .png)
+   ═══════════════════════════════════════════════════════════════════ */
+const IMG_EXTENSIONS = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG'];
+
+function resolveImage(basePath) {
+  return new Promise(resolve => {
+    if (/\.(jpg|jpeg|png|gif|webp)$/i.test(basePath)) {
+      resolve(basePath);
+      return;
+    }
+    let i = 0;
+    (function tryNext() {
+      if (i >= IMG_EXTENSIONS.length) { resolve(basePath + '.jpg'); return; }
+      const test = new Image();
+      test.onload = () => resolve(basePath + IMG_EXTENSIONS[i]);
+      test.onerror = () => { i++; tryNext(); };
+      test.src = basePath + IMG_EXTENSIONS[i];
+    })();
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ⚠️ NÃO PRECISA MEXER DAQUI PRA BAIXO
+   ═══════════════════════════════════════════════════════════════════ */
+const catalogList = Object.entries(RELEASES).map(([id, r]) => ({ id, ...r }));
+const params = new URLSearchParams(window.location.search);
+const releaseId = params.get('m');
+const release = RELEASES[releaseId];
+const finalRelease = release || Object.values(RELEASES)[0];
+const finalId = release ? releaseId : Object.keys(RELEASES)[0];
+
+document.title = finalRelease.title + " — NaldoA";
+document.querySelector('meta[name="description"]').setAttribute('content', finalRelease.descEN);
+document.querySelector('meta[property="og:title"]').setAttribute('content', finalRelease.title + " — NaldoA");
+
+document.getElementById('titleLabel').textContent = finalRelease.title;
+document.getElementById('typeLabel').textContent = finalRelease.type;
+document.getElementById('yearLabel').textContent = finalRelease.year;
+
+// Resolve a extensão real da imagem (jpg/jpeg/png)
+resolveImage(finalRelease.cover).then(realSrc => {
+  const imgEl = document.getElementById('coverImg');
+  imgEl.src = realSrc;
+  imgEl.alt = finalRelease.title + ' cover';
+
+  const bgCover = document.getElementById('bgCover');
+  bgCover.style.backgroundImage = `url("${realSrc}")`;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => bgCover.classList.add('active'));
+  });
+
+  document.querySelector('meta[property="og:image"]').setAttribute('content', realSrc);
+});
+
+const ICONS = {
+  spotify: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg>',
+  apple: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg>',
+  youtube: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg>',
+  deezer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M4 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>',
+  amazon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>',
+  soundcloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16h12a3 3 0 0 0 0-6h-1M4 16V8"/></svg>'
+};
+const PLATFORM_NAMES = { spotify: "Spotify", apple: "Apple Music", youtube: "YouTube Music", deezer: "Deezer", amazon: "Amazon Music", soundcloud: "SoundCloud" };
+
+const FALLBACK_LINKS = {
+  spotify: "https://open.spotify.com/",
+  apple: "https://music.apple.com/",
+  youtube: "https://music.youtube.com/",
+  deezer: "https://www.deezer.com/",
+  amazon: "https://music.amazon.com/",
+  soundcloud: "https://soundcloud.com/"
+};
+
+const wrap = document.getElementById('platformsWrap');
+Object.keys(ICONS).forEach(key => {
+  const url = (finalRelease.links && finalRelease.links[key]) || FALLBACK_LINKS[key];
+  const a = document.createElement('a');
+  a.className = 'platform ' + key;
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.innerHTML = ICONS[key] + PLATFORM_NAMES[key];
+  wrap.appendChild(a);
+});
+
+// More from NaldoA
+const moreGrid = document.getElementById('moreGrid');
+const others = catalogList.filter(x => x.id !== finalId).slice(0, 8);
+others.forEach(item => {
+  const a = document.createElement('a');
+  a.href = 'release.html?m=' + item.id;
+  a.className = 'more-card';
+  a.innerHTML = `
+    <img data-src="${item.cover}" alt="${item.title}" loading="lazy" />
+    <div class="more-info">
+      <div class="more-title-card">${item.title}</div>
+      <div class="more-meta">${item.type} · ${item.year}</div>
+    </div>
+  `;
+  moreGrid.appendChild(a);
+});
+moreGrid.querySelectorAll('img[data-src]').forEach(img => {
+  resolveImage(img.dataset.src).then(realSrc => {
+    img.src = realSrc;
+    img.removeAttribute('data-src');
+  });
+});
+
+// Tema
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('naldoa-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('naldoa-theme', next);
+});
+
+// Idioma
+const translations = {
+  pt: { back: "Todos os lançamentos", listenOn: "Ouça em", shareTitle: "Compartilhe este lançamento", copyLink: "Copiar link", moreTitle: "Mais do NaldoA", copied: "Link copiado!" },
+  en: { back: "All releases", listenOn: "Listen on", shareTitle: "Share this release", copyLink: "Copy link", moreTitle: "More from NaldoA", copied: "Link copied!" },
+  es: { back: "Todos los lanzamientos", listenOn: "Escuchar en", shareTitle: "Comparte este lanzamiento", copyLink: "Copiar enlace", moreTitle: "Más de NaldoA", copied: "¡Enlace copiado!" }
+};
+let currentLang = 'en';
+function applyLang(lang) {
+  if (!translations[lang]) lang = 'en';
+  currentLang = lang;
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.getElementById('descLabel').textContent = finalRelease['desc' + lang.toUpperCase()] || finalRelease.descEN;
+  document.getElementById('langLabel').textContent = lang.toUpperCase();
+  document.querySelectorAll('.lang-menu button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  localStorage.setItem('naldoa-lang', lang);
+}
+const langBtn = document.getElementById('langBtn');
+const langMenu = document.getElementById('langMenu');
+langBtn.addEventListener('click', e => { e.stopPropagation(); langMenu.classList.toggle('open'); });
+document.querySelectorAll('.lang-menu button').forEach(b => {
+  b.addEventListener('click', () => { applyLang(b.dataset.lang); langMenu.classList.remove('open'); });
+});
+document.addEventListener('click', () => langMenu.classList.remove('open'));
+const savedLang = localStorage.getItem('naldoa-lang');
+const browserLang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+applyLang(savedLang || (translations[browserLang] ? browserLang : 'en'));
+
+// Share
+function updateShareLinks() {
+  const url = window.location.href;
+  const text = finalRelease.title + " — NaldoA";
+  document.getElementById('xBtn').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+  document.getElementById('fbBtn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+}
+updateShareLinks();
+
+const toast = document.getElementById('toast');
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const url = window.location.href;
+  try { await navigator.clipboard.writeText(url); }
+  catch {
+    const inp = document.createElement('input');
+    inp.value = url; document.body.appendChild(inp);
+    inp.select(); document.execCommand('copy'); inp.remove();
+  }
+  toast.textContent = translations[currentLang].copied;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+});
+
+// Reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+</script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
