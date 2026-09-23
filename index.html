@@ -1417,53 +1417,7 @@ header {
     min-height: 320px;
   }
 }
-  /* ============================================================
-   HEADER — respeita ilha dinâmica / notch (iPhone + Android)
-   ============================================================ */
-
-/* Desktop: afasta um pouco do topo */
-header {
-  top: calc(20px + env(safe-area-inset-top, 0px)) !important;
-}
-
-/* Tablet / Mobile */
-@media (max-width: 900px) {
-  header {
-    top: calc(14px + env(safe-area-inset-top, 0px)) !important;
-    background: rgba(12, 12, 18, 0.92) !important;
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
-    z-index: 999 !important;
-  }
-  [data-theme="light"] header {
-    background: rgba(255, 255, 255, 0.94) !important;
-    border-color: rgba(0, 0, 0, 0.10) !important;
-  }
-}
-
-/* Mobile pequeno: header mais compacto e mais pra baixo */
-@media (max-width: 560px) {
-  header {
-    width: calc(100% - 20px) !important;
-    padding: 8px 8px 8px 16px !important;
-    top: calc(12px + env(safe-area-inset-top, 0px)) !important;
-  }
-  .logo { font-size: 0.92rem !important; }
-
-  /* Ajusta o padding do main pra não ficar atrás do header */
-  main {
-    padding-top: calc(96px + env(safe-area-inset-top, 0px)) !important;
-  }
-}
-
-/* Fallback pra navegadores antigos sem env() */
-@supports not (top: env(safe-area-inset-top)) {
-  header { top: 20px !important; }
-  @media (max-width: 900px) { header { top: 14px !important; } }
-  @media (max-width: 560px) { header { top: 12px !important; } }
-}
+  
 </style>
 </head>
 
