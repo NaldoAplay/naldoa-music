@@ -1250,6 +1250,45 @@ footer { padding: 60px 0 40px; border-top: 1px solid var(--border); margin-top: 
     margin-bottom: 36px;
   }
 }
+
+/* ============================================================
+   HEADER — respeita a ilha dinâmica / notch do iPhone
+   ============================================================ */
+header {
+  top: calc(20px + env(safe-area-inset-top, 0px)) !important;
+}
+
+/* No celular, o header desce pra baixo da ilha */
+@media (max-width: 900px) {
+  header {
+    top: calc(14px + env(safe-area-inset-top, 0px)) !important;
+    background: rgba(10, 10, 16, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    z-index: 999 !important;
+  }
+  [data-theme="light"] header {
+    background: rgba(255, 255, 255, 0.94) !important;
+    border-color: rgba(0, 0, 0, 0.10) !important;
+  }
+}
+
+/* No mobile pequeno, ajusta tamanho também */
+@media (max-width: 560px) {
+  header {
+    width: calc(100% - 24px) !important;
+    padding: 10px 12px 10px 18px !important;
+    top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+  }
+  .logo { font-size: 1rem !important; }
+
+  /* O hero também precisa descer pra não ficar atrás do header */
+  .hero {
+    padding-top: calc(110px + env(safe-area-inset-top, 0px)) !important;
+  }
+}
 </style>
 </head>
 
@@ -1959,13 +1998,7 @@ function updateOnScroll() {
   const p = max > 0 ? scrollY / max : 0;
   if (progressBar) progressBar.style.transform = `scaleX(${p})`;
 
-  if (scrollY > 40) {
-    header.style.padding = isSmallScreen ? '6px 6px 6px 16px' : '8px 8px 8px 20px';
-    header.style.top = isSmallScreen ? '8px' : '12px';
-  } else {
-    header.style.padding = isSmallScreen ? '8px 8px 8px 18px' : '12px 12px 12px 24px';
-    header.style.top = isSmallScreen ? '12px' : '20px';
-  }
+  
 
   const mult = isSmallScreen ? 0.4 : 1;
   parallaxEls.forEach(el => {
