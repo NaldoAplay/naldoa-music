@@ -56,7 +56,6 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; }
 
-/* FUNDO COM A CAPA */
 .bg-cover {
   position: fixed; inset: 0; z-index: -5;
   background-size: cover; background-position: center center;
@@ -102,7 +101,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing:
 
 .container { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
 
-/* HEADER */
 header {
   position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
   width: calc(100% - 40px); max-width: var(--max); z-index: 100;
@@ -139,7 +137,6 @@ main { padding: 130px 0 80px; }
 .back-link:hover { background: var(--glass-hover); border-color: var(--border-strong); color: var(--text); }
 .back-link svg { width: 14px; height: 14px; }
 
-/* LAYOUT */
 .release-hero { display: grid; grid-template-columns: 1fr 1.15fr; gap: 64px; align-items: center; margin-bottom: 64px; }
 .cover-wrap { position: relative; aspect-ratio: 1 / 1; border-radius: 28px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-photo); background: linear-gradient(135deg, #1a1a2e, #0f0f1a); }
 .cover-wrap::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 1px 0 rgba(255,255,255,0.14); }
@@ -150,7 +147,6 @@ main { padding: 130px 0 80px; }
 .info h1 { font-size: clamp(2.4rem, 5.5vw, 4.5rem); margin-bottom: 22px; letter-spacing: -0.045em; line-height: 0.95; background: linear-gradient(180deg, var(--text) 0%, var(--soft) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .info .desc { color: var(--soft); font-size: 1rem; line-height: 1.6; max-width: 500px; margin-bottom: 36px; }
 
-/* PLATAFORMAS */
 .platforms-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; font-weight: 500; }
 .platforms { display: flex; flex-wrap: wrap; gap: 8px; }
 .platform {
@@ -180,7 +176,6 @@ main { padding: 130px 0 80px; }
 .platform.amazon:hover     { border-color: rgba(0, 168, 225, 0.6);  box-shadow: 0 6px 20px -6px rgba(0, 168, 225, 0.5); }
 .platform.soundcloud:hover { border-color: rgba(255, 85, 0, 0.6);   box-shadow: 0 6px 20px -6px rgba(255, 85, 0, 0.5); }
 
-/* SHARE */
 .share-section { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
 .share-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; font-weight: 500; }
 .share-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -189,7 +184,6 @@ main { padding: 130px 0 80px; }
 .share-btn svg { width: 14px; height: 14px; }
 .share-btn.copied { border-color: rgba(48, 209, 88, 0.5); color: #30d158; }
 
-/* MORE */
 .more-section { margin-top: 80px; }
 .more-title { font-size: clamp(1.25rem, 2.5vw, 1.75rem); margin-bottom: 24px; }
 .more-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
@@ -209,6 +203,7 @@ footer { padding: 50px 0 30px; border-top: 1px solid var(--border); margin-top: 
 .socials a { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--glass); border: 1px solid var(--border); transition: all .25s ease; }
 .socials a:hover { background: var(--glass-hover); border-color: var(--border-strong); transform: translateY(-2px); }
 .socials svg { width: 15px; height: 15px; color: var(--soft); stroke-width: 1.6; }
+.socials a:hover svg { color: var(--text); }
 
 [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
 [data-reveal].in-view { opacity: 1; transform: translateY(0); }
@@ -333,10 +328,10 @@ footer { padding: 50px 0 30px; border-top: 1px solid var(--border); margin-top: 
       <div class="copyright">© <span id="year"></span> NaldoA. <span data-i18n="footer.rights">All rights reserved.</span></div>
     </div>
     <div class="socials">
-      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
-      <a href="#" aria-label="Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg></a>
-      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a>
-      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10a4 4 0 1 1-4-4"/><path d="M14 4c.5 2 2 3.5 4 4"/></svg></a>
+      <a href="https://instagram.com/naldoamusic" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+      <a href="https://open.spotify.com/artist/05anJA6CE7Afkn0hYyVMRV" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg></a>
+      <a href="https://youtube.com/@naldoamusic" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a>
+      <a href="https://tiktok.com/@naldoamusic" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10a4 4 0 1 1-4-4"/><path d="M14 4c.5 2 2 3.5 4 4"/></svg></a>
     </div>
   </div>
 </footer>
@@ -344,13 +339,30 @@ footer { padding: 50px 0 30px; border-top: 1px solid var(--border); margin-top: 
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
+   🔗 PERFIS OFICIAIS — preencha UMA vez, vale para tudo
+   Quando você deixar um link "" vazio numa música, ela usa o perfil
+   ═══════════════════════════════════════════════════════════════ */
+const PROFILE_LINKS = {
+  spotify:      "https://open.spotify.com/artist/05anJA6CE7Afkn0hYyVMRV",
+  apple:        "https://music.apple.com/br/artist/naldoa/1782398892",
+  youtube:      "https://youtube.com/@naldoamusic",
+  youtubeLabel: "https://youtube.com/@naldoadigitalmusic",
+  deezer:       "https://link.deezer.com/s/34oNTy6B345zBvlNUxkm1",
+  amazon:       "https://music.amazon.com.br/artists/B0DP59T244/naldoa",
+  soundcloud:   "https://soundcloud.com/naldoa",
+  instagram:    "https://instagram.com/naldoamusic",
+  tiktok:       "https://tiktok.com/@naldoamusic",
+  email:        "mailto:naldoamusic@gmail.com"
+};
+
+/* ═══════════════════════════════════════════════════════════════
    🎵 CADASTRE SUAS MÚSICAS AQUI
-   ═══════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════ */
 const RELEASES = {
   "album-frost": { title: "Album Frost", type: "Album", year: 2026, cover: "capas/Album Frost",
     descPT: "Álbum com atmosfera glacial e produção cinematográfica.", descEN: "Album with a glacial atmosphere and cinematic production.", descES: "Álbum con atmósfera glacial y producción cinematográfica.",
-    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+    links: { spotify: "https://open.spotify.com/intl-pt/album/7kwNqLFYRqS4GpkpOoRrau?si=Tf0kMyBTTPS2I0GT76M8Xw", apple: "https://music.apple.com/br/album/frost/6803013113", youtube: "https://www.youtube.com/watch?v=E01wdsDOWoU", deezer: "https://link.deezer.com/s/34pmv9JxVJOQ3OOCGEikk", amazon: "https://music.amazon.com.br/albums/B0HF69W7HR", soundcloud: "" } },
   "album-frozen": { title: "Album Frozen", type: "Album", year: 2026, cover: "capas/Album Frozen",
     descPT: "Uma jornada gelada por sintetizadores cristalinos.", descEN: "A frozen journey through crystalline synths.", descES: "Un viaje helado por sintetizadores cristalinos.",
     links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
@@ -393,9 +405,6 @@ const RELEASES = {
   "hollow-core": { title: "Hollow Core", type: "Single", year: 2026, cover: "capas/Hollow Core",
     descPT: "Produção crua com foco na batida e no baixo.", descEN: "Raw production focused on beat and bass.", descES: "Producción cruda enfocada en el ritmo y el bajo.",
     links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
-  "hollow-core-progressive-house": { title: "Hollow Core (Progressive House)", type: "Single", year: 2026, cover: "capas/Hollow Core Core",
-    descPT: "Versão progressive house com progressão longa.", descEN: "Progressive house version with a long progression.", descES: "Versión progressive house con progresión larga.",
-    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
   "iron-currents": { title: "Iron Currents", type: "Single", year: 2026, cover: "capas/Iron Currents",
     descPT: "Faixa industrial com graves densos.", descEN: "Industrial track with dense bass.", descES: "Pista industrial con bajos densos.",
     links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
@@ -410,13 +419,13 @@ const RELEASES = {
     links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
   "shortwave": { title: "Shortwave", type: "Single", year: 2026, cover: "capas/Shortwave",
     descPT: "Som retrô-futurista com batida pulsante.", descEN: "Retro-futuristic sound with pulsing beat.", descES: "Sonido retro-futurista con ritmo pulsante.",
-    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+    links: { spotify: "https://open.spotify.com/intl-pt/track/3tjFFZXvv48PxKXRE4zU0k", apple: "https://music.apple.com/br/song/shortwave/6802976192", youtube: "https://youtu.be/i6ybCRGLBxM", deezer: "https://link.deezer.com/s/34oTUw1CNWSunHFJk6Gfw", amazon: "https://music.amazon.com.br/albums/B0HF2FBD3Z", soundcloud: "" } },
   "the-last-goodbye": { title: "The Last Goodbye", type: "Single", year: 2026, cover: "capas/The Last Goodbye",
     descPT: "Faixa emotiva com melodia marcante.", descEN: "Emotional track with memorable melody.", descES: "Pista emotiva con melodía memorable.",
     links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
   "tiempo-loco": { title: "Tiempo Loco", type: "Single", year: 2026, cover: "capas/Tiempo Loco",
     descPT: "Batida latina vibrante com produção eletrônica.", descEN: "Vibrant Latin beat with electronic production.", descES: "Ritmo latino vibrante con producción electrónica.",
-    links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+    links: { spotify: "https://open.spotify.com/intl-pt/album/5GmHkjAUvZq8UgP1XfwkS3", apple: "https://music.apple.com/br/album/tiempo-loco/1789686501", youtube: "https://www.youtube.com/watch?v=0RAvJuvlfJg", deezer: "", amazon: "https://music.amazon.com.br/albums/B0DRPLTZLV", soundcloud: "" } },
   "too-late": { title: "Too Late", type: "Single", year: 2026, cover: "capas/TOO LATE",
     descPT: "Urgência e energia crua.", descEN: "Urgency and raw energy.", descES: "Urgencia y energía cruda.",
     links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
@@ -435,10 +444,23 @@ const RELEASES = {
   "white-noise": { title: "White Noise", type: "Single", year: 2026, cover: "capas/White Noise",
     descPT: "Textura sonora com energia hipnótica.", descEN: "Sonic texture with hypnotic energy.", descES: "Textura sonora con energía hipnótica.",
     links: { spotify: "", apple: "", youtube: "", deezer: "", amazon: "", soundcloud: "" } },
+  "dime-que-si": { title: "Dime Que Sí", type: "Single", year: 2026, cover: "capas/Dime Que Si",
+    descPT: "Reggaeton sensual com batida marcante.", descEN: "Sensual reggaeton with a striking beat.", descES: "Reggaeton sensual con ritmo marcante.",
+    links: { spotify: "https://open.spotify.com/album/5QvhgjBlLHrUj6iW8VsCkQ", apple: "https://music.apple.com/br/album/dime-que-s%C3%AD/1864516737", youtube: "https://www.youtube.com/watch?v=yDxDboOk4uM", deezer: "https://link.deezer.com/s/34q7MolUTLLKcoGA7Y9Ep", amazon: "https://music.amazon.com.br/albums/B0GCH1NG34", soundcloud: "" } },
+  "mystery": { title: "Mystery", type: "Single", year: 2026, cover: "capas/Mystery",
+    descPT: "Atmosfera misteriosa e groove profundo.", descEN: "Mysterious atmosphere and deep groove.", descES: "Atmósfera misteriosa y groove profundo.",
+    links: { spotify: "https://open.spotify.com/intl-pt/album/6bjOWM0II6z0RNY2aZKFuv", apple: "https://music.apple.com/br/album/mystery/6786148768", youtube: "https://www.youtube.com/watch?v=_3z893tEONE", deezer: "https://link.deezer.com/s/34q8mBOtDaemaCG2VsyOw", amazon: "https://music.amazon.com.br/albums/B0GWF7B5CP", soundcloud: "" } },
+  "gravity": { title: "Gravity", type: "Single", year: 2026, cover: "capas/Gravity",
+    descPT: "Faixa com peso e impacto emocional.", descEN: "Track with weight and emotional impact.", descES: "Pista con peso e impacto emocional.",
+    links: { spotify: "https://open.spotify.com/album/233M27Vw3aQVGRLydNWlFB", apple: "https://music.apple.com/br/song/gravity/1856660425", youtube: "https://youtu.be/lTX-4xNoziA", deezer: "https://link.deezer.com/s/34oTZ3txCwzX4WBYDoWm2", amazon: "https://music.amazon.com.br/tracks/B0G44NZM3R", soundcloud: "" } },
+  "crossing-lines": { title: "Crossing Lines", type: "Single", year: 2026, cover: "capas/Crossing Lines",
+    descPT: "Faixa marcante com progressão poderosa.", descEN: "Striking track with powerful progression.", descES: "Pista marcante con progresión poderosa.",
+    links: { spotify: "https://open.spotify.com/intl-pt/album/1EZh2trprVxxVV421iKfOa", apple: "https://music.apple.com/br/song/crossing-lines/6802976106", youtube: "https://youtu.be/NKGnU8oblfw", deezer: "https://link.deezer.com/s/34oTNW2pIHuAorm9J1ra0", amazon: "https://music.amazon.com.br/albums/B0HF2LP9VW", soundcloud: "" } },
 };
-/* ═══════════════════════════════════════════════════════════════════
+
+/* ═══════════════════════════════════════════════════════════════
    RESOLVE AUTOMÁTICO DE EXTENSÃO (.jpg / .jpeg / .png)
-   ═══════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════ */
 const IMG_EXTENSIONS = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG'];
 
 function resolveImage(basePath) {
@@ -458,9 +480,9 @@ function resolveImage(basePath) {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
    ⚠️ NÃO PRECISA MEXER DAQUI PRA BAIXO
-   ═══════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════ */
 const catalogList = Object.entries(RELEASES).map(([id, r]) => ({ id, ...r }));
 const params = new URLSearchParams(window.location.search);
 const releaseId = params.get('m');
@@ -476,7 +498,6 @@ document.getElementById('titleLabel').textContent = finalRelease.title;
 document.getElementById('typeLabel').textContent = finalRelease.type;
 document.getElementById('yearLabel').textContent = finalRelease.year;
 
-// Resolve a extensão real da imagem (jpg/jpeg/png)
 resolveImage(finalRelease.cover).then(realSrc => {
   const imgEl = document.getElementById('coverImg');
   imgEl.src = realSrc;
@@ -501,18 +522,21 @@ const ICONS = {
 };
 const PLATFORM_NAMES = { spotify: "Spotify", apple: "Apple Music", youtube: "YouTube Music", deezer: "Deezer", amazon: "Amazon Music", soundcloud: "SoundCloud" };
 
+/* ✅ Aqui é o pulo do gato: se a música não tem link específico, usa o perfil */
 const FALLBACK_LINKS = {
-  spotify: "https://open.spotify.com/",
-  apple: "https://music.apple.com/",
-  youtube: "https://music.youtube.com/",
-  deezer: "https://www.deezer.com/",
-  amazon: "https://music.amazon.com/",
-  soundcloud: "https://soundcloud.com/"
+  spotify:    PROFILE_LINKS.spotify,
+  apple:      PROFILE_LINKS.apple,
+  youtube:    PROFILE_LINKS.youtube,
+  deezer:     PROFILE_LINKS.deezer,
+  amazon:     PROFILE_LINKS.amazon,
+  soundcloud: PROFILE_LINKS.soundcloud
 };
 
 const wrap = document.getElementById('platformsWrap');
 Object.keys(ICONS).forEach(key => {
-  const url = (finalRelease.links && finalRelease.links[key]) || FALLBACK_LINKS[key];
+  const specific = (finalRelease.links && finalRelease.links[key] && finalRelease.links[key].trim()) ? finalRelease.links[key].trim() : null;
+  const url = specific || FALLBACK_LINKS[key];
+  if (!url) return; // não renderiza botão sem link
   const a = document.createElement('a');
   a.className = 'platform ' + key;
   a.href = url;
@@ -558,9 +582,9 @@ themeToggle.addEventListener('click', () => {
 
 // Idioma
 const translations = {
-  pt: { back: "Todos os lançamentos", listenOn: "Ouça em", shareTitle: "Compartilhe este lançamento", copyLink: "Copiar link", moreTitle: "Mais do NaldoA", copied: "Link copiado!" },
-  en: { back: "All releases", listenOn: "Listen on", shareTitle: "Share this release", copyLink: "Copy link", moreTitle: "More from NaldoA", copied: "Link copied!" },
-  es: { back: "Todos los lanzamientos", listenOn: "Escuchar en", shareTitle: "Comparte este lanzamiento", copyLink: "Copiar enlace", moreTitle: "Más de NaldoA", copied: "¡Enlace copiado!" }
+  pt: { back: "Todos os lançamentos", listenOn: "Ouça em", shareTitle: "Compartilhe este lançamento", copyLink: "Copiar link", moreTitle: "Mais do NaldoA", copied: "Link copiado!", "footer.rights": "Todos os direitos reservados." },
+  en: { back: "All releases", listenOn: "Listen on", shareTitle: "Share this release", copyLink: "Copy link", moreTitle: "More from NaldoA", copied: "Link copied!", "footer.rights": "All rights reserved." },
+  es: { back: "Todos los lanzamientos", listenOn: "Escuchar en", shareTitle: "Comparte este lanzamiento", copyLink: "Copiar enlace", moreTitle: "Más de NaldoA", copied: "¡Enlace copiado!", "footer.rights": "Todos los derechos reservados." }
 };
 let currentLang = 'en';
 function applyLang(lang) {
@@ -591,8 +615,8 @@ applyLang(savedLang || (translations[browserLang] ? browserLang : 'en'));
 function updateShareLinks() {
   const url = window.location.href;
   const text = finalRelease.title + " — NaldoA";
-  document.getElementById('xBtn').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-  document.getElementById('fbBtn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  document.getElementById('xBtn').href = `https://x.com/naldoamusic?s=11`;
+  document.getElementById('fbBtn').href = `https://www.facebook.com/profile.php?id=61591200540946`;
 }
 updateShareLinks();
 

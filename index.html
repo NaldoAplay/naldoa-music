@@ -22,8 +22,23 @@
 <meta name="twitter:description" content="EDM, Electronic and Reggaeton." />
 <meta name="twitter:image" content="https://naldoa.com/NaldoA.jpg" />
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23000'/><text x='50' y='50' text-anchor='middle' dy='.36em' font-size='58' font-family='-apple-system,sans-serif' font-weight='700' fill='white'>N</text></svg>" />
+<!-- FAVICON (aba do navegador) -->
+<link rel="icon" type="image/png" href="icon.png" />
 
+<!-- APPLE TOUCH ICON (iOS home screen) -->
+<link rel="apple-touch-icon" href="icon.png" />
+
+<!-- ANDROID / PWA -->
+<link rel="manifest" href="manifest.json" />
+
+<!-- Nome do app quando instalado -->
+<meta name="apple-mobile-web-app-title" content="NaldoA" />
+<meta name="application-name" content="NaldoA" />
+
+<!-- Cor da barra de status -->
+<meta name="theme-color" content="#04040a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1289,6 +1304,109 @@ header {
     padding-top: calc(110px + env(safe-area-inset-top, 0px)) !important;
   }
 }
+
+/* ============================================================
+   LABEL — imagem clicável + botão do site
+   ============================================================ */
+
+/* Imagem vira link clicável */
+.label-visual {
+  display: block;
+  cursor: pointer;
+}
+
+/* Zoom suave ao passar o mouse na imagem */
+.label-visual:hover img {
+  transform: scale(1.06);
+}
+
+/* Botão "Visit label website" */
+.label-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.label-site-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 550;
+}
+
+.label-site-btn svg {
+  width: 15px;
+  height: 15px;
+  transition: transform .3s var(--ease);
+}
+
+.label-site-btn:hover svg {
+  transform: translate(3px, -3px);
+}
+
+/* Mobile — botão ocupa a largura toda se quiser */
+@media (max-width: 560px) {
+  .label-actions {
+    margin-top: 22px;
+  }
+  .label-site-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 11px 18px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ============================================================
+   LABEL — mostra a imagem INTEIRA, sem cortar nem esticar
+   ============================================================ */
+
+/* 1. Container com proporção bonita e fundo escuro elegante */
+.label-visual {
+  position: relative;
+  background: #0a0a12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 2. Desliga o parallax exagerado (era o inset: -10% que aumentava) */
+.label-visual .visual-inner {
+  position: absolute;
+  inset: 0;   /* ⬅️ era -10% 0 — agora fica normal, sem zoom */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 3. Imagem INTEIRA dentro do container (contain em vez de cover) */
+.label-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;    /* ⬅️ mostra TUDO, sem cortar */
+  object-position: center;
+  padding: 8px;            /* respiro nas bordas, opcional */
+}
+
+/* Desktop: container com proporção equilibrada */
+@media (min-width: 901px) {
+  .label-visual {
+    aspect-ratio: 4 / 5;
+    max-height: 620px;
+  }
+}
+
+/* Mobile: mantém a altura mínima que você já tinha */
+@media (max-width: 900px) {
+  .label-visual {
+    min-height: 320px;
+  }
+}
 </style>
 </head>
 
@@ -1410,11 +1528,11 @@ header {
     </p>
 
     <!-- FEATURED 1 — bg = capa do single -->
-    <article class="release reveal" data-bg="capas/Null State.jpg">
+    <article class="release reveal" data-bg="capas/NULL STATE.jpg">
       <div class="release-cover reveal-3d" data-reveal>
         <div class="reveal-inner">
           <div class="cover-inner" data-parallax="0.10">
-            <img src="capas/Null State.jpg" alt="Neon Nights cover" loading="lazy" />
+            <img src="capas/NULL STATE.jpg" alt="Neon Nights cover" loading="lazy" />
           </div>
         </div>
       </div>
@@ -1425,34 +1543,41 @@ header {
           A melodic EDM journey with a heavy drop and cinematic atmosphere.
         </p>
         <div class="platforms">
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg> Spotify</a>
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg> Apple Music</a>
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg> YouTube</a>
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M4 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg> Deezer</a>
-        </div>
+  <a class="platform" href="https://open.spotify.com/intl-pt/track/4OKE5Gqps7Wm8vuktznjq9?si=47a021b8da104f6a" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg> Spotify</a>
+  <a class="platform" href="https://www.youtube.com/watch?v=-A7R5Dng4AE&list=OLAK5uy_mIAimoeXIawmhJ_TEz7NdQO2Nz0N1P4LI&pp=0gcJCf8COCosWNin" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg> YouTube</a>
+  <a class="platform" href="https://link.deezer.com/s/34tSgCcY9d52FKA8o4lvX" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M4 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg> Deezer</a>
+  <a class="platform" href="https://music.amazon.com.br/tracks/B0HJNT2V15?marketplaceId=A2Q3Y263D00KWC&musicTerritory=BR&ref=dm_sh_sX8tafcjJ8uBn4PKXeveHnXfb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg> Amazon Music</a>
+</div>
       </div>
     </article>
 
     <!-- FEATURED 2 -->
-    <article class="release reveal" data-bg="capas/Tiempo Loco.jpg">
+    <article class="release reveal" data-bg="capas/Dime Que Si.jpg">
       <div class="release-cover reveal-3d" data-reveal>
         <div class="reveal-inner">
           <div class="cover-inner" data-parallax="0.10">
-            <img src="capas/Tiempo Loco.jpg" alt="Ritmo Caliente cover" loading="lazy" />
+            <img src="capas/Dime Que Si.jpg" alt="Midnight Signals cover" loading="lazy" />
           </div>
         </div>
       </div>
       <div class="release-info">
-        <div class="release-type" data-i18n="featured.2.type">EP · 2025</div>
-        <h3 class="release-title">Tiempo Loco</h3>
+        <div class="release-type" data-i18n="featured.2.type">EP · 2026</div>
+        <h3 class="release-title">Dime Que Sí</h3>
         <p class="release-desc" data-i18n="featured.2.desc">
           Latin reggaeton with hot beats and memorable vocals. Made for dancing.
         </p>
         <div class="platforms">
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg> Spotify</a>
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg> Apple Music</a>
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg> YouTube</a>
-        </div>
+  <a class="platform" href="https://open.spotify.com/intl-pt/album/5QvhgjBlLHrUj6iW8VsCkQ?si=yyakItD9SZey60YTZJqaNg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg> Spotify</a>
+  <a class="platform apple" href="https://music.apple.com/br/album/dime-que-sí/1864516737" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 18V6l10-2v12"/>
+    <circle cx="6" cy="18" r="3"/>
+    <circle cx="16" cy="16" r="3"/>
+  </svg>
+  Apple Music
+</a>
+  <a class="platform" href="https://link.deezer.com/s/34q7MolUTLLKcoGA7Y9Ep" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M4 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg> Deezer</a>
+</div>
       </div>
     </article>
 
@@ -1461,7 +1586,7 @@ header {
       <div class="release-cover reveal-3d" data-reveal>
         <div class="reveal-inner">
           <div class="cover-inner" data-parallax="0.10">
-            <img src="capas/Velvet Smoke.jpeg" alt="Midnight Signals cover" loading="lazy" />
+            <img src="capas/Velvet Smoke.jpeg" alt="Ritmo Caliente cover" loading="lazy" />
           </div>
         </div>
       </div>
@@ -1469,12 +1594,14 @@ header {
         <div class="release-type" data-i18n="featured.3.type">Single · 2026</div>
         <h3 class="release-title">Velvet Smoke</h3>
         <p class="release-desc" data-i18n="featured.3.desc">
-          Deep electronic textures with late-night energy and hypnotic grooves.
+           
         </p>
         <div class="platforms">
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg> Spotify</a>
-          <a class="platform" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0M4 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg> Deezer</a>
-        </div>
+  <a class="platform" href="https://open.spotify.com/intl-pt/album/0SDfXqDXehIID3jEetJ2f1?si=KA2IUE3vTyqpW23unTP6dw" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg> Spotify</a>
+  <a class="platform" href="https://music.amazon.com.br/tracks/B0HJJCST3M?marketplaceId=A2Q3Y263D00KWC&musicTerritory=BR&ref=dm_sh_KbyrPWMkBvNOGkdfvtgkq3H9G" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="16" cy="16" r="3"/></svg> Amazon Music</a>
+  <a class="platform" href="https://youtu.be/TdYd2cJLypA?si=6nVkp_1pIylJJ-TT" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg> YouTube</a>
+</div>
+        
       </div>
     </article>
 
@@ -1513,6 +1640,9 @@ header {
 <!-- ============================================================
      LABEL
      ============================================================ -->
+<!-- ============================================================
+     LABEL — imagem clicável + botão do site da gravadora
+     ============================================================ -->
 <section class="section" id="label" data-bg="NaldoA-Digital-Music.jpg">
   <div class="container">
     <div class="section-eyebrow" data-reveal data-i18n="label.eyebrow">Independent Label</div>
@@ -1523,11 +1653,14 @@ header {
 
     <div class="label-card reveal-3d" data-reveal>
       <div class="reveal-inner" style="display: contents;">
-        <div class="label-visual">
+
+        <!-- IMAGEM CLICÁVEL → abre o site da gravadora -->
+        <a class="label-visual" href="https://naldoa-dm.web.app" target="_blank" rel="noopener" aria-label="Visit NaldoA Digital Music website">
           <div class="visual-inner" data-parallax="0.12">
             <img src="NaldoA-Digital-Music.jpg" alt="NaldoA Digital Music" loading="lazy" />
           </div>
-        </div>
+        </a>
+
         <div class="label-content">
           <div class="label-tag" data-i18n="label.tag">Founded in 2024</div>
           <h3 class="label-title" data-i18n="label.title">Music without borders.</h3>
@@ -1542,7 +1675,19 @@ header {
             <span class="label-feature" data-i18n="label.f2">Independent publishing</span>
             <span class="label-feature" data-i18n="label.f3">Artist-owned catalog</span>
           </div>
+
+          <!-- BOTÃO PARA O SITE DA GRAVADORA -->
+          <div class="label-actions">
+            <a href="https://naldoa-dm.web.app" target="_blank" rel="noopener" class="btn btn-primary label-site-btn">
+              <span data-i18n="label.visit">Visit label website</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17 17 7"/>
+                <path d="M7 7h10v10"/>
+              </svg>
+            </a>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -1600,9 +1745,7 @@ header {
 <section class="section" id="contact" data-bg="NaldoA.jpg">
   <div class="container">
     <div class="contact-card" data-reveal>
-      <h2 class="section-title">
-        <span data-i18n="contact.title1">Get in</span> touch
-      </h2>
+      <h2 class="section-title" data-i18n="contact.title">Get in touch</h2>
       <p class="section-sub" data-i18n="contact.sub">
         Collaborations, remixes, sync licensing, distribution and label partnerships.
       </p>
@@ -1632,15 +1775,30 @@ header {
       <div class="copyright">© <span id="year"></span> NaldoA. <span data-i18n="footer.rights">All rights reserved.</span></div>
     </div>
     <div class="socials">
-      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
-      <a href="#" aria-label="Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg></a>
-      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a>
-      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10a4 4 0 1 1-4-4"/><path d="M14 4c.5 2 2 3.5 4 4"/></svg></a>
-    </div>
+  <a href="https://instagram.com/naldoamusic" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+  <a href="https://open.spotify.com/artist/05anJA6CE7Afkn0hYyVMRV" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg></a>
+  <a href="https://youtube.com/@naldoamusic" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a>
+  <a href="https://tiktok.com/@naldoamusic" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10a4 4 0 1 1-4-4"/><path d="M14 4c.5 2 2 3.5 4 4"/></svg></a>
+</div>
   </div>
 </footer>
 
 <script>
+  /* ═══════════════════════════════════════════════════════════════
+   PERFIS OFICIAIS — preencha UMA VEZ e tudo funciona em todo o site
+   ═══════════════════════════════════════════════════════════════ */
+const PROFILE_LINKS = {
+  spotify:      "https://open.spotify.com/artist/05anJA6CE7Afkn0hYyVMRV",
+  apple:        "https://music.apple.com/br/artist/naldoa/1782398892",
+  youtube:      "https://youtube.com/@naldoamusic",
+  youtubeLabel: "https://youtube.com/@naldoadigitalmusic",
+  deezer:       "https://link.deezer.com/s/34oNTy6B345zBvlNUxkm1",
+  amazon:       "https://music.amazon.com.br/artists/B0DP59T244/naldoa",
+  soundcloud:   "",
+  instagram:    "https://instagram.com/naldoamusic",
+  tiktok:       "https://tiktok.com/@naldoamusic",
+  email:        "mailto:naldoamusic@gmail.com"
+};
 /* ============================================================
    CATÁLOGO — adicione seus 100+ lançamentos aqui
    ============================================================ */
@@ -1686,9 +1844,9 @@ const translations = {
     "hero.tagline": "DJ e produtor musical brasileiro unindo EDM, música eletrônica e reggaeton. Fundador da NaldoA Digital Music.",
     "hero.cta.listen": "Ouvir agora", "hero.cta.contact": "Entrar em contato", "hero.role": "DJ / Produtor / Fundador", "hero.scroll": "Rolar", "genre.electronic": "Eletrônica",
     "featured.eyebrow": "Destaques", "featured.title": "Lançamentos em destaque", "featured.sub": "Os drops mais recentes e marcantes do catálogo.",
-    "featured.1.type": "Single · 2025", "featured.1.desc": "Uma viagem de EDM melódico com drop pesado e atmosfera cinematográfica.",
-    "featured.2.type": "EP · 2024", "featured.2.desc": "Reggaeton latino com batidas quentes e vocais marcantes. Feito para dançar.",
-    "featured.3.type": "Single · 2024", "featured.3.desc": "Texturas eletrônicas profundas com energia noturna e grooves hipnóticos.",
+    "featured.1.type": "Single · 2026", "featured.1.desc": "Uma viagem de EDM melódico com drop pesado e atmosfera cinematográfica.",
+    "featured.2.type": "EP · 2026", "featured.2.desc": "Reggaeton latino com batidas quentes e vocais marcantes. Feito para dançar.",
+    "featured.3.type": "Single · 2026", "featured.3.desc": "Texturas eletrônicas profundas com energia noturna e grooves hipnóticos.",
     "catalog.eyebrow": "Discografia Completa", "catalog.title": "Catálogo completo", "catalog.sub": "faixas e álbuns lançados mundialmente.",
     "catalog.all": "Todos", "catalog.singles": "Singles", "catalog.eps": "EPs", "catalog.albums": "Álbuns", "catalog.remixes": "Remixes", "catalog.loadMore": "Mostrar todos os lançamentos",
     "label.eyebrow": "Gravadora Independente", "label.heading": "NaldoA Digital Music", "label.subhead": "Uma gravadora independente fundada em 2024 por NaldoA para distribuir, publicar e lançar música no mundo todo.",
@@ -1701,8 +1859,8 @@ const translations = {
     "bio.p2": "Como DJ e produtor, transita entre música eletrônica, EDM e reggaeton, construindo uma identidade sonora onde sintetizadores futuristas encontram ritmos latinos.",
     "bio.p3": "Fundador da NaldoA Digital Music (2024), sua missão é lançar música de forma independente, conectar culturas através do som e avançar o sound design.",
     "bio.stat1": "Faixas lançadas", "bio.stat2": "Gêneros dominados", "bio.stat3": "Gravadora fundada",
-    "contact.title1": "Entre em", "contact.sub": "Colaborações, remixes, licenciamento, distribuição e parcerias com a gravadora.", "contact.cta.email": "Enviar e-mail",
-    "footer.rights": "Todos os direitos reservados."
+    "contact.title": "Entre em contato", "contact.sub": "Colaborações, remixes, licenciamento, distribuição e parcerias com a gravadora.", "contact.cta.email": "Enviar e-mail",
+    "footer.rights": "Todos os direitos reservados.","label.visit": "Visitar site da gravadora",
   },
   en: {
     "nav.featured": "Featured", "nav.catalog": "Catalog", "nav.label": "Label", "nav.bio": "About", "nav.contact": "Contact",
@@ -1710,9 +1868,9 @@ const translations = {
     "hero.tagline": "Brazilian DJ and music producer blending EDM, electronic music and reggaeton. Founder of NaldoA Digital Music.",
     "hero.cta.listen": "Listen now", "hero.cta.contact": "Get in touch", "hero.role": "DJ / Producer / Label Founder", "hero.scroll": "Scroll", "genre.electronic": "Electronic",
     "featured.eyebrow": "Featured", "featured.title": "Featured releases", "featured.sub": "The latest and most notable drops from the catalog.",
-    "featured.1.type": "Single · 2025", "featured.1.desc": "A melodic EDM journey with a heavy drop and cinematic atmosphere.",
-    "featured.2.type": "EP · 2024", "featured.2.desc": "Latin reggaeton with hot beats and memorable vocals. Made for dancing.",
-    "featured.3.type": "Single · 2024", "featured.3.desc": "Deep electronic textures with late-night energy and hypnotic grooves.",
+    "featured.1.type": "Single · 2026", "featured.1.desc": "A melodic EDM journey with a heavy drop and cinematic atmosphere.",
+    "featured.2.type": "EP · 2026", "featured.2.desc": "Latin reggaeton with hot beats and memorable vocals. Made for dancing.",
+    "featured.3.type": "Single · 2026", "featured.3.desc": "Deep electronic textures with late-night energy and hypnotic grooves.",
     "catalog.eyebrow": "Full Discography", "catalog.title": "Complete catalog", "catalog.sub": "tracks and albums released worldwide.",
     "catalog.all": "All", "catalog.singles": "Singles", "catalog.eps": "EPs", "catalog.albums": "Albums", "catalog.remixes": "Remixes", "catalog.loadMore": "Show all releases",
     "label.eyebrow": "Independent Label", "label.heading": "NaldoA Digital Music", "label.subhead": "An independent label founded in 2024 by NaldoA to distribute, publish and release music worldwide.",
@@ -1725,8 +1883,8 @@ const translations = {
     "bio.p2": "As a DJ and producer, he moves between electronic music, EDM and reggaeton, building a sonic identity where futuristic synths meet Latin rhythms.",
     "bio.p3": "Founder of NaldoA Digital Music (2024), his mission is to release music independently, connect cultures through sound and push sound design forward.",
     "bio.stat1": "Tracks released", "bio.stat2": "Genres mastered", "bio.stat3": "Label founded",
-    "contact.title1": "Get in", "contact.sub": "Collaborations, remixes, sync licensing, distribution and label partnerships.", "contact.cta.email": "Send email",
-    "footer.rights": "All rights reserved."
+    "contact.title": "Get in touch", "contact.sub": "Collaborations, remixes, sync licensing, distribution and label partnerships.", "contact.cta.email": "Send email",
+    "footer.rights": "All rights reserved.", "label.visit": "Visit label website",
   },
   es: {
     "nav.featured": "Destacados", "nav.catalog": "Catálogo", "nav.label": "Sello", "nav.bio": "Sobre", "nav.contact": "Contacto",
@@ -1734,9 +1892,9 @@ const translations = {
     "hero.tagline": "DJ y productor musical brasileño que fusiona EDM, música electrónica y reggaeton. Fundador de NaldoA Digital Music.",
     "hero.cta.listen": "Escuchar ahora", "hero.cta.contact": "Contactar", "hero.role": "DJ / Productor / Fundador", "hero.scroll": "Desliza", "genre.electronic": "Electrónica",
     "featured.eyebrow": "Destacados", "featured.title": "Lanzamientos destacados", "featured.sub": "Los drops más recientes y destacados del catálogo.",
-    "featured.1.type": "Single · 2025", "featured.1.desc": "Un viaje de EDM melódico con un drop potente y atmósfera cinematográfica.",
-    "featured.2.type": "EP · 2024", "featured.2.desc": "Reggaeton latino con ritmos calientes y voces memorables. Hecho para bailar.",
-    "featured.3.type": "Single · 2024", "featured.3.desc": "Texturas electrónicas profundas con energía nocturna y grooves hipnóticos.",
+    "featured.1.type": "Single · 2026", "featured.1.desc": "Un viaje de EDM melódico con un drop potente y atmósfera cinematográfica.",
+    "featured.2.type": "EP · 2026", "featured.2.desc": "Reggaeton latino con ritmos calientes y voces memorables. Hecho para bailar.",
+    "featured.3.type": "Single · 2026", "featured.3.desc": "Texturas electrónicas profundas con energía nocturna y grooves hipnóticos.",
     "catalog.eyebrow": "Discografía Completa", "catalog.title": "Catálogo completo", "catalog.sub": "pistas y álbumes lanzados en todo el mundo.",
     "catalog.all": "Todos", "catalog.singles": "Singles", "catalog.eps": "EPs", "catalog.albums": "Álbumes", "catalog.remixes": "Remixes", "catalog.loadMore": "Mostrar todos los lanzamientos",
     "label.eyebrow": "Sello Independiente", "label.heading": "NaldoA Digital Music", "label.subhead": "Un sello independiente fundado en 2024 por NaldoA para distribuir, publicar y lanzar música en todo el mundo.",
@@ -1749,8 +1907,8 @@ const translations = {
     "bio.p2": "Como DJ y productor, se mueve entre música electrónica, EDM y reggaeton, construyendo una identidad sonora donde sintetizadores futuristas se encuentran con ritmos latinos.",
     "bio.p3": "Fundador de NaldoA Digital Music (2024), su misión es lanzar música de forma independiente, conectar culturas a través del sonido y avanzar el diseño sonoro.",
     "bio.stat1": "Pistas lanzadas", "bio.stat2": "Géneros dominados", "bio.stat3": "Sello fundado",
-    "contact.title1": "Ponte en", "contact.sub": "Colaboraciones, remixes, licencias, distribución y alianzas con el sello.", "contact.cta.email": "Enviar correo",
-    "footer.rights": "Todos los derechos reservados."
+    "contact.title": "Ponte en contacto", "contact.sub": "Colaboraciones, remixes, licencias, distribución y alianzas con el sello.", "contact.cta.email": "Enviar correo",
+    "footer.rights": "Todos los derechos reservados.", "label.visit": "Visitar sitio del sello",
   }
 };
 

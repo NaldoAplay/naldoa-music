@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+<title>NaldoA — DJ & Producer</title>
+<meta name="description" content="NaldoA is a Brazilian DJ and music producer blending EDM, electronic and reggaeton. Founder of NaldoA Digital Music." />
+<meta name="author" content="NaldoA" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://naldoa.com/" />
+
+<meta property="og:type" content="music.musician" />
+<meta property="og:title" content="NaldoA — DJ & Producer" />
+<meta property="og:description" content="EDM, Electronic & Reggaeton." />
+<meta property="og:image" content="NaldoA.jpg" />
+<meta property="og:url" content="https://naldoa.com/" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="NaldoA — DJ & Producer" />
+<meta name="twitter:description" content="EDM, Electronic & Reggaeton." />
+<meta name="twitter:image" content="NaldoA.jpg" />
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0a0a'/><text x='50' y='50' text-anchor='middle' dy='.36em' font-size='62' font-family='-apple-system,sans-serif' font-weight='700' fill='white'>N</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  "name": "NaldoA",
+  "genre": ["EDM", "Electronic", "Reggaeton"],
+  "url": "https://naldoa.com/",
+  "image": "NaldoA.jpg",
+  "description": "Brazilian DJ and music producer, founder of NaldoA Digital Music.",
+  "nationality": "Brazilian"
+}
+</script>
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --bg: #0a0a0a;
+  --bg-soft: #141414;
+  --text: #f5f5f5;
+  --muted: #8a8a8a;
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.20);
+  --accent: #ff5c35;
+  --accent-soft: rgba(255, 92, 53, 0.12);
+
+  --max: 1360px;
+  --gutter: clamp(20px, 4vw, 48px);
+
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --nav-h: 64px;
+}
+[data-theme="light"] {
+  --bg: #fafaf8;
+  --bg-soft: #f0f0ee;
+  --text: #0a0a0a;
+  --muted: #757575;
+  --line: rgba(0, 0, 0, 0.10);
+  --line-strong: rgba(0, 0, 0, 0.20);
+  --accent-soft: rgba(255, 92, 53, 0.10);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100vh;
+  transition: background .4s ease, color .4s ease;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+::selection { background: var(--accent); color: #fff; }
+
+/* ============================================================
+   TIPOGRAFIA
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+.serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.02em; }
+
+/* ============================================================
+   UTIL
+   ============================================================ */
+.container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+  z-index: 1000;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  transition: background .4s ease, border-color .4s ease;
+}
+.header-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.logo span { color: var(--accent); }
+
+nav.desktop { display: flex; }
+nav.desktop ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+nav.desktop a {
+  color: var(--muted);
+  transition: color .2s ease;
+  position: relative;
+}
+nav.desktop a:hover { color: var(--text); }
+
+.header-right { display: flex; align-items: center; gap: 6px; }
+.icon-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  transition: background .2s ease;
+  position: relative;
+}
+.icon-btn:hover { background: var(--bg-soft); }
+.icon-btn svg { width: 17px; height: 17px; stroke-width: 1.8; color: var(--text); }
+.icon-btn .icon-sun { display: none; }
+[data-theme="light"] .icon-btn .icon-sun { display: block; }
+[data-theme="light"] .icon-btn .icon-moon { display: none; }
+
+.lang-wrap { position: relative; }
+.lang-btn {
+  width: auto;
+  padding: 0 12px;
+  height: 38px;
+  border-radius: 999px;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.lang-btn:hover { background: var(--bg-soft); }
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  padding: 6px;
+  border-radius: 12px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+.lang-menu.open { display: flex; }
+.lang-menu button {
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition: background .15s, color .15s;
+}
+.lang-menu button:hover { background: var(--bg-soft); color: var(--text); }
+.lang-menu button.active { color: var(--accent); }
+
+.menu-toggle { display: none; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 60px var(--gutter);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.hero-text { max-width: 660px; }
+
+.hero h1 {
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.88;
+  margin-bottom: 32px;
+}
+.hero h1 .serif { color: var(--accent); font-weight: 400; }
+
+.hero-tagline {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+.tag {
+  font-size: 0.76rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  transition: transform .25s var(--ease), background .25s, color .25s, border-color .25s;
+}
+.btn-primary { background: var(--accent); color: #fff; font-weight: 600; }
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-ghost { border-color: var(--line-strong); color: var(--text); }
+.btn-ghost:hover { background: var(--bg-soft); border-color: var(--text); }
+.btn svg { width: 15px; height: 15px; }
+
+.hero-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+.hero-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.05);
+}
+
+/* ============================================================
+   SECTION
+   ============================================================ */
+.section {
+  padding: clamp(80px, 10vw, 140px) 0;
+  border-top: 1px solid var(--line);
+}
+.section-head {
+  max-width: var(--max);
+  margin: 0 auto var(--gutter);
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.section-title {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+.section-title .serif { color: var(--accent); font-weight: 400; }
+.section-sub {
+  font-size: 0.95rem;
+  color: var(--muted);
+  max-width: 380px;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   RELEASES GRID
+   ============================================================ */
+.filters {
+  max-width: var(--max);
+  margin: 0 auto 40px;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  transition: all .2s ease;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--line-strong); }
+.filter-btn.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+.grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 2vw, 28px);
+}
+
+.card {
+  display: block;
+  transition: transform .35s var(--ease);
+}
+.card:hover { transform: translateY(-4px); }
+
+.card-cover {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  margin-bottom: 14px;
+}
+.card-cover img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease);
+}
+.card:hover .card-cover img { transform: scale(1.04); }
+
+.card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(10,10,10,0.75);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card-meta {
+  font-size: 0.76rem;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+
+.grid-actions {
+  max-width: var(--max);
+  margin: 48px auto 0;
+  padding: 0 var(--gutter);
+  display: flex;
+  justify-content: center;
+}
+.load-more {
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: all .2s ease;
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+.load-more:hover { background: var(--bg-soft); }
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+.label-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: center;
+}
+.label-visual {
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+.label-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+.label-content h3 {
+  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+  margin-bottom: 24px;
+}
+.label-content p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 18px;
+  max-width: 520px;
+}
+.label-bullets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.label-bullets span {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-text p {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 540px;
+}
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.about-photo {
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+.about-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.contact-text h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  margin-bottom: 24px;
+}
+.contact-text h2 .serif { color: var(--accent); font-weight: 400; }
+.contact-text p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 500px;
+  margin-bottom: 32px;
+}
+.contact-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.contact-email-box {
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+.contact-email-box .eyebrow { margin-bottom: 16px; }
+.contact-email-box a {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  word-break: break-all;
+  color: var(--text);
+  display: block;
+  transition: color .2s ease;
+}
+.contact-email-box a:hover { color: var(--accent); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  padding: 60px 0 40px;
+  border-top: 1px solid var(--line);
+}
+.footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-left {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.03em;
+}
+.copyright {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.socials { display: flex; gap: 6px; }
+.socials a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  transition: all .2s ease;
+}
+.socials a:hover { border-color: var(--text); background: var(--bg-soft); }
+.socials svg { width: 15px; height: 15px; stroke-width: 1.7; color: var(--muted); }
+.socials a:hover svg { color: var(--text); }
+
+/* ============================================================
+   MENU MOBILE
+   ============================================================ */
+.mobile-menu {
+  position: fixed;
+  top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg);
+  padding: 40px var(--gutter);
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--muted);
+  transition: color .2s ease;
+}
+.mobile-menu a:hover { color: var(--text); }
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; padding: 40px var(--gutter) 60px; }
+  .hero-photo { max-width: 420px; margin: 0 auto; width: 100%; order: -1; }
+  .hero h1 { font-size: clamp(3rem, 14vw, 5.5rem); margin-bottom: 24px; }
+  .hero-tagline { margin-bottom: 28px; }
+  .hero-tags { margin-bottom: 28px; }
+
+  .label-grid, .about-grid, .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .label-visual, .about-photo {
+    max-width: 420px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .about-photo { order: -1; }
+
+  nav.desktop { display: none; }
+  .menu-toggle { display: grid; }
+
+  .section-head { margin-bottom: 32px; }
+}
+@media (max-width: 560px) {
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .hero h1 { font-size: clamp(2.6rem, 15vw, 4rem); letter-spacing: -0.05em; }
+  .hero-tagline { font-size: 0.94rem; }
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+  .hero-photo { aspect-ratio: 1 / 1; }
+
+  .btn { padding: 12px 22px; font-size: 0.86rem; }
+
+  .about-stats { grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; padding-top: 28px; }
+
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .label-grid, .about-grid, .contact-grid { gap: 32px; }
+
+  .contact-email-box { padding: 24px; }
+  .contact-email-box a { font-size: 1rem; word-break: break-all; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   MOBILE — imagens da gravadora e about menores
+   ============================================================ */
+@media (max-width: 900px) {
+  .label-visual,
+  .about-photo {
+    max-width: 280px;      /* era 420px */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .label-visual,
+  .about-photo {
+    max-width: 220px;      /* ainda menor no celular pequeno */
+  }
+}
+@media (max-width: 560px) {
+  .label-visual,
+  .about-photo {
+    aspect-ratio: 3 / 3;
+  }
+}
+</style>
+</head>
+<body>
+
+    
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">Naldo<span>A</span></a>
+
+    <nav class="desktop">
+      <ul>
+        <li><a href="#releases" data-i18n="nav.releases">Releases</a></li>
+        <li><a href="#label" data-i18n="nav.label">Label</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang-wrap">
+        <button class="icon-btn lang-btn" id="langBtn" aria-label="Language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 3.5 9 14 14 0 0 1-3.5 9 14 14 0 0 1-3.5-9A14 14 0 0 1 12 3z"/></svg>
+          <span id="langLabel">EN</span>
+        </button>
+        <div class="lang-menu" id="langMenu">
+          <button data-lang="pt">Português</button>
+          <button data-lang="en">English</button>
+          <button data-lang="es">Español</button>
+        </div>
+      </div>
+
+      <button class="icon-btn" id="themeToggle" aria-label="Theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MENU MOBILE -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#releases" data-i18n="nav.releases">Releases</a>
+  <a href="#label" data-i18n="nav.label">Label</a>
+  <a href="#about" data-i18n="nav.about">About</a>
+  <a href="#contact" data-i18n="nav.contact">Contact</a>
+</div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="eyebrow" data-i18n="hero.eyebrow">DJ & Producer — Brazil</div>
+      <h1>
+        <span class="serif" data-i18n="hero.title1">Sound of the</span><br>
+        <span data-i18n="hero.title2">Future.</span>
+      </h1>
+      <p class="hero-tagline" data-i18n="hero.tagline">
+        Brazilian DJ and music producer blending EDM, electronic music and reggaeton. Founder of NaldoA Digital Music.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">EDM</span>
+        <span class="tag" data-i18n="tag.electronic">Electronic</span>
+        <span class="tag">Reggaeton</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#releases" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span data-i18n="hero.cta.listen">Listen now</span>
+        </a>
+        <a href="#contact" class="btn btn-ghost" data-i18n="hero.cta.contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <img src="NaldoA.jpg" alt="NaldoA — DJ and music producer" loading="eager" />
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     RELEASES
+     ============================================================ -->
+<section class="section" id="releases">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow" data-i18n="releases.eyebrow">Catalog</div>
+      <h2 class="section-title">
+        <span class="serif" data-i18n="releases.title1">All</span> <span data-i18n="releases.title2">Releases</span>
+      </h2>
+    </div>
+    <p class="section-sub">
+      <span id="catalogCount">0</span> <span data-i18n="releases.sub">singles, EPs and albums released worldwide.</span>
+    </p>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all" data-i18n="filter.all">All</button>
+    <button class="filter-btn" data-filter="Single" data-i18n="filter.singles">Singles</button>
+    <button class="filter-btn" data-filter="Album" data-i18n="filter.albums">Albums</button>
+    <button class="filter-btn" data-filter="Remix" data-i18n="filter.remixes">Remixes</button>
+  </div>
+
+  <div class="grid" id="catalogGrid"></div>
+
+  <div class="grid-actions">
+    <button class="load-more" id="loadMoreBtn">
+      <span data-i18n="loadMore">Show all releases</span>
+      <span id="loadCount">+0</span>
+    </button>
+  </div>
+</section>
+
+<!-- ============================================================
+     LABEL
+     ============================================================ -->
+<section class="section" id="label">
+  <div class="label-grid">
+    <div class="label-visual">
+      <img src="NaldoA-Digital-Music.jpg" alt="NaldoA Digital Music" loading="lazy" />
+    </div>
+    <div class="label-content">
+      <div class="eyebrow" data-i18n="label.eyebrow">Independent Label</div>
+      <h3 data-i18n="label.title">NaldoA Digital Music</h3>
+      <p data-i18n="label.p1">
+        An independent label founded in 2024 by NaldoA to distribute, publish and release music worldwide.
+      </p>
+      <p data-i18n="label.p2">
+        Built on a digital-first mindset, the label gives full artistic freedom to every release.
+      </p>
+      <div class="label-bullets">
+        <span data-i18n="label.f1">Global distribution</span>
+        <span data-i18n="label.f2">Independent publishing</span>
+        <span data-i18n="label.f3">Artist-owned catalog</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="eyebrow" data-i18n="about.eyebrow">Biography</div>
+      <h2 class="section-title" style="margin-bottom: 32px;">
+        <span class="serif" data-i18n="about.title1">About</span> <span data-i18n="about.title2">NaldoA</span>
+      </h2>
+      <p data-i18n="about.p1">
+        NaldoA is a Brazilian artist passionate about music and technology, blending both worlds to create the sound of the future.
+      </p>
+      <p data-i18n="about.p2">
+        As a DJ and producer, he moves between electronic music, EDM and reggaeton — building a sonic identity where futuristic synths meet Latin rhythms.
+      </p>
+
+      <div class="about-stats">
+        <div>
+          <div class="stat-num" data-count="100" data-suffix="+">0</div>
+          <div class="stat-label" data-i18n="about.stat1">Tracks released</div>
+        </div>
+        <div>
+          <div class="stat-num" data-count="3" data-suffix="">0</div>
+          <div class="stat-label" data-i18n="about.stat2">Genres</div>
+        </div>
+        <div>
+          <div class="stat-num" data-count="2024" data-suffix="">0</div>
+          <div class="stat-label" data-i18n="about.stat3">Label founded</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-photo">
+      <img src="NaldoA.jpg" alt="NaldoA" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section class="section" id="contact">
+  <div class="contact-grid">
+    <div class="contact-text">
+      <div class="eyebrow" data-i18n="contact.eyebrow">Contact</div>
+      <h2>
+        <span class="serif" data-i18n="contact.title1">Let's</span> <span data-i18n="contact.title2">work.</span>
+      </h2>
+      <p data-i18n="contact.sub">
+        Collaborations, remixes, sync licensing, distribution and label partnerships.
+      </p>
+      <div class="contact-cta">
+        <a href="mailto:naldoamusic@gmail.com?subject=Contact%20from%20website%20%E2%80%94%20NaldoA&body=Hi%20NaldoA%2C%0A%0A" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 7 10-7"/></svg>
+          <span data-i18n="contact.cta">Send email</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-email-box">
+      <div class="eyebrow" data-i18n="contact.emailLabel">Email</div>
+      <a href="mailto:naldoamusic@gmail.com">naldoamusic@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">NaldoA</div>
+      <div class="copyright">© <span id="year"></span> · <span data-i18n="footer.rights">All rights reserved.</span></div>
+    </div>
+    <div class="socials">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+      <a href="#" aria-label="Spotify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5-1 4-1 4 1 4 1M9 10.5a3 3 0 0 1 6 0"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a>
+      <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10a4 4 0 1 1-4-4"/><path d="M14 4c.5 2 2 3.5 4 4"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CATÁLOGO
+   ============================================================ */
+const catalogData = [
+  { title: "Album Frost",              type: "Album",  year: 2026, cover: "capas/Album Frost" },
+  { title: "Album Frozen",             type: "Album",  year: 2026, cover: "capas/Album Frozen" },
+  { title: "Album Sinal",              type: "Album",  year: 2026, cover: "capas/Album Sinal" },
+  { title: "Album Another Night",      type: "Album",  year: 2026, cover: "capas/Album Another Night" },
+  { title: "Another Night",            type: "Single", year: 2026, cover: "capas/Another Night" },
+  { title: "Blackout",                 type: "Single", year: 2026, cover: "capas/Blackout" },
+  { title: "Carry Me Home",            type: "Single", year: 2026, cover: "capas/Carry Me Home" },
+  { title: "Dark Room",                type: "Single", year: 2026, cover: "capas/Dark Room" },
+  { title: "Deadlock",                 type: "Single", year: 2026, cover: "capas/Deadlock" },
+  { title: "Ember",                    type: "Single", year: 2026, cover: "capas/EMBER" },
+  { title: "Fading Signals",           type: "Single", year: 2026, cover: "capas/Fading Signals" },
+  { title: "Fading Signals (Mix)",     type: "Remix",  year: 2026, cover: "capas/Fading Signals Mix" },
+  { title: "Feeling",                  type: "Single", year: 2026, cover: "capas/Feeling" },
+  { title: "Glacial Heart",            type: "Single", year: 2026, cover: "capas/Glacial Heart" },
+  { title: "Hollow Core",              type: "Single", year: 2026, cover: "capas/Hollow Core" },
+  { title: "Iron Currents",            type: "Single", year: 2026, cover: "capas/Iron Currents" },
+  { title: "Null State",               type: "Single", year: 2026, cover: "capas/Null State" },
+  { title: "Overlap",                  type: "Single", year: 2026, cover: "capas/Overlap" },
+  { title: "Proxy",                    type: "Single", year: 2026, cover: "capas/Proxy" },
+  { title: "Shortwave",                type: "Single", year: 2026, cover: "capas/Shortwave" },
+  { title: "The Last Goodbye",         type: "Single", year: 2026, cover: "capas/The Last Goodbye" },
+  { title: "Tiempo Loco",              type: "Single", year: 2026, cover: "capas/Tiempo Loco" },
+  { title: "Too Late",                 type: "Single", year: 2026, cover: "capas/TOO LATE" },
+  { title: "Tum Tá Tum",               type: "Single", year: 2026, cover: "capas/Tum Tá Tum" },
+  { title: "Unbroken",                 type: "Single", year: 2026, cover: "capas/Unbroken" },
+  { title: "Velvet Smoke",             type: "Single", year: 2026, cover: "capas/Velvet Smoke" },
+  { title: "While There Is Still Time",type: "Single", year: 2026, cover: "capas/While There Is Still Time" },
+  { title: "White Noise",              type: "Single", year: 2026, cover: "capas/White Noise" },
+];
+const INITIAL_VISIBLE = 8;
+
+/* ============================================================
+   TRADUÇÕES
+   ============================================================ */
+const translations = {
+  pt: {
+    "nav.releases": "Lançamentos", "nav.label": "Gravadora", "nav.about": "Sobre", "nav.contact": "Contato",
+    "hero.eyebrow": "DJ & Produtor — Brasil",
+    "hero.title1": "Som do", "hero.title2": "Futuro.",
+    "hero.tagline": "DJ e produtor musical brasileiro unindo EDM, música eletrônica e reggaeton. Fundador da NaldoA Digital Music.",
+    "hero.cta.listen": "Ouvir agora", "hero.cta.contact": "Entrar em contato",
+    "tag.electronic": "Eletrônica",
+    "releases.eyebrow": "Catálogo", "releases.title1": "Todos os", "releases.title2": "Lançamentos",
+    "releases.sub": "singles, EPs e álbuns lançados mundialmente.",
+    "filter.all": "Todos", "filter.singles": "Singles", "filter.albums": "Álbuns", "filter.remixes": "Remixes",
+    "loadMore": "Ver todos os lançamentos",
+    "label.eyebrow": "Gravadora Independente",
+    "label.title": "NaldoA Digital Music",
+    "label.p1": "Uma gravadora independente fundada em 2024 por NaldoA para distribuir, publicar e lançar música no mundo todo.",
+    "label.p2": "Com mentalidade digital desde o início, a gravadora dá total liberdade artística a cada lançamento.",
+    "label.f1": "Distribuição global", "label.f2": "Publicação independente", "label.f3": "Catálogo do artista",
+    "about.eyebrow": "Biografia", "about.title1": "Sobre", "about.title2": "NaldoA",
+    "about.p1": "NaldoA é um artista brasileiro apaixonado por música e tecnologia, misturando os dois mundos para criar o som do futuro.",
+    "about.p2": "Como DJ e produtor, transita entre música eletrônica, EDM e reggaeton — construindo uma identidade sonora onde sintetizadores futuristas encontram ritmos latinos.",
+    "about.stat1": "Faixas lançadas", "about.stat2": "Gêneros", "about.stat3": "Gravadora fundada",
+    "contact.eyebrow": "Contato", "contact.title1": "Vamos", "contact.title2": "trabalhar.",
+    "contact.sub": "Colaborações, remixes, licenciamento, distribuição e parcerias com a gravadora.",
+    "contact.cta": "Enviar e-mail", "contact.emailLabel": "E-mail",
+    "footer.rights": "Todos os direitos reservados."
+  },
+  en: {
+    "nav.releases": "Releases", "nav.label": "Label", "nav.about": "About", "nav.contact": "Contact",
+    "hero.eyebrow": "DJ & Producer — Brazil",
+    "hero.title1": "Sound of the", "hero.title2": "Future.",
+    "hero.tagline": "Brazilian DJ and music producer blending EDM, electronic music and reggaeton. Founder of NaldoA Digital Music.",
+    "hero.cta.listen": "Listen now", "hero.cta.contact": "Get in touch",
+    "tag.electronic": "Electronic",
+    "releases.eyebrow": "Catalog", "releases.title1": "All", "releases.title2": "Releases",
+    "releases.sub": "singles, EPs and albums released worldwide.",
+    "filter.all": "All", "filter.singles": "Singles", "filter.albums": "Albums", "filter.remixes": "Remixes",
+    "loadMore": "Show all releases",
+    "label.eyebrow": "Independent Label",
+    "label.title": "NaldoA Digital Music",
+    "label.p1": "An independent label founded in 2024 by NaldoA to distribute, publish and release music worldwide.",
+    "label.p2": "Built on a digital-first mindset, the label gives full artistic freedom to every release.",
+    "label.f1": "Global distribution", "label.f2": "Independent publishing", "label.f3": "Artist-owned catalog",
+    "about.eyebrow": "Biography", "about.title1": "About", "about.title2": "NaldoA",
+    "about.p1": "NaldoA is a Brazilian artist passionate about music and technology, blending both worlds to create the sound of the future.",
+    "about.p2": "As a DJ and producer, he moves between electronic music, EDM and reggaeton — building a sonic identity where futuristic synths meet Latin rhythms.",
+    "about.stat1": "Tracks released", "about.stat2": "Genres", "about.stat3": "Label founded",
+    "contact.eyebrow": "Contact", "contact.title1": "Let's", "contact.title2": "work.",
+    "contact.sub": "Collaborations, remixes, sync licensing, distribution and label partnerships.",
+    "contact.cta": "Send email", "contact.emailLabel": "Email",
+    "footer.rights": "All rights reserved."
+  },
+  es: {
+    "nav.releases": "Lanzamientos", "nav.label": "Sello", "nav.about": "Sobre", "nav.contact": "Contacto",
+    "hero.eyebrow": "DJ & Productor — Brasil",
+    "hero.title1": "Sonido del", "hero.title2": "Futuro.",
+    "hero.tagline": "DJ y productor musical brasileño que fusiona EDM, música electrónica y reggaeton. Fundador de NaldoA Digital Music.",
+    "hero.cta.listen": "Escuchar ahora", "hero.cta.contact": "Contactar",
+    "tag.electronic": "Electrónica",
+    "releases.eyebrow": "Catálogo", "releases.title1": "Todos los", "releases.title2": "Lanzamientos",
+    "releases.sub": "singles, EPs y álbumes lanzados en todo el mundo.",
+    "filter.all": "Todos", "filter.singles": "Singles", "filter.albums": "Álbumes", "filter.remixes": "Remixes",
+    "loadMore": "Ver todos los lanzamientos",
+    "label.eyebrow": "Sello Independiente",
+    "label.title": "NaldoA Digital Music",
+    "label.p1": "Un sello independiente fundado en 2024 por NaldoA para distribuir, publicar y lanzar música en todo el mundo.",
+    "label.p2": "Con mentalidad digital desde el inicio, el sello da total libertad artística a cada lanzamiento.",
+    "label.f1": "Distribución global", "label.f2": "Publicación independiente", "label.f3": "Catálogo del artista",
+    "about.eyebrow": "Biografía", "about.title1": "Sobre", "about.title2": "NaldoA",
+    "about.p1": "NaldoA es un artista brasileño apasionado por la música y la tecnología, mezclando ambos mundos para crear el sonido del futuro.",
+    "about.p2": "Como DJ y productor, se mueve entre música electrónica, EDM y reggaeton — construyendo una identidad sonora donde sintetizadores futuristas se encuentran con ritmos latinos.",
+    "about.stat1": "Pistas lanzadas", "about.stat2": "Géneros", "about.stat3": "Sello fundado",
+    "contact.eyebrow": "Contacto", "contact.title1": "Vamos a", "contact.title2": "trabajar.",
+    "contact.sub": "Colaboraciones, remixes, licencias, distribución y alianzas con el sello.",
+    "contact.cta": "Enviar correo", "contact.emailLabel": "Correo",
+    "footer.rights": "Todos los derechos reservados."
+  }
+};
+
+/* ============================================================
+   IDIOMA
+   ============================================================ */
+const langBtn = document.getElementById('langBtn');
+const langMenu = document.getElementById('langMenu');
+const langLabel = document.getElementById('langLabel');
+
+function applyLanguage(lang) {
+  if (!translations[lang]) lang = 'en';
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = translations[lang][key];
+    if (val) el.textContent = val;
+  });
+  langLabel.textContent = lang.toUpperCase();
+  document.querySelectorAll('.lang-menu button').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  localStorage.setItem('naldoa-lang', lang);
+}
+const savedLang = localStorage.getItem('naldoa-lang');
+const browserLang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+applyLanguage(savedLang || (translations[browserLang] ? browserLang : 'en'));
+
+langBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  langMenu.classList.toggle('open');
+});
+document.querySelectorAll('.lang-menu button').forEach(b => {
+  b.addEventListener('click', () => {
+    applyLanguage(b.dataset.lang);
+    langMenu.classList.remove('open');
+  });
+});
+document.addEventListener('click', () => langMenu.classList.remove('open'));
+
+/* ============================================================
+   TEMA
+   ============================================================ */
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('naldoa-theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('naldoa-theme', next);
+});
+
+/* ============================================================
+   MENU MOBILE
+   ============================================================ */
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+/* ============================================================
+   AUTO-DETECÇÃO DE EXTENSÃO DA CAPA
+   ============================================================ */
+const _imgCache = {};
+function loadCover(basePath, callback) {
+  if (_imgCache[basePath]) { callback(_imgCache[basePath]); return; }
+  const exts = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG', '.webp'];
+  let i = 0;
+  (function tryNext() {
+    if (i >= exts.length) { callback(encodeURI(basePath) + '.jpg'); return; }
+    const test = new Image();
+    const url = encodeURI(basePath + exts[i]);
+    test.onload = () => { _imgCache[basePath] = url; callback(url); };
+    test.onerror = () => { i++; tryNext(); };
+    test.src = url;
+  })();
+}
+
+/* ============================================================
+   RENDER CATÁLOGO
+   ============================================================ */
+const gridEl = document.getElementById('catalogGrid');
+const countEl = document.getElementById('catalogCount');
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+const loadCount = document.getElementById('loadCount');
+
+function renderGrid(filter = 'all') {
+  gridEl.innerHTML = '';
+  const items = filter === 'all' ? catalogData : catalogData.filter(i => i.type === filter);
+  items.forEach((item, idx) => {
+    const el = document.createElement('a');
+    el.className = 'card';
+    el.href = 'release.html?m=' + item.cover.split('/').pop()
+      .toLowerCase()
+      .replace(/[áàâã]/g,'a').replace(/[éê]/g,'e').replace(/[íî]/g,'i').replace(/[óô]/g,'o').replace(/[úû]/g,'u')
+      .replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+    if (idx >= INITIAL_VISIBLE) el.style.display = 'none';
+    el.dataset.hidden = idx >= INITIAL_VISIBLE ? '1' : '0';
+    el.innerHTML = `
+      <div class="card-cover">
+        <span class="card-badge">${item.type}</span>
+        <img data-src="${item.cover}" alt="${item.title} cover" loading="lazy" />
+      </div>
+      <div class="card-title">${item.title}</div>
+      <div class="card-meta">${item.year}</div>
+    `;
+    gridEl.appendChild(el);
+  });
+
+  countEl.textContent = catalogData.length;
+
+  gridEl.querySelectorAll('img[data-src]').forEach(img => {
+    loadCover(img.dataset.src, realSrc => {
+      img.src = realSrc;
+      img.removeAttribute('data-src');
+    });
+  });
+
+  updateLoadMore();
+}
+
+function updateLoadMore() {
+  const hidden = gridEl.querySelectorAll('.card[data-hidden="1"]');
+  if (hidden.length === 0) {
+    loadMoreBtn.style.display = 'none';
+  } else {
+    loadMoreBtn.style.display = 'inline-flex';
+    loadCount.textContent = '+' + hidden.length;
+  }
+}
+
+loadMoreBtn.addEventListener('click', () => {
+  gridEl.querySelectorAll('.card[data-hidden="1"]').forEach((el, i) => {
+    setTimeout(() => {
+      el.style.display = '';
+      el.dataset.hidden = '0';
+    }, i * 30);
+  });
+  setTimeout(updateLoadMore, 500);
+});
+
+renderGrid('all');
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGrid(btn.dataset.filter);
+  });
+});
+
+/* ============================================================
+   CONTADORES
+   ============================================================ */
+function animateCount(el) {
+  const target = parseInt(el.dataset.count, 10);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1600;
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(target * eased) + suffix;
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(animateCount);
+      statObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.about-stats').forEach(el => statObs.observe(el));
+
+/* ============================================================
+   ANO AUTOMÁTICO
+   ============================================================ */
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
